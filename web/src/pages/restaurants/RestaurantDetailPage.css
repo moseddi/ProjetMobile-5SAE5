@@ -1,0 +1,398 @@
+/* Premium Restaurant Detail Page */
+.restaurant-detail-page {
+  min-height: 100vh;
+  background: var(--color-bg-primary);
+  padding-top: 72px;
+}
+
+/* Hero Image - Large Visual */
+.restaurant-hero {
+  width: 100%;
+  height: 560px;
+  overflow: hidden;
+  background: var(--color-bg-tertiary);
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Restaurant Header */
+.restaurant-header {
+  background: white;
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--space-2xl) 0;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xl);
+}
+
+.header-main {
+  flex: 1;
+}
+
+.restaurant-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-md);
+  line-height: 1.2;
+}
+
+.restaurant-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+}
+
+.meta-item {
+  font-weight: var(--font-medium);
+}
+
+.meta-item.cuisine {
+  color: var(--color-text-primary);
+}
+
+.meta-item.rating {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.meta-item.status.open {
+  color: var(--color-success);
+}
+
+.meta-item.status.closed {
+  color: var(--color-text-tertiary);
+}
+
+.meta-separator {
+  color: var(--color-text-tertiary);
+}
+
+.header-actions {
+  flex-shrink: 0;
+}
+
+/* Detail Content */
+.detail-content {
+  padding: var(--space-3xl) 0;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: var(--space-3xl);
+}
+
+/* Main Column */
+.detail-main {
+  min-width: 0;
+}
+
+.content-section {
+  margin-bottom: var(--space-3xl);
+  padding-bottom: var(--space-3xl);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.content-section:last-child {
+  border-bottom: none;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-lg);
+}
+
+.section-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.8;
+  color: var(--color-text-secondary);
+}
+
+/* Features Grid */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-md);
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary);
+}
+
+.feature-check {
+  color: var(--color-success);
+  font-weight: 600;
+}
+
+/* Reviews Section */
+.section-header-with-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-xl);
+}
+
+.empty-reviews {
+  padding: var(--space-2xl);
+  text-align: center;
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-md);
+  color: var(--color-text-tertiary);
+  font-family: 'Inter', sans-serif;
+}
+
+.reviews-grid {
+  display: grid;
+  gap: var(--space-xl);
+}
+
+.review-item {
+  padding: var(--space-xl);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.review-header-info {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.reviewer-avatar-wrapper {
+  flex-shrink: 0;
+}
+
+.reviewer-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.reviewer-details {
+  flex: 1;
+}
+
+.reviewer-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 4px;
+}
+
+.review-date {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  color: var(--color-text-tertiary);
+}
+
+.review-rating-display {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.review-item-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-sm);
+}
+
+.review-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+}
+
+.view-all-reviews {
+  margin-top: var(--space-xl);
+  text-align: center;
+}
+
+/* Sidebar */
+.detail-sidebar {
+  position: relative;
+}
+
+.info-card {
+  position: sticky;
+  top: 96px;
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-soft);
+}
+
+.info-card-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-lg);
+}
+
+.info-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-xl);
+}
+
+.info-row {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.info-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.info-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.info-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8125rem;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: var(--font-medium);
+}
+
+.info-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9375rem;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+}
+
+.btn-block {
+  width: 100%;
+  justify-content: center;
+}
+
+/* Loading & Error States */
+.loading-container,
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: var(--space-lg);
+}
+
+.error-container h2 {
+  font-family: 'Playfair Display', serif;
+  color: var(--color-text-primary);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .detail-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+  }
+
+  .info-card {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .restaurant-detail-page {
+    padding-top: 64px;
+  }
+
+  .restaurant-hero {
+    height: 400px;
+  }
+
+  .restaurant-header {
+    padding: var(--space-xl) 0;
+  }
+
+  .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .restaurant-title {
+    font-size: 2.25rem;
+  }
+
+  .header-actions {
+    width: 100%;
+  }
+
+  .header-actions .btn {
+    width: 100%;
+  }
+
+  .detail-content {
+    padding: var(--space-2xl) 0;
+  }
+
+  .content-section {
+    margin-bottom: var(--space-2xl);
+    padding-bottom: var(--space-2xl);
+  }
+
+  .section-title {
+    font-size: 1.75rem;
+  }
+
+  .section-header-with-action {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+  }
+
+  .section-header-with-action .btn {
+    width: 100%;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .review-item {
+    padding: var(--space-lg);
+  }
+}

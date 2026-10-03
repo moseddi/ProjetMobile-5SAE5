@@ -1,0 +1,339 @@
+/* Premium Reviews Page */
+.reviews-page {
+  min-height: 100vh;
+  background: var(--color-bg-primary);
+  padding-top: 72px;
+}
+
+/* Page Header */
+.page-header {
+  background: var(--color-bg-secondary);
+  padding: var(--space-4xl) 0 var(--space-3xl);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.page-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.75rem, 6vw, 4.5rem);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-md);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.page-header p {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.25rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+/* Reviews Layout */
+.reviews-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: var(--space-3xl);
+  padding: var(--space-3xl) 0;
+}
+
+/* Filters Sidebar */
+.filters-sidebar {
+  position: sticky;
+  top: 96px;
+  align-self: start;
+}
+
+.filter-section {
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-xl);
+  margin-bottom: var(--space-lg);
+}
+
+.filter-section h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-md);
+}
+
+.rating-filters {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.rating-filter-btn {
+  font-family: 'Inter', sans-serif;
+  padding: 12px 16px;
+  border: 1.5px solid var(--color-border);
+  background: white;
+  border-radius: var(--radius-sm);
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.rating-filter-btn:hover {
+  border-color: var(--color-text-primary);
+  color: var(--color-text-primary);
+}
+
+.rating-filter-btn.active {
+  background: var(--color-text-primary);
+  border-color: var(--color-text-primary);
+  color: white;
+  font-weight: var(--font-medium);
+}
+
+.btn-clear-filters {
+  font-family: 'Inter', sans-serif;
+  width: 100%;
+  padding: 12px;
+  border: 1.5px solid var(--color-border);
+  background: white;
+  border-radius: var(--radius-sm);
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-clear-filters:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* Reviews Content */
+.reviews-content {
+  min-width: 0;
+}
+
+.results-header {
+  margin-bottom: var(--space-xl);
+}
+
+.results-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+/* Review Card */
+.review-card {
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-xl);
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-soft);
+}
+
+.review-card:hover {
+  box-shadow: var(--shadow-medium);
+  transform: translateY(-2px);
+}
+
+.review-main {
+  margin-bottom: var(--space-lg);
+  padding-bottom: var(--space-lg);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.reviewer-section {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.reviewer-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--color-border-light);
+}
+
+.reviewer-details h4 {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 4px;
+}
+
+.review-date {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  color: var(--color-text-tertiary);
+}
+
+.review-content {
+  padding-left: 80px;
+}
+
+.review-header {
+  margin-bottom: var(--space-md);
+}
+
+.review-rating {
+  font-size: 1.25rem;
+  color: var(--color-primary);
+  margin-bottom: var(--space-sm);
+}
+
+.review-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-sm);
+}
+
+.review-comment {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-md);
+}
+
+.review-photo {
+  width: 100%;
+  max-width: 400px;
+  border-radius: var(--radius-sm);
+  margin-top: var(--space-md);
+}
+
+/* Restaurant Reference */
+.restaurant-reference {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.restaurant-info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.restaurant-thumb {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+}
+
+.restaurant-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.restaurant-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+/* Loading & Empty States */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3xl);
+  gap: var(--space-lg);
+}
+
+.loading-state p {
+  font-family: 'Inter', sans-serif;
+  color: var(--color-text-secondary);
+}
+
+.empty-state {
+  text-align: center;
+  padding: var(--space-3xl);
+}
+
+.empty-state p {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.0625rem;
+  color: var(--color-text-tertiary);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .reviews-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .filters-sidebar {
+    position: static;
+  }
+
+  .filter-section {
+    margin-bottom: var(--space-md);
+  }
+
+  .review-content {
+    padding-left: 0;
+    margin-top: var(--space-md);
+  }
+}
+
+@media (max-width: 768px) {
+  .reviews-page {
+    padding-top: 64px;
+  }
+
+  .page-header {
+    padding: var(--space-2xl) 0;
+  }
+
+  .page-header h1 {
+    font-size: 2.5rem;
+  }
+
+  .page-header p {
+    font-size: 1.0625rem;
+  }
+
+  .reviews-layout {
+    padding: var(--space-2xl) 0;
+  }
+
+  .review-card {
+    padding: var(--space-lg);
+  }
+
+  .reviewer-section {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .restaurant-reference {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+  }
+}

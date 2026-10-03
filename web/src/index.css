@@ -1,0 +1,273 @@
+/* Import Google Fonts - Serif for Display Headings */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Premium Restaurant Color Palette */
+  --color-primary: #E63946;
+  --color-primary-dark: #C7303A;
+  --color-primary-light: #FF5A67;
+  --color-accent: #E63946;
+  --color-accent-dark: #C7303A;
+  --color-accent-light: #FF6B77;
+  
+  /* Backgrounds - Warm Cream/Ivory */
+  --color-bg-primary: #FEFCF9;
+  --color-bg-secondary: #F8F5F1;
+  --color-bg-tertiary: #F2EDE7;
+  --color-surface: #FFFFFF;
+  --color-surface-elevated: #FFFFFE;
+  
+  /* Text Colors - Strong Black Typography */
+  --color-text-primary: #1A1A1A;
+  --color-text-secondary: #4A4A4A;
+  --color-text-tertiary: #7A7A7A;
+  --color-text-muted: #9A9A9A;
+  
+  /* Warm Neutrals */
+  --color-warm-gray: #8B8680;
+  --color-warm-gray-light: #AFA9A3;
+  --color-warm-beige: #D4CEC6;
+  
+  /* Borders - Subtle Warm Gray */
+  --color-border: #E8E3DD;
+  --color-border-light: #F0EBE5;
+  --color-divider: #DDD8D2;
+  
+  /* Semantic Colors */
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-error: #EF4444;
+  --color-rating: #E63946;
+  
+  /* Shadows - Very Subtle */
+  --shadow-subtle: 0 1px 2px rgba(26, 26, 26, 0.03);
+  --shadow-soft: 0 2px 8px rgba(26, 26, 26, 0.04), 0 1px 2px rgba(26, 26, 26, 0.03);
+  --shadow-medium: 0 4px 16px rgba(26, 26, 26, 0.06), 0 2px 4px rgba(26, 26, 26, 0.04);
+  --shadow-large: 0 8px 24px rgba(26, 26, 26, 0.08), 0 4px 8px rgba(26, 26, 26, 0.05);
+  --shadow-elevated: 0 16px 48px rgba(26, 26, 26, 0.10);
+  
+  /* Typography Scale */
+  --font-display: 700;
+  --font-heading: 600;
+  --font-body: 400;
+  --font-medium: 500;
+  
+  /* Spacing Scale - Generous */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 40px;
+  --space-2xl: 56px;
+  --space-3xl: 80px;
+  --space-4xl: 120px;
+  
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+}
+
+
+
+/* Import Google Fonts - Serif for Display Headings */
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+  font-size: 16px;
+  letter-spacing: -0.011em;
+}
+
+/* Editorial Typography - Serif Display Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: var(--font-display);
+  line-height: 1.2;
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: clamp(2.75rem, 6vw, 5rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+h2 {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+h3 {
+  font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+  font-weight: 600;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--space-xl);
+}
+
+.container-wide {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 var(--space-xl);
+}
+
+/* Premium Button Styles - Strong Red CTA */
+.btn {
+  padding: 16px 32px;
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-weight: var(--font-medium);
+  font-family: 'Inter', sans-serif;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  letter-spacing: -0.01em;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: white;
+  box-shadow: 0 1px 3px rgba(230, 57, 70, 0.15);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-dark);
+  box-shadow: 0 4px 12px rgba(230, 57, 70, 0.25);
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  border: 1.5px solid var(--color-border);
+  color: var(--color-text-primary);
+  background: transparent;
+}
+
+.btn-outline:hover {
+  border-color: var(--color-text-primary);
+  transform: translateY(-1px);
+}
+
+.btn-sm {
+  padding: 10px 20px;
+  font-size: 14px;
+}
+
+.btn-lg {
+  padding: 18px 40px;
+  font-size: 16px;
+}
+
+.card {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--color-border-light);
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+.spinner {
+  border: 3px solid var(--color-border);
+  border-top: 3px solid var(--color-primary);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error-message {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--color-error);
+  font-family: 'Inter', sans-serif;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--color-text-secondary);
+}
+
+.empty-state h3 {
+  font-size: 1.5rem;
+  margin-bottom: var(--space-md);
+  color: var(--color-text-primary);
+}
+
+.empty-state p {
+  font-size: 1rem;
+  color: var(--color-text-tertiary);
+  margin-bottom: var(--space-xl);
+}
+
+/* Text Utilities */
+.text-serif {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.text-sans {
+  font-family: 'Inter', sans-serif;
+}
+
+@media (max-width: 768px) {
+  .container, .container-wide {
+    padding: 0 var(--space-lg);
+  }
+  
+  .btn {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+}
