@@ -1,0 +1,41 @@
+package com.hangout.controller;
+
+import com.hangout.model.Event;
+import com.hangout.service.EventService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/events")
+@RequiredArgsConstructor
+public class EventController {
+
+    private final EventService eventService;
+
+    @GetMapping
+    public List<Event> getAll() { return eventService.getAll(); }
+
+    @GetMapping("/{id}")
+    public Event getById(@PathVariable String id) { return eventService.getById(id); }
+
+    @GetMapping("/restaurant/{restaurantId}")
+    public List<Event> getByRestaurant(@PathVariable String restaurantId) {
+        return eventService.getByRestaurant(restaurantId);
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Event create(@RequestBody Event event) { return eventService.create(event); }
+
+    @PutMapping("/{id}")
+    public Event update(@PathVariable String id, @RequestBody Event event) {
+        return eventService.update(id, event);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable String id) { eventService.delete(id); }
+}
