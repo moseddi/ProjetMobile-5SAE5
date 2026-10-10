@@ -101,3 +101,44 @@ export interface ApiError {
   message: string;
   timestamp: string;
 }
+
+export type EventCategory =
+  | 'WINE_TASTING' | 'COOKING_CLASS' | 'LIVE_MUSIC'
+  | 'SPECIAL_DINNER' | 'THEMED_NIGHT' | 'OTHER';
+
+export interface Event {
+  id: string;
+  restaurantId: string;
+  title: string;
+  description?: string;
+  image?: string;
+  eventDate: string;
+  price: number;
+  availableSpots: number;
+  bookedSpots: number;
+  category: EventCategory;
+  theme?: string;
+  cuisine?: string;
+  menu?: string;
+  ambiance?: string;
+  hashtags?: string[];
+  appelAction?: string;
+  generatedByAI?: boolean;
+}
+
+export interface GenerateDescriptionRequest {
+  theme: string;
+  date: string;
+  cuisine: string;
+  menu?: string;
+  ambiance?: string;
+  places?: number;
+  style?: string;
+}
+
+export interface GeneratedDescription {
+  titre: string;
+  description: string;
+  hashtags: string[];
+  appel_action: string;
+}
