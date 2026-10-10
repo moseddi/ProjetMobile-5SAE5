@@ -5,6 +5,12 @@ import com.hangout.service.EventService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import com.hangout.ai.EventDescriptionService;
+import com.hangout.ai.GenerateDescriptionRequest;
+import com.hangout.ai.GeneratedDescription;
+import com.hangout.ai.SimpleRateLimiter;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -14,6 +20,8 @@ import java.util.List;
 public class EventController {
 
     private final EventService eventService;
+    private final EventDescriptionService descriptionService;
+    private final SimpleRateLimiter rateLimiter;
 
     @GetMapping
     public List<Event> getAll() { return eventService.getAll(); }
@@ -38,4 +46,12 @@ public class EventController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable String id) { eventService.delete(id); }
+
+    @PostMapping("/generate-description")
+public GeneratedDescription generateDescription(
+        @Valid @RequestBody GenerateDescriptionRequest request,
+        HttpServletRequest http) {
+    rateLimiter.check(http.getRemoteAddr());
+    return descriptionService.generate(request);
+}
 }

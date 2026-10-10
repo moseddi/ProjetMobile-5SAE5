@@ -6,6 +6,12 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import com.hangout.ai.AiException;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import java.util.Map;
+
+
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -60,6 +66,11 @@ public class GlobalExceptionHandler {
         );
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
     }
+
+    @ExceptionHandler(AiException.class)
+    public ResponseEntity<Map<String, String>> handleAiException(AiException e) {
+        return ResponseEntity.status(e.getStatus()).body(Map.of("message", e.getMessage()));
+}
     
     public record ErrorResponse(int status, String message, LocalDateTime timestamp) {}
 }
