@@ -1,0 +1,112 @@
+[
+  {
+    "id": "r001",
+    "restaurant_id": "rest001",
+    "restaurant_name": "Le Petit Bistro",
+    "comment": "La nourriture était excellente, les plats bien présentés. Mais le service était vraiment lent et le personnel peu aimable. En plus c'est trop cher pour ce qu'on a eu.",
+    "food_score": 9,
+    "service_score": 2,
+    "price_score": 3,
+    "ambiance_score": 6,
+    "global_rating": 3.5
+  },
+  {
+    "id": "r002",
+    "restaurant_name": "Chez Momo",
+    "restaurant_id": "rest002",
+    "comment": "Super ambiance, personnel souriant et rapide. La nourriture est correcte mais pas exceptionnelle. Le prix est raisonnable pour la qualité.",
+    "food_score": 6,
+    "service_score": 9,
+    "price_score": 8,
+    "ambiance_score": 9,
+    "global_rating": 4.2
+  },
+  {
+    "id": "r003",
+    "restaurant_name": "La Bonne Table",
+    "restaurant_id": "rest003",
+    "comment": "Meilleur restaurant de la ville ! La nourriture est incroyable, le service impeccable, et le prix est justifié. Je recommande vivement.",
+    "food_score": 10,
+    "service_score": 9,
+    "price_score": 7,
+    "ambiance_score": 8,
+    "global_rating": 4.8
+  },
+  {
+    "id": "r004",
+    "restaurant_name": "Fast & Good",
+    "restaurant_id": "rest004",
+    "comment": "Très bon rapport qualité prix. La nourriture est bonne et le service rapide. Idéal pour un repas express. L'ambiance est un peu bruyante.",
+    "food_score": 7,
+    "service_score": 8,
+    "price_score": 9,
+    "ambiance_score": 4,
+    "global_rating": 4.0
+  },
+  {
+    "id": "r005",
+    "restaurant_name": "Le Gourmet",
+    "restaurant_id": "rest005",
+    "comment": "Cadre magnifique et ambiance romantique. La nourriture est bonne mais les portions sont petites. Service attentionné mais on attend longtemps.",
+    "food_score": 7,
+    "service_score": 5,
+    "price_score": 4,
+    "ambiance_score": 10,
+    "global_rating": 3.8
+  },
+  {
+    "id": "r006",
+    "restaurant_name": "Burger Palace",
+    "restaurant_id": "rest006",
+    "comment": "Les meilleurs burgers de la ville ! Service super rapide, prix abordable. Ambiance décontractée et sympa. Je reviens souvent.",
+    "food_score": 9,
+    "service_score": 9,
+    "price_score": 9,
+    "ambiance_score": 7,
+    "global_rating": 4.7
+  },
+  {
+    "id": "r007",
+    "restaurant_name": "Sushi Zen",
+    "restaurant_id": "rest007",
+    "comment": "Sushis frais et délicieux. Le service est correct mais pas exceptionnel. Un peu cher mais la qualité est là. Ambiance zen et agréable.",
+    "food_score": 9,
+    "service_score": 6,
+    "price_score": 5,
+    "ambiance_score": 8,
+    "global_rating": 4.2
+  },
+  {
+    "id": "r008",
+    "restaurant_name": "La Pizzeria Roma",
+    "restaurant_id": "rest008",
+    "comment": "Pizzas au feu de bois authentiques, vraiment délicieuses. Service chaleureux et familial. Prix très corrects. Ambiance italienne sympa.",
+    "food_score": 9,
+    "service_score": 8,
+    "price_score": 8,
+    "ambiance_score": 8,
+    "global_rating": 4.6
+  },
+  {
+    "id": "r009",
+    "restaurant_name": "Le Mauvais Sort",
+    "restaurant_id": "rest009",
+    "comment": "Déçu. La nourriture était froide et sans goût. Le serveur était impoli. En plus on a attendu 45 minutes. Trop cher pour cette qualité.",
+    "food_score": 2,
+    "service_score": 1,
+    "price_score": 1,
+    "ambiance_score": 3,
+    "global_rating": 1.2
+  },
+  {
+    "id": "r010",
+    "restaurant_name": "Café Central",
+    "restaurant_id": "rest010",
+    "comment": "Bon café et petite restauration correcte. Idéal pour le déjeuner. Service rapide et sympa. Très bon rapport qualité prix. Un peu bruyant aux heures de pointe.",
+    "food_score": 7,
+    "service_score": 8,
+    "price_score": 9,
+    "ambiance_score": 5,
+    "global_rating": 4.1
+  }
+]

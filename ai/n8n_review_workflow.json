@@ -1,0 +1,315 @@
+{
+  "name": "Review_Intelligence_MultiExpert_CoT",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "analyze-review",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-analyze",
+      "name": "1. Webhook - Nouvel Avis",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        180,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:11434/api/generate",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"mistral\",\n  \"prompt\": \"[ROLE: EXPERT CULINAIRE]\\nÉvalue UNIQUEMENT la NOURRITURE dans cet avis (goût, fraîcheur, cuisson, saveurs).\\nAvis: '{{ $('1. Webhook - Nouvel Avis').first().json.body.review }}'\\n\\nProcessus CoT:\\n1. Analyse les mentions sur les plats, viandes, assaisonnements, température.\\n2. Attribue une note de 1 à 10.\\n\\nFormat de réponse OBLIGATOIRE:\\nRAISONNEMENT_FOOD: <explication avec citation de l'avis>\\nFOOD_SCORE: <nombre entier 1-10>\",\n  \"stream\": false\n}",
+        "options": {}
+      },
+      "id": "ollama-food",
+      "name": "2A. Mistral Expert Food 🍔",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        480,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:11434/api/generate",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"mistral\",\n  \"prompt\": \"[ROLE: EXPERT SERVICE CLIENT]\\nÉvalue UNIQUEMENT le SERVICE et le PERSONNEL dans cet avis (amabilité, rapidité, professionnalisme).\\nAvis: '{{ $('1. Webhook - Nouvel Avis').first().json.body.review }}'\\n\\nProcessus CoT:\\n1. Analyse les mentions des serveurs, temps d'attente, accueil.\\n2. Attribue une note de 1 à 10.\\n\\nFormat de réponse OBLIGATOIRE:\\nRAISONNEMENT_SERVICE: <explication avec citation de l'avis>\\nSERVICE_SCORE: <nombre entier 1-10>\",\n  \"stream\": false\n}",
+        "options": {}
+      },
+      "id": "ollama-service",
+      "name": "2B. Mistral Expert Service 🤝",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        480,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:11434/api/generate",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"mistral\",\n  \"prompt\": \"[ROLE: EXPERT BUDGET & VALEUR]\\nÉvalue UNIQUEMENT le PRIX et le RAPPORT QUALITÉ/PRIX dans cet avis (cher, bon marché, rentable, excessif).\\nAvis: '{{ $('1. Webhook - Nouvel Avis').first().json.body.review }}'\\n\\nProcessus CoT:\\n1. Analyse les mentions financières, additions, portions par rapport au coût.\\n2. Attribue une note de 1 à 10 (1=trop cher/vol, 10=excellent rapport qualité-prix).\\n\\nFormat de réponse OBLIGATOIRE:\\nRAISONNEMENT_PRICE: <explication avec citation de l'avis>\\nPRICE_SCORE: <nombre entier 1-10>\",\n  \"stream\": false\n}",
+        "options": {}
+      },
+      "id": "ollama-price",
+      "name": "2C. Mistral Expert Prix 💶",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        480,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:11434/api/generate",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"mistral\",\n  \"prompt\": \"[ROLE: EXPERT CADRE & AMBIANCE]\\nÉvalue UNIQUEMENT l'AMBIANCE et le CADRE dans cet avis (décor, musique, niveau sonore, propreté).\\nAvis: '{{ $('1. Webhook - Nouvel Avis').first().json.body.review }}'\\n\\nProcessus CoT:\\n1. Analyse les mentions du décor, musique, foule, ambiance générale.\\n2. Attribue une note de 1 à 10.\\n\\nFormat de réponse OBLIGATOIRE:\\nRAISONNEMENT_AMBIANCE: <explication avec citation de l'avis>\\nAMBIANCE_SCORE: <nombre entier 1-10>\",\n  \"stream\": false\n}",
+        "options": {}
+      },
+      "id": "ollama-ambiance",
+      "name": "2D. Mistral Expert Ambiance 🏠",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        480,
+        620
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "multiplex",
+        "options": {}
+      },
+      "id": "merge-1-2",
+      "name": "Merge Food & Service",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [
+        720,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "multiplex",
+        "options": {}
+      },
+      "id": "merge-3-4",
+      "name": "Merge Price & Ambiance",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [
+        720,
+        540
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "multiplex",
+        "options": {}
+      },
+      "id": "merge-all",
+      "name": "Merge All Experts",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [
+        920,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const originalBody = $('1. Webhook - Nouvel Avis').first().json.body;\n\nfunction extractScore(text, regex, def = 7) {\n  const m = (text || '').match(new RegExp(regex, 'i'));\n  return m ? Math.max(1, Math.min(10, parseInt(m[1]))) : def;\n}\n\nlet foodResp = '', servResp = '', priceResp = '', ambResp = '';\ntry { foodResp = $('2A. Mistral Expert Food 🍔').first().json.response || ''; } catch(e){}\ntry { servResp = $('2B. Mistral Expert Service 🤝').first().json.response || ''; } catch(e){}\ntry { priceResp = $('2C. Mistral Expert Prix 💶').first().json.response || ''; } catch(e){}\ntry { ambResp = $('2D. Mistral Expert Ambiance 🏠').first().json.response || ''; } catch(e){}\n\nconst foodScore = extractScore(foodResp, 'FOOD_SCORE[:\\\\s\\\\-]+(\\\\d+)', 8);\nconst serviceScore = extractScore(servResp, 'SERVICE_SCORE[:\\\\s\\\\-]+(\\\\d+)', 7);\nconst priceScore = extractScore(priceResp, 'PRICE_SCORE[:\\\\s\\\\-]+(\\\\d+)', 6);\nconst ambianceScore = extractScore(ambResp, 'AMBIANCE_SCORE[:\\\\s\\\\-]+(\\\\d+)', 8);\n\nreturn [{\n  json: {\n    status: \"success\",\n    restaurant: originalBody.restaurant || 'Restaurant',\n    review: originalBody.review,\n    multi_criteria_scores: {\n      food: foodScore,\n      service: serviceScore,\n      price: priceScore,\n      ambiance: ambianceScore\n    },\n    rating: originalBody.rating || '5',\n    chain_of_thought_reasoning: {\n      food_thought: foodResp,\n      service_thought: servResp,\n      price_thought: priceResp,\n      ambiance_thought: ambResp\n    }\n  }\n}];"
+      },
+      "id": "code-merge-experts",
+      "name": "3. Synthèse Finale & CoT",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8000/add-review",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"restaurant\": \"{{ $json.restaurant }}\",\n  \"review\": \"{{ $json.review }}\",\n  \"food\": {{ $json.multi_criteria_scores.food }},\n  \"service\": {{ $json.multi_criteria_scores.service }},\n  \"price\": {{ $json.multi_criteria_scores.price }},\n  \"ambiance\": {{ $json.multi_criteria_scores.ambiance }},\n  \"rating\": \"{{ $json.rating }}\"\n}",
+        "options": {}
+      },
+      "id": "http-save-rag",
+      "name": "4. Indexation ChromaDB (RAG)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1340,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $('3. Synthèse Finale & CoT').first().json }}",
+        "options": {}
+      },
+      "id": "respond-final",
+      "name": "5. Réponse Finale",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1560,
+        380
+      ]
+    }
+  ],
+  "connections": {
+    "1. Webhook - Nouvel Avis": {
+      "main": [
+        [
+          {
+            "node": "2A. Mistral Expert Food 🍔",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "2B. Mistral Expert Service 🤝",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "2C. Mistral Expert Prix 💶",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "2D. Mistral Expert Ambiance 🏠",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2A. Mistral Expert Food 🍔": {
+      "main": [
+        [
+          {
+            "node": "Merge Food & Service",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2B. Mistral Expert Service 🤝": {
+      "main": [
+        [
+          {
+            "node": "Merge Food & Service",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "2C. Mistral Expert Prix 💶": {
+      "main": [
+        [
+          {
+            "node": "Merge Price & Ambiance",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2D. Mistral Expert Ambiance 🏠": {
+      "main": [
+        [
+          {
+            "node": "Merge Price & Ambiance",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge Food & Service": {
+      "main": [
+        [
+          {
+            "node": "Merge All Experts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Price & Ambiance": {
+      "main": [
+        [
+          {
+            "node": "Merge All Experts",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge All Experts": {
+      "main": [
+        [
+          {
+            "node": "3. Synthèse Finale & CoT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3. Synthèse Finale & CoT": {
+      "main": [
+        [
+          {
+            "node": "4. Indexation ChromaDB (RAG)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4. Indexation ChromaDB (RAG)": {
+      "main": [
+        [
+          {
+            "node": "5. Réponse Finale",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
