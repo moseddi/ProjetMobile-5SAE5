@@ -21,14 +21,14 @@ interface Snippet {
 }
 
 // ─── Auto-rating engine (keyword-based, scale 1 to 5) ────────────────────────
-const POS_FOOD    = ['delicious','amazing food','great food','excellent food','tasty','flavorful','savoureux','délicieux','good food','best food','fresh','tender','authentic'];
-const NEG_FOOD    = ['bad food','food was not good','food was terrible','bland','tasteless','cold food','disappointed by food','overcooked','raw','inedible','nourriture décevante','not good enough'];
-const POS_SERVICE = ['great service','excellent service','fast service','attentive','friendly staff','waiter was great','courteous','polite','very helpful','super service','bon service','staff friendly'];
-const NEG_SERVICE = ['slow service','rude','bad service','waiter was rude','ignored us','waited','long wait','poor service','unfriendly','inattentif','service trop lent','underperform'];
-const POS_PRICE   = ['affordable','good value','cheap','reasonable price','worth it','cost effective','rapport qualité','not expensive','great deal','bon rapport'];
-const NEG_PRICE   = ['expensive','overpriced','too pricey','too costly','cher','trop cher','extortionate','overcharge','not worth','bill was high','addition trop','way too much'];
-const POS_AMB     = ['great ambiance','beautiful','cozy','lovely atmosphere','nice decor','warm atmosphere','pleasant','relaxing','romantic','wonderful setting','beau cadre','belle ambiance'];
-const NEG_AMB     = ['no ambiance','bad ambiance','loud','noisy','uncomfortable','dirty','ugly decor','not comfortable','poor atmosphere','ambiance décevante','pas d\'ambiance','disappointing ambiance'];
+const POS_FOOD    = ['delicious','amazing food','great food','excellent food','tasty','flavorful','savoureux','délicieux','good food','best food','fresh','tender','authentic','food was great','food was amazing','food was delicious','nourriture excellente'];
+const NEG_FOOD    = ['bad food','food was not good','food was terrible','food was bad','bland','tasteless','cold food','disappointed by food','overcooked','raw','inedible','nourriture décevante','not good enough','plat froid','mauvaise nourriture'];
+const POS_SERVICE = ['great service','excellent service','fast service','attentive','friendly staff','waiter was great','courteous','polite','very helpful','super service','bon service','staff friendly','service was great','service was good','service impeccable'];
+const NEG_SERVICE = ['slow service','rude','bad service','service was bad','service was terrible','service was slow','waiter was rude','ignored us','waited','long wait','poor service','service was poor','unfriendly','inattentif','service trop lent','underperform','mauvais service'];
+const POS_PRICE   = ['affordable','good value','cheap','reasonable price','worth it','cost effective','rapport qualité','not expensive','great deal','bon rapport','prix correct','pas cher'];
+const NEG_PRICE   = ['expensive','overpriced','too pricey','too costly','cher','trop cher','extortionate','overcharge','not worth','bill was high','addition trop','way too much','trop couteux'];
+const POS_AMB     = ['great ambiance','beautiful','cozy','lovely atmosphere','nice decor','warm atmosphere','pleasant','relaxing','romantic','wonderful setting','beau cadre','belle ambiance','super ambiance'];
+const NEG_AMB     = ['no ambiance','bad ambiance','loud','noisy','uncomfortable','dirty','ugly decor','not comfortable','poor atmosphere','ambiance décevante','pas d\'ambiance','disappointing ambiance','ambiance bruyante'];
 
 function scoreFromKeywords(text: string, pos: string[], neg: string[]): number | null {
   const t = text.toLowerCase();
@@ -106,16 +106,16 @@ const ReviewsPage = () => {
     const lower = comment.toLowerCase();
     const avgScore = (foodRating + serviceRating + priceRating + ambianceRating) / 4;
 
-    const strongNegative = ['terrible', 'horrible', 'worst', 'awful', 'inedible', 'immangeable', 'catastrophique', 'arrogant', 'degoutant', 'poison', 'fuyez'];
-    const strongPositive = ['delicieux', 'delicious', 'amazing', 'excellent', 'parfait', 'perfect', 'exceptionnel', 'masterpiece', 'magnifique', 'best meal'];
+    const strongNegative = ['terrible', 'horrible', 'worst', 'awful', 'inedible', 'immangeable', 'catastrophique', 'arrogant', 'degoutant', 'poison', 'fuyez', 'bad', 'mauvais', 'nul', 'scam', 'arnaque', 'honteux'];
+    const strongPositive = ['delicieux', 'delicious', 'amazing', 'excellent', 'parfait', 'perfect', 'exceptionnel', 'masterpiece', 'magnifique', 'best meal', 'super', 'génial', 'genial', 'wonderful', 'top'];
 
     const hasNeg = strongNegative.some(w => lower.includes(w));
     const hasPos = strongPositive.some(w => lower.includes(w));
 
-    if (avgScore >= 4.5 && hasNeg) {
+    if (avgScore >= 4.0 && hasNeg) {
       return `⚠️ Anomalie Détectée par l'IA : Contradiction Sémantique — Note très élevée (${avgScore.toFixed(1)}/5) mais votre avis contient des critiques très négatives.`;
     }
-    if (avgScore <= 1.5 && hasPos) {
+    if (avgScore <= 2.0 && hasPos) {
       return `⚠️ Anomalie Détectée par l'IA : Contradiction Sémantique — Note très basse (${avgScore.toFixed(1)}/5) mais votre avis contient des termes élogieux.`;
     }
     return null;
