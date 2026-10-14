@@ -15,6 +15,10 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Client LLM branché sur Groq (API compatible OpenAI).
+ * Remplace Gemini pour la génération d'explications RAG.
+ */
 @Service
 public class LlmClient {
 
@@ -22,9 +26,9 @@ public class LlmClient {
     private final String apiKey;
     private final String model;
 
-    public LlmClient(@Value("${ai.api-key:}") String apiKey,
-                     @Value("${ai.model}") String model,
-                     @Value("${ai.timeout-seconds:20}") int timeoutSeconds) {
+    public LlmClient(@Value("${ai.groq-api-key:}") String apiKey,
+                     @Value("${ai.groq-model:openai/gpt-oss-120b}") String model,
+                     @Value("${ai.timeout-seconds:30}") int timeoutSeconds) {
 
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
         factory.setConnectTimeout(Duration.ofSeconds(5));
@@ -32,42 +36,47 @@ public class LlmClient {
 
         this.restClient = RestClient.builder()
                 .requestFactory(factory)
-                .baseUrl("https://generativelanguage.googleapis.com")
+                .baseUrl("https://api.groq.com/openai/v1")
                 .build();
         this.apiKey = apiKey;
         this.model = model;
     }
 
+    /**
+     * Envoie un prompt système + un contenu utilisateur à Groq.
+     * Retourne le texte brut généré.
+     */
     public String complete(String systemPrompt, String userContent) {
         if (apiKey == null || apiKey.isBlank()) {
             throw new AiException(HttpStatus.SERVICE_UNAVAILABLE,
                     "Service IA non configuré (clé API absente)");
         }
 
+        // Format OpenAI chat/completions
         Map<String, Object> body = Map.of(
-                "systemInstruction", Map.of("parts", List.of(Map.of("text", systemPrompt))),
-                "contents", List.of(Map.of(
-                        "role", "user",
-                        "parts", List.of(Map.of("text", userContent)))),
-                "generationConfig", Map.of(
-                        "maxOutputTokens", 2048,
-                        "temperature", 0.8,
-                        "responseMimeType", "application/json")
+                "model", model,
+                "messages", List.of(
+                        Map.of("role", "system", "content", systemPrompt),
+                        Map.of("role", "user", "content", userContent)
+                ),
+                "temperature", 0.7,
+                "max_tokens", 2048,
+                "response_format", Map.of("type", "json_object")
         );
 
         try {
             JsonNode response = restClient.post()
-                    .uri("/v1beta/models/{model}:generateContent", model)
-                    .header("x-goog-api-key", apiKey)
+                    .uri("/chat/completions")
+                    .header("Authorization", "Bearer " + apiKey)
                     .contentType(MediaType.APPLICATION_JSON)
                     .body(body)
                     .retrieve()
                     .body(JsonNode.class);
 
             String text = response == null ? "" :
-                    response.path("candidates").path(0)
-                            .path("content").path("parts").path(0)
-                            .path("text").asText("");
+                    response.path("choices").path(0)
+                            .path("message").path("content")
+                            .asText("");
 
             if (text.isBlank()) {
                 throw new AiException(HttpStatus.BAD_GATEWAY, "Réponse vide du service IA");
