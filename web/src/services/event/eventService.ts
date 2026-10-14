@@ -1,5 +1,6 @@
 import { apiClient } from '../api/apiClient';
-import type { Event, GenerateDescriptionRequest, GeneratedDescription } from '../../types';
+import type { Event, GenerateDescriptionRequest, GeneratedDescription, RagResponse } from '../../types';
+
 
 export interface RestaurantOption {
   id: string;
@@ -23,4 +24,8 @@ export const eventService = {
   // Le timeout de 30 s est déjà défini globalement dans apiClient
   generateDescription: (data: GenerateDescriptionRequest): Promise<GeneratedDescription> =>
     apiClient.post<GeneratedDescription>('/events/generate-description', data),
+
+
+  ragRecommend: (query: string, userId?: string): Promise<RagResponse> =>
+  apiClient.post<RagResponse>('/rag/recommend', { query, userId, limit: 4 }),
 };

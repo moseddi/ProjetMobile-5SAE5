@@ -142,3 +142,27 @@ export interface GeneratedDescription {
   hashtags: string[];
   appel_action: string;
 }
+
+export interface ReviewSnippet {
+  label: string;
+  rating: number;
+  text: string;
+  similarityPercent: number;
+}
+
+export interface RagItem {
+  event: Event;
+  restaurantName: string;
+  avgRating: number;
+  relevancePercent: number;
+  explanation: string;
+  sources: ReviewSnippet[];
+}
+
+export interface RagResponse {
+  queryUsed: string;
+  mode: 'QUERY' | 'PROFILE' | 'DEFAULT' | 'NONE';
+  generated: boolean;
+  items: RagItem[];
+  message?: string | null;
+}

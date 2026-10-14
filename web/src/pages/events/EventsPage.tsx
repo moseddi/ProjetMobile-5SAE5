@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import EventAIForm from '../../components/EventAIForm';
 import { eventService } from '../../services/event/eventService';
 import type { Event as AppEvent } from '../../types';
+import ReviewRagSearch from '../../components/ReviewRagSearch';
 
 const DEFAULT_IMAGE =
   'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80';
@@ -36,10 +37,10 @@ const EventsPage = () => {
       );
       setEvents(sorted);
     } catch {
-  setError('Impossible de charger les événements. Vérifiez que le backend est démarré.');
-} finally {
-  setLoading(false);
-}
+      setError('Impossible de charger les événements. Vérifiez que le backend est démarré.');
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   useEffect(() => {
@@ -86,6 +87,15 @@ const EventsPage = () => {
               }}
             />
           )}
+        </div>
+      </section>
+
+      {/* ============================================================
+          Recommendation from customer reviews (RAG)
+          ============================================================ */}
+      <section className="events-section">
+        <div className="container-wide">
+          <ReviewRagSearch />
         </div>
       </section>
 
