@@ -100,6 +100,29 @@ const ReviewsPage = () => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const suggestionsRef = useRef<HTMLDivElement>(null);
 
+  // ── AI Anomaly Detection (Verification du module) ───────────────────────────
+  const detectAnomaly = () => {
+    if (!comment || comment.trim().length < 8) return null;
+    const lower = comment.toLowerCase();
+    const avgScore = (foodRating + serviceRating + priceRating + ambianceRating) / 4;
+
+    const strongNegative = ['terrible', 'horrible', 'worst', 'awful', 'inedible', 'immangeable', 'catastrophique', 'arrogant', 'degoutant', 'poison', 'fuyez'];
+    const strongPositive = ['delicieux', 'delicious', 'amazing', 'excellent', 'parfait', 'perfect', 'exceptionnel', 'masterpiece', 'magnifique', 'best meal'];
+
+    const hasNeg = strongNegative.some(w => lower.includes(w));
+    const hasPos = strongPositive.some(w => lower.includes(w));
+
+    if (avgScore >= 4.5 && hasNeg) {
+      return `⚠️ Anomalie Détectée par l'IA : Contradiction Sémantique — Note très élevée (${avgScore.toFixed(1)}/5) mais votre avis contient des critiques très négatives.`;
+    }
+    if (avgScore <= 1.5 && hasPos) {
+      return `⚠️ Anomalie Détectée par l'IA : Contradiction Sémantique — Note très basse (${avgScore.toFixed(1)}/5) mais votre avis contient des termes élogieux.`;
+    }
+    return null;
+  };
+
+  const anomalyWarning = detectAnomaly();
+
   useEffect(() => { loadData(); }, []);
   useEffect(() => { filterReviews(); }, [reviews, selectedRating]);
 
@@ -403,6 +426,25 @@ const ReviewsPage = () => {
                   </div>
                 )}
               </div>
+
+              {/* Anomaly Detection Alert */}
+              {anomalyWarning && (
+                <div style={{
+                  marginTop: '10px',
+                  padding: '12px 16px',
+                  borderRadius: 'var(--radius-sm)',
+                  background: '#fef2f2',
+                  border: '1.5px solid #fecaca',
+                  color: '#991b1b',
+                  fontSize: '0.875rem',
+                  fontWeight: 500,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px'
+                }}>
+                  <span>{anomalyWarning}</span>
+                </div>
+              )}
             </div>
 
             <button
