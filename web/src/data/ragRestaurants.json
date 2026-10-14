@@ -1,0 +1,1598 @@
+{
+  "restaurants": [
+    {
+      "restaurant": "10 Downing Street",
+      "food": 9,
+      "service": 8,
+      "price": 7,
+      "ambiance": 8,
+      "rating": "3.8"
+    },
+    {
+      "restaurant": "13 Dhaba",
+      "food": 9,
+      "service": 6,
+      "price": 10,
+      "ambiance": 7,
+      "rating": "3.5"
+    },
+    {
+      "restaurant": "3B's - Buddies, Bar & Barbecue",
+      "food": 10,
+      "service": 10,
+      "price": 8,
+      "ambiance": 9,
+      "rating": "4.8"
+    },
+    {
+      "restaurant": "AB's - Absolute Barbecues",
+      "food": 10,
+      "service": 10,
+      "price": 10,
+      "ambiance": 8,
+      "rating": "4.9"
+    },
+    {
+      "restaurant": "Absolute Sizzlers",
+      "food": 9,
+      "service": 8,
+      "price": 8,
+      "ambiance": 8,
+      "rating": "3.6"
+    },
+    {
+      "restaurant": "Al Saba Restaurant",
+      "food": 9,
+      "service": 7,
+      "price": 9,
+      "ambiance": 8,
+      "rating": "3.2"
+    },
+    {
+      "restaurant": "American Wild Wings",
+      "food": 9,
+      "service": 9,
+      "price": 10,
+      "ambiance": 9,
+      "rating": "4.0"
+    },
+    {
+      "restaurant": "Amul",
+      "food": 9,
+      "service": 9,
+      "price": 8,
+      "ambiance": 7,
+      "rating": "3.9"
+    },
+    {
+      "restaurant": "Arena Eleven",
+      "food": 9,
+      "service": 9,
+      "price": 9,
+      "ambiance": 9,
+      "rating": "4.1"
+    },
+    {
+      "restaurant": "Aromas@11SIX",
+      "food": 9,
+      "service": 9,
+      "price": 8,
+      "ambiance": 8,
+      "rating": "3.5"
+    },
+    {
+      "restaurant": "Asian Meal Box",
+      "food": 8,
+      "service": 4,
+      "price": 10,
+      "ambiance": 4,
+      "rating": "2.6"
+    },
+    {
+      "restaurant": "B-Dubs",
+      "food": 10,
+      "service": 10,
+      "price": 7,
+      "ambiance": 9,
+      "rating": "4.8"
+    },
+    {
+      "restaurant": "Banana Leaf Multicuisine Restaurant",
+      "food": 10,
+      "service": 10,
+      "price": 9,
+      "ambiance": 9,
+      "rating": "3.7"
+    },
+    {
+      "restaurant": "Barbeque Nation",
+      "food": 9,
+      "service": 10,
+      "price": 8,
+      "ambiance": 7,
+      "rating": "4.1"
+    },
+    {
+      "restaurant": "Behrouz Biryani",
+      "food": 10,
+      "service": 4,
+      "price": 10,
+      "ambiance": 10,
+      "rating": "2.8"
+    },
+    {
+      "restaurant": "Being Hungry",
+      "food": 9,
+      "service": 10,
+      "price": 10,
+      "ambiance": 7,
+      "rating": "3.7"
+    },
+    {
+      "restaurant": "Beyond Flavours",
+      "food": 9,
+      "service": 9,
+      "price": 7,
+      "ambiance": 10,
+      "rating": "4.3"
+    },
+    {
+      "restaurant": "Biryanis And More",
+      "food": 10,
+      "service": 8,
+      "price": 8,
+      "ambiance": 6,
+      "rating": "3.7"
+    },
+    {
+      "restaurant": "Cafe Eclat",
+      "food": 9,
+      "service": 9,
+      "price": 5,
+      "ambiance": 9,
+      "rating": "3.6"
+    },
+    {
+      "restaurant": "Cascade - Radisson Hyderabad Hitec City",
+      "food": 9,
+      "service": 10,
+      "price": 7,
+      "ambiance": 9,
+      "rating": "4.3"
+    },
+    {
+      "restaurant": "Chinese Pavilion",
+      "food": 10,
+      "service": 10,
+      "price": 6,
+      "ambiance": 9,
+      "rating": "3.7"
+    },
+    {
+      "restaurant": "Club Rogue",
+      "food": 8,
+      "service": 6,
+      "price": 10,
+      "ambiance": 8,
+      "rating": "2.9"
+    },
+    {
+      "restaurant": "Collage - Hyatt Hyderabad Gachibowli",
+      "food": 8,
+      "service": 9,
+      "price": 5,
+      "ambiance": 10,
+      "rating": "3.4"
+    },
+    {
+      "restaurant": "Cream Stone",
+      "food": 10,
+      "service": 9,
+      "price": 7,
+      "ambiance": 6,
+      "rating": "3.8"
+    },
+    {
+      "restaurant": "Delhi-39",
+      "food": 8,
+      "service": 6,
+      "price": 10,
+      "ambiance": 10,
+      "rating": "3.0"
+    },
+    {
+      "restaurant": "Deli 9 Bistro",
+      "food": 9,
+      "service": 9,
+      "price": 6,
+      "ambiance": 10,
+      "rating": "3.8"
+    },
+    {
+      "restaurant": "Desi Bytes",
+      "food": 9,
+      "service": 7,
+      "price": 7,
+      "ambiance": 9,
+      "rating": "2.9"
+    },
+    {
+      "restaurant": "Dine O China",
+      "food": 9,
+      "service": 10,
+      "price": 6,
+      "ambiance": 8,
+      "rating": "3.4"
+    },
+    {
+      "restaurant": "Diners Pavilion",
+      "food": 9,
+      "service": 9,
+      "price": 7,
+      "ambiance": 9,
+      "rating": "3.3"
+    },
+    {
+      "restaurant": "Domino's Pizza",
+      "food": 5,
+      "service": 7,
+      "price": 7,
+      "ambiance": 10,
+      "rating": "3.1"
+    },
+    {
+      "restaurant": "Driven Cafe",
+      "food": 7,
+      "service": 8,
+      "price": 6,
+      "ambiance": 10,
+      "rating": "3.7"
+    },
+    {
+      "restaurant": "Dunkin' Donuts",
+      "food": 8,
+      "service": 8,
+      "price": 7,
+      "ambiance": 8,
+      "rating": "3.1"
+    },
+    {
+      "restaurant": "Eat India Company",
+      "food": 8,
+      "service": 7,
+      "price": 6,
+      "ambiance": 9,
+      "rating": "3.3"
+    },
+    {
+      "restaurant": "Faasos",
+      "food": 9,
+      "service": 7,
+      "price": 5,
+      "ambiance": 7,
+      "rating": "3.0"
+    },
+    {
+      "restaurant": "Feast - Sheraton Hyderabad Hotel",
+      "food": 9,
+      "service": 10,
+      "price": 5,
+      "ambiance": 9,
+      "rating": "4.2"
+    },
+    {
+      "restaurant": "Flechazo",
+      "food": 9,
+      "service": 10,
+      "price": 7,
+      "ambiance": 10,
+      "rating": "4.7"
+    },
+    {
+      "restaurant": "Frio Bistro",
+      "food": 9,
+      "service": 9,
+      "price": 6,
+      "ambiance": 8,
+      "rating": "3.6"
+    },
+    {
+      "restaurant": "GD's",
+      "food": 9,
+      "service": 10,
+      "price": 7,
+      "ambiance": 10,
+      "rating": "4.0"
+    },
+    {
+      "restaurant": "Gal Punjab Di",
+      "food": 9,
+      "service": 9,
+      "price": 8,
+      "ambiance": 8,
+      "rating": "3.6"
+    },
+    {
+      "restaurant": "Green Bawarchi Restaurant",
+      "food": 9,
+      "service": 7,
+      "price": 10,
+      "ambiance": 8,
+      "rating": "3.5"
+    },
+    {
+      "restaurant": "Hitech Bawarchi Food Zone",
+      "food": 9,
+      "service": 9,
+      "price": 10,
+      "ambiance": 7,
+      "rating": "3.0"
+    },
+    {
+      "restaurant": "Hotel Zara Hi-Fi",
+      "food": 8,
+      "service": 7,
+      "price": 9,
+      "ambiance": 10,
+      "rating": "2.4"
+    },
+    {
+      "restaurant": "Hunger Maggi Point",
+      "food": 9,
+      "service": 7,
+      "price": 8,
+      "ambiance": 4,
+      "rating": "3.1"
+    },
+    {
+      "restaurant": "Hyderabad Chefs",
+      "food": 10,
+      "service": 8,
+      "price": 7,
+      "ambiance": 4,
+      "rating": "3.8"
+    },
+    {
+      "restaurant": "Hyderabadi Daawat",
+      "food": 9,
+      "service": 9,
+      "price": 6,
+      "ambiance": 10,
+      "rating": "3.8"
+    },
+    {
+      "restaurant": "Hyper Local",
+      "food": 9,
+      "service": 10,
+      "price": 6,
+      "ambiance": 9,
+      "rating": "3.6"
+    },
+    {
+      "restaurant": "Jonathan's Kitchen - Holiday Inn Express & Suites",
+      "food": 8,
+      "service": 8,
+      "price": 6,
+      "ambiance": 9,
+      "rating": "3.5"
+    },
+    {
+      "restaurant": "KFC",
+      "food": 9,
+      "service": 5,
+      "price": 10,
+      "ambiance": 8,
+      "rating": "2.9"
+    },
+    {
+      "restaurant": "KS Bakers",
+      "food": 10,
+      "service": 8,
+      "price": 10,
+      "ambiance": 6,
+      "rating": "4.0"
+    },
+    {
+      "restaurant": "Karachi Bakery",
+      "food": 8,
+      "service": 10,
+      "price": 10,
+      "ambiance": 4,
+      "rating": "3.8"
+    },
+    {
+      "restaurant": "Karachi Cafe",
+      "food": 9,
+      "service": 8,
+      "price": 8,
+      "ambiance": 9,
+      "rating": "3.7"
+    },
+    {
+      "restaurant": "Khaan Saab",
+      "food": 9,
+      "service": 10,
+      "price": 7,
+      "ambiance": 9,
+      "rating": "3.8"
+    },
+    {
+      "restaurant": "Komatose - Holiday Inn Express & Suites",
+      "food": 9,
+      "service": 7,
+      "price": 9,
+      "ambiance": 9,
+      "rating": "3.7"
+    },
+    {
+      "restaurant": "Kritunga Restaurant",
+      "food": 10,
+      "service": 7,
+      "price": 9,
+      "ambiance": 7,
+      "rating": "3.5"
+    },
+    {
+      "restaurant": "La La Land - Bar & Kitchen",
+      "food": 9,
+      "service": 7,
+      "price": 9,
+      "ambiance": 8,
+      "rating": "3.2"
+    },
+    {
+      "restaurant": "Labonel",
+      "food": 9,
+      "service": 7,
+      "price": 6,
+      "ambiance": 9,
+      "rating": "3.9"
+    },
+    {
+      "restaurant": "Marsala Food Company",
+      "food": 9,
+      "service": 9,
+      "price": 7,
+      "ambiance": 9,
+      "rating": "3.5"
+    },
+    {
+      "restaurant": "Mathura Vilas",
+      "food": 8,
+      "service": 8,
+      "price": 5,
+      "ambiance": 7,
+      "rating": "2.8"
+    },
+    {
+      "restaurant": "Mazzo - Marriott Executive Apartments",
+      "food": 9,
+      "service": 9,
+      "price": 6,
+      "ambiance": 10,
+      "rating": "4.2"
+    },
+    {
+      "restaurant": "Mohammedia Shawarma",
+      "food": 7,
+      "service": 8,
+      "price": 10,
+      "ambiance": 4,
+      "rating": "3.0"
+    },
+    {
+      "restaurant": "Momos Delight",
+      "food": 9,
+      "service": 8,
+      "price": 9,
+      "ambiance": 10,
+      "rating": "3.7"
+    },
+    {
+      "restaurant": "Mustang Terrace Lounge",
+      "food": 8,
+      "service": 8,
+      "price": 8,
+      "ambiance": 9,
+      "rating": "3.3"
+    },
+    {
+      "restaurant": "NorFest - The Dhaba",
+      "food": 10,
+      "service": 10,
+      "price": 8,
+      "ambiance": 7,
+      "rating": "4.0"
+    },
+    {
+      "restaurant": "Olive Garden",
+      "food": 10,
+      "service": 9,
+      "price": 9,
+      "ambiance": 8,
+      "rating": "3.8"
+    },
+    {
+      "restaurant": "Over The Moon Brew Company",
+      "food": 9,
+      "service": 9,
+      "price": 6,
+      "ambiance": 9,
+      "rating": "4.3"
+    },
+    {
+      "restaurant": "Owm Nom Nom",
+      "food": 9,
+      "service": 6,
+      "price": 8,
+      "ambiance": 10,
+      "rating": "3.3"
+    },
+    {
+      "restaurant": "Pakwaan Grand",
+      "food": 9,
+      "service": 8,
+      "price": 10,
+      "ambiance": 10,
+      "rating": "2.7"
+    },
+    {
+      "restaurant": "Paradise",
+      "food": 10,
+      "service": 10,
+      "price": 10,
+      "ambiance": 10,
+      "rating": "4.7"
+    },
+    {
+      "restaurant": "Pista House",
+      "food": 10,
+      "service": 8,
+      "price": 10,
+      "ambiance": 7,
+      "rating": "3.2"
+    },
+    {
+      "restaurant": "Pot Pourri",
+      "food": 9,
+      "service": 9,
+      "price": 9,
+      "ambiance": 8,
+      "rating": "3.3"
+    },
+    {
+      "restaurant": "PourHouse7",
+      "food": 9,
+      "service": 9,
+      "price": 7,
+      "ambiance": 9,
+      "rating": "3.9"
+    },
+    {
+      "restaurant": "Prism Club & Kitchen",
+      "food": 9,
+      "service": 9,
+      "price": 6,
+      "ambiance": 9,
+      "rating": "4.2"
+    },
+    {
+      "restaurant": "Royal Spicy Restaurant",
+      "food": 10,
+      "service": 9,
+      "price": 10,
+      "ambiance": 7,
+      "rating": "3.7"
+    },
+    {
+      "restaurant": "SKYHY",
+      "food": 9,
+      "service": 9,
+      "price": 6,
+      "ambiance": 9,
+      "rating": "3.4"
+    },
+    {
+      "restaurant": "Sardarji's Chaats & More",
+      "food": 9,
+      "service": 7,
+      "price": 9,
+      "ambiance": 4,
+      "rating": "3.2"
+    },
+    {
+      "restaurant": "Shah Ghouse Hotel & Restaurant",
+      "food": 10,
+      "service": 7,
+      "price": 10,
+      "ambiance": 5,
+      "rating": "3.2"
+    },
+    {
+      "restaurant": "Shah Ghouse Spl Shawarma",
+      "food": 9,
+      "service": 10,
+      "price": 9,
+      "ambiance": 7,
+      "rating": "3.4"
+    },
+    {
+      "restaurant": "Shanghai Chef 2",
+      "food": 9,
+      "service": 9,
+      "price": 8,
+      "ambiance": 8,
+      "rating": "3.1"
+    },
+    {
+      "restaurant": "Shree Santosh Dhaba Family Restaurant",
+      "food": 8,
+      "service": 7,
+      "price": 10,
+      "ambiance": 7,
+      "rating": "2.8"
+    },
+    {
+      "restaurant": "Squeeze @ The Lime",
+      "food": 9,
+      "service": 9,
+      "price": 10,
+      "ambiance": 9,
+      "rating": "3.8"
+    },
+    {
+      "restaurant": "T Grill",
+      "food": 9,
+      "service": 7,
+      "price": 6,
+      "ambiance": 8,
+      "rating": "3.2"
+    },
+    {
+      "restaurant": "Tandoori Food Works",
+      "food": 9,
+      "service": 8,
+      "price": 10,
+      "ambiance": 8,
+      "rating": "3.3"
+    },
+    {
+      "restaurant": "Tempteys",
+      "food": 10,
+      "service": 10,
+      "price": 8,
+      "ambiance": 10,
+      "rating": "3.9"
+    },
+    {
+      "restaurant": "The Chocolate Room",
+      "food": 7,
+      "service": 7,
+      "price": 6,
+      "ambiance": 8,
+      "rating": "2.8"
+    },
+    {
+      "restaurant": "The Fisherman's Wharf",
+      "food": 10,
+      "service": 9,
+      "price": 6,
+      "ambiance": 10,
+      "rating": "4.2"
+    },
+    {
+      "restaurant": "The Foodie Monster Kitchen",
+      "food": 8,
+      "service": 9,
+      "price": 10,
+      "ambiance": 9,
+      "rating": "3.6"
+    },
+    {
+      "restaurant": "The Glass Onion",
+      "food": 10,
+      "service": 9,
+      "price": 6,
+      "ambiance": 9,
+      "rating": "3.8"
+    },
+    {
+      "restaurant": "The Indi Grill",
+      "food": 10,
+      "service": 10,
+      "price": 9,
+      "ambiance": 8,
+      "rating": "4.6"
+    },
+    {
+      "restaurant": "The Lal Street - Bar Exchange",
+      "food": 9,
+      "service": 8,
+      "price": 8,
+      "ambiance": 8,
+      "rating": "3.5"
+    },
+    {
+      "restaurant": "The Old Madras Baking Company",
+      "food": 9,
+      "service": 9,
+      "price": 7,
+      "ambiance": 7,
+      "rating": "3.6"
+    },
+    {
+      "restaurant": "The Tilt Bar Republic",
+      "food": 9,
+      "service": 9,
+      "price": 7,
+      "ambiance": 9,
+      "rating": "3.8"
+    },
+    {
+      "restaurant": "Tiki Shack",
+      "food": 9,
+      "service": 8,
+      "price": 8,
+      "ambiance": 9,
+      "rating": "3.5"
+    },
+    {
+      "restaurant": "Triptify",
+      "food": 9,
+      "service": 10,
+      "price": 10,
+      "ambiance": 10,
+      "rating": "3.5"
+    },
+    {
+      "restaurant": "Udipi's Upahar",
+      "food": 10,
+      "service": 8,
+      "price": 10,
+      "ambiance": 6,
+      "rating": "4.0"
+    },
+    {
+      "restaurant": "Ulavacharu",
+      "food": 10,
+      "service": 7,
+      "price": 5,
+      "ambiance": 7,
+      "rating": "3.2"
+    },
+    {
+      "restaurant": "Urban Asia - Kitchen & Bar",
+      "food": 9,
+      "service": 9,
+      "price": 5,
+      "ambiance": 8,
+      "rating": "3.6"
+    },
+    {
+      "restaurant": "Yum Yum Tree - The Arabian Food Court",
+      "food": 9,
+      "service": 9,
+      "price": 9,
+      "ambiance": 9,
+      "rating": "3.6"
+    },
+    {
+      "restaurant": "Zega - Sheraton Hyderabad Hotel",
+      "food": 9,
+      "service": 10,
+      "price": 7,
+      "ambiance": 10,
+      "rating": "4.5"
+    },
+    {
+      "restaurant": "Zing's Northeast Kitchen",
+      "food": 9,
+      "service": 8,
+      "price": 8,
+      "ambiance": 9,
+      "rating": "3.6"
+    },
+    {
+      "restaurant": "eat.fit",
+      "food": 9,
+      "service": 7,
+      "price": 5,
+      "ambiance": 7,
+      "rating": "3.2"
+    }
+  ],
+  "snippets": [
+    {
+      "restaurant": "10 Downing Street",
+      "text": "I've been to this place about two times and i really liked the ambience, interior will give you feels of london streets. talking about food, only good thing was lasagna other than that we ordered veg "
+    },
+    {
+      "restaurant": "10 Downing Street",
+      "text": "I have visited this pub last weekend with group of friends, we had brewed beers, veg & non-veg starters. Food tastes good, prices are reasonable, ambience is decent, service is good even though it’s o"
+    },
+    {
+      "restaurant": "13 Dhaba",
+      "text": "I didn't go and eat at the Dhaba. I had ordered from here. The taste was amazing and te only issue was packaging of the order. A must have is Alu Parantha and lassi."
+    },
+    {
+      "restaurant": "13 Dhaba",
+      "text": "Nothing much to say but got authentic north indian food taste in south India. Chole bhature were mouth watering. Lassi was thick & fresh. The ambience gives a glimpse of an North Indian roadside dhaba"
+    },
+    {
+      "restaurant": "3B's - Buddies, Bar & Barbecue",
+      "text": "We go their for a team dinner.The name of the guys govind who served us very well.He is very polite and humble.He is the reall server as professional."
+    },
+    {
+      "restaurant": "3B's - Buddies, Bar & Barbecue",
+      "text": "Good service by Govind and feeling happy for the food and the management. Food was awesome and expect others to come and feel the comforts one thing to add about the cleaness and everything."
+    },
+    {
+      "restaurant": "AB's - Absolute Barbecues",
+      "text": "It was excellent experience spiced thank Krishna and monaj excellent food and service I am full happy enjoy the food and service thanks and team"
+    },
+    {
+      "restaurant": "AB's - Absolute Barbecues",
+      "text": "Excellent, it was a great experience that i had there. Krishna has taken care of us. And the chef pankaj has served all the special dishes to us. Will go again soon🤤🤤🤤"
+    },
+    {
+      "restaurant": "Absolute Sizzlers",
+      "text": "Service was pathetic. Ordered a sizzler with lamb, was told no lamb. Ordered another sizzle with Noodles. It took 15 mins to serve that one. Also, served it with rice instead and when I asked to chang"
+    },
+    {
+      "restaurant": "Absolute Sizzlers",
+      "text": "I ordered a chicken American chopsey, and they gave me this. There was no noodles in it nor soup. The dish was more of a chicken salad. Wrong order delivered."
+    },
+    {
+      "restaurant": "Al Saba Restaurant",
+      "text": "Visited this place at night. Had chicken Biryani, Fish Biryani, tandoori chicken as starter. Food taste wise was good. we choose In door A/C seating. Need to work on cleanliness which is lacking in th"
+    },
+    {
+      "restaurant": "Al Saba Restaurant",
+      "text": "Yet another Sunday evening.. It was quite late when I reached this place.. But it was not the time to shut down the restaurant as well.. It was shocking to see no one in the restaurant though..  Ambie"
+    },
+    {
+      "restaurant": "American Wild Wings",
+      "text": "found them on Zomato website, a very interesting to say that this restaurant carved a niche in serving juicy  chicken wings with wide spread of 10 to 12 sauces especially Texas BBQ, Spicy garlic too y"
+    },
+    {
+      "restaurant": "American Wild Wings",
+      "text": "Out of hunger and trust on the restaurant I ordered a chicken burger from American wild wings, Gachibowli hoping it would be tasty and healthy but the kind of service i recieved was really pathetic. A"
+    },
+    {
+      "restaurant": "Amul",
+      "text": "The place I prefer most for good taste and enjoyment.. More levels of ice cream so, shakes and many more.... I like the Chacolte flavour the most..."
+    },
+    {
+      "restaurant": "Amul",
+      "text": "We had ordered from Amul and we will order again. We were looking for a late night binge and found Amul on Zomato. We ordered some Choco Chips (5/5) and Alphonso Mango (5/5) ice cream and loved them. "
+    },
+    {
+      "restaurant": "Arena Eleven",
+      "text": "Located in midst of SLN terminus this place is a sports bar where you can enjoy a chilled beer along with a good match screening . The service is a bit slow also the food is mediocre. The ambience is "
+    },
+    {
+      "restaurant": "Arena Eleven",
+      "text": "I HV been here yesterday for lunch, the hospitality here was good. I ordered chicken tikka, salt & pepper prawns which was Lovely, njoyed with beer. Will come next time again 👍"
+    },
+    {
+      "restaurant": "Aromas@11SIX",
+      "text": "This place is located in khajaguda. It used to be one of my favorite places because of the taste, quantity and pricing. I used to visit this place every weekend or in fact twice a week.  Food is no do"
+    },
+    {
+      "restaurant": "Aromas@11SIX",
+      "text": "This review was long due. Located on the Khajaguda Road this restaurant claims to be part of the Gachibowli cluster and when I asked the owner he said he was just on the edge of Gachibowli and, theref"
+    },
+    {
+      "restaurant": "Asian Meal Box",
+      "text": "Meal box are value for money. The tossed noodles are soft and much healthier than fried and chicken quality is also good. The only con is that chicken is not spicy even after selecting the spicy optio"
+    },
+    {
+      "restaurant": "Asian Meal Box",
+      "text": "Taste was good, though I ordered large the quantity was too little. Chicken quantity was very less.  I ordered extra egg which is no where found."
+    },
+    {
+      "restaurant": "B-Dubs",
+      "text": "The best place to be if you want to see some sport screening. What I really liked about the place is they have round about 42 screens and no matter where you sit you will have 5-6 screens which will b"
+    },
+    {
+      "restaurant": "B-Dubs",
+      "text": "This was the best time what I have spent in Hyderabad.....A man called sunny ....remember the name \"sunny\".....Go there and ask for \"sunny\" ..if u get him , u will have the best day. !"
+    },
+    {
+      "restaurant": "Banana Leaf Multicuisine Restaurant",
+      "text": "I really had the best food experience in recent times. If you are not really particular about ambience and crazy foodie. Then this restaurant is a must visit. Starters outstanding.. biryani delicious."
+    },
+    {
+      "restaurant": "Banana Leaf Multicuisine Restaurant",
+      "text": "There is lot of discrimination between zomato gold customers and regular customers.  They give lot less quantity for zomato gold customers and also desriminated behaviour."
+    },
+    {
+      "restaurant": "Barbeque Nation",
+      "text": "#Foodengineeringg #RamadanSpecial #Reviewmode  Bbbq nation has come up with all new DAWAT -E - RAMADAN Where they've bought in few of the best Street foods of Ramadan which really makes one visit and "
+    },
+    {
+      "restaurant": "Barbeque Nation",
+      "text": "This is one of my favourite restaurant with grill concept. Ambience was really fascinating ,food quality was too good , my favourite recipe is grill pineapple it is delicious."
+    },
+    {
+      "restaurant": "Behrouz Biryani",
+      "text": "First the price is too high and the quantity I'm getting is lower than the expectation . You can see the cup it's so small like its just gave me for only to taste it. And about the taste it's good. I "
+    },
+    {
+      "restaurant": "Behrouz Biryani",
+      "text": "I ordered the biryani with great expectations. The packaging, and the presentation is extremely nice, and the aroma was great. The biryani thigh, was frozen in the middle! It's a prepackaged frozen fo"
+    },
+    {
+      "restaurant": "Being Hungry",
+      "text": "I ordered paratha and kulchas from here yesterday night and out of 3 ..2 were burnt . Taste was horrible . And when we complained in zomato chat they gave 27 credit points .. as if that makes up for e"
+    },
+    {
+      "restaurant": "Being Hungry",
+      "text": "Kaju Biriyani is AWESOME one must try this for sure. I love this most in this restaurant.Apart from this other items are also good. I strongly recommend this restaurant near Gachibowli"
+    },
+    {
+      "restaurant": "Beyond Flavours",
+      "text": "The ambience was good, food was quite good . had Saturday lunch , which was cost effective . Good place for a sate brunch. One can also chill with friends and or parents. Waiter Soumen Das was really "
+    },
+    {
+      "restaurant": "Beyond Flavours",
+      "text": "Ambience is too good for a pleasant evening. Service is very prompt. Food is good. Over all a good experience. Soumen Das - kudos to the service"
+    },
+    {
+      "restaurant": "Biryanis And More",
+      "text": "Best place to have biryani in and around Gachibowli.Definitely recommendable. Almost fully crowded on weekends and weekdays both because of the quality and quantity."
+    },
+    {
+      "restaurant": "Biryanis And More",
+      "text": "Tried Bheemavaram mixed pulao and Green mirchi chicken pulao. Taste was ok,not that great. Service could have been way better. Bheemavaram pulao was good in meat to rice ration and tasted good.  Servi"
+    },
+    {
+      "restaurant": "Cafe Eclat",
+      "text": "This place is a hiddengem!  Went to buy their sourdough bread.ended up having their mushroom soup, death by chocolate cake and key lime tart.  Mushroom soup came with grilled sourdough, everything was"
+    },
+    {
+      "restaurant": "Cafe Eclat",
+      "text": "Great selection of freshly made breads. Macaroons were well made. Breakfast here is a welcome change and worth the experience. Found all the items that I had were really good and fresh.Staff are very "
+    },
+    {
+      "restaurant": "Cascade - Radisson Hyderabad Hitec City",
+      "text": "This is a nice place for family as well as official lunch and dinner.The staffs are very courteous and the manager takes personal care for all the guests which adds to the dining experience.Food is gr"
+    },
+    {
+      "restaurant": "Cascade - Radisson Hyderabad Hitec City",
+      "text": "We are staying in radisson and haveing fud daily past 20days it's awesome all staff are cooperative just want to thank chief Manoj and chief tanuirma so helping out and giving us tasty food daily and "
+    },
+    {
+      "restaurant": "Chinese Pavilion",
+      "text": "Starting off with food...They have amazing and delicious Chinese food for starters as well as main course. Service is good and the people are polite. Quality and quantity both were up to the mark. A m"
+    },
+    {
+      "restaurant": "Chinese Pavilion",
+      "text": "I had ordered Manchow Soup. The taste was very nice. It felt like a great start . Crispy noodles in it added a great texture and taste to the Soup, chicken was cooked well, overall a very good subtle "
+    },
+    {
+      "restaurant": "Club Rogue",
+      "text": "Visited this place on a weekday afternoon, and it was mostly empty. But by the decor it felt that the place will look lively in the evenings, so will give it a shot sometime. Happy hours was on, so we"
+    },
+    {
+      "restaurant": "Club Rogue",
+      "text": "Now that's a banger of a place.. just out of the world experience . Folks are going Mad.😎!  Music is just awesome and all people do here is hit the floor.  Ambience is cool and food good.  But it's th"
+    },
+    {
+      "restaurant": "Collage - Hyatt Hyderabad Gachibowli",
+      "text": "Good ambiance with wide range food options , people having different taste of food can enjoy the place and good for team dinners Happy dinning"
+    },
+    {
+      "restaurant": "Collage - Hyatt Hyderabad Gachibowli",
+      "text": "We were there to celebrate our anniversary. There was a set menu, Welcome Drink(very refreshing) tomato Shorba(passable),crispy paneer, chicken tikka (both were very yummy) , butter chicken, paneer bu"
+    },
+    {
+      "restaurant": "Cream Stone",
+      "text": "Undoubtedly the best place to have ice creams nowadays is Cream stone. Near to DLF and many hostels. Polite staff and friendly. Always crowded 😄"
+    },
+    {
+      "restaurant": "Cream Stone",
+      "text": "Always love to swiggy this food. Nutella brownie and ferrero rocher is amazing. Well packaged and well sent. No issues till date except i gain weight. A bit fan."
+    },
+    {
+      "restaurant": "Delhi-39",
+      "text": "Went for lunch. Ordered Mix. Veg curry, Roti, Plain Naan & Biryani. Food taste was good but curries are more oily. Price is average. Service is good."
+    },
+    {
+      "restaurant": "Delhi-39",
+      "text": "The ambience is sort of ok.  The food is good. We ordered paneer tikka, mushroom masala, tandoori rotiya, veg raita, jeera rice, butter paneer masala. Food turned out to be good. And if any issue with"
+    },
+    {
+      "restaurant": "Deli 9 Bistro",
+      "text": "One of the worthy places to visit. Loved the food#Deli9. Delicacies chocolate nougat pastry#Pasta#Indian cuisine. A bit overpriced with respect to quantity but not compromised with quality and hygiene"
+    },
+    {
+      "restaurant": "Deli 9 Bistro",
+      "text": "Nice place, good food for a quick evening bites . A tad bit pricey as per the place but overall good experience. The lamb burger is a must try and the pastries are too good to miss !!"
+    },
+    {
+      "restaurant": "Desi Bytes",
+      "text": "after reading reviews, i was having high expectations from this place, so i ordered litthi choka. if you are a big big fan of soyabean then only you'll be able to eat food otherwise they put lot of so"
+    },
+    {
+      "restaurant": "Desi Bytes",
+      "text": "The one star is not for food, it's pretty decent.  I visited with my friends and the crowd was really less. We were there for a short period of time and awaiting our cab. The staff was constantly aski"
+    },
+    {
+      "restaurant": "Dine O China",
+      "text": "It's very clean and good...the foods are also delicious and the beside glass side place very nice place for couples. Rice and noodles quantity also good and menu prices also very reasonable dinning al"
+    },
+    {
+      "restaurant": "Dine O China",
+      "text": "very nice this place i order to special seafood platter in oyster sauce is perfect tasty special thanks for chefs....i will come again thanks"
+    },
+    {
+      "restaurant": "Diners Pavilion",
+      "text": "A classy restaurant in Gachibowli area that serves super awesome Hyderabadi food at a very reasonal price. The waiters are polite and accommodate any special request you have as to how the food has to"
+    },
+    {
+      "restaurant": "Diners Pavilion",
+      "text": "It is closed as of 14th May. It is not mentioned on Zomato. Please call before you visit this place. I wanted to take my parents to the place but they referred me to Mustang!!!"
+    },
+    {
+      "restaurant": "Domino's Pizza",
+      "text": "I have ordered from Dominos all my life, but no store has ever been this bad. The order arrived in 45 mins, all my food had completely cooled down. I asked the delivery boy about their 30 mins policy,"
+    },
+    {
+      "restaurant": "Domino's Pizza",
+      "text": "Pathetic service . Food arrived in 2 hours cold and no apology from the restaurant . Very bad customer care service from zomato and dominoes."
+    },
+    {
+      "restaurant": "Driven Cafe",
+      "text": "We went to have coffee at this place. They have such awesome ambience. Coffee was fantastic and Mushroom, Corn and Jalapeño Pizza was out of this world. Plus you can actually book Sports Bikes and Car"
+    },
+    {
+      "restaurant": "Driven Cafe",
+      "text": "Driven is a bike themed cafe where you can even take bikes or luxury cars for rent  This is located in the busiest IT areas of Hyderabad. This is one of the places that is open till late night in this"
+    },
+    {
+      "restaurant": "Dunkin' Donuts",
+      "text": "The taste and quality of the food here is on a slippery slope. I used to love the Boston creme donut. What once used to have a juicy, creamy filling is now a miser's dab. Burgers have also lost their "
+    },
+    {
+      "restaurant": "Dunkin' Donuts",
+      "text": "I have eaten at this place a couple of times before and the donuts were decent. But today, we picked a few donuts to take home and when we tasted them, they felt so stale and tasteless, as if they hav"
+    },
+    {
+      "restaurant": "Eat India Company",
+      "text": "Went for my friend bday party with team'staff are very helpful And.service was really great .food is delicious specially Singapore prawn..only problem is Ac is not working..rest everything went superb"
+    },
+    {
+      "restaurant": "Eat India Company",
+      "text": "I would like to start that it worth it..went for dinner buffet,i love the spread of asian and indian dishes which were in the buffet..on top of that excellent service by all the polite staff in the re"
+    },
+    {
+      "restaurant": "Faasos",
+      "text": "As part of tasting review, ordered masala paneer wrap, jumbo chicken wrap and sigbature rice roasted chicken, you guys rock, well balanced taste , wraps are stuffed with lots of chicken, they are juic"
+    },
+    {
+      "restaurant": "Faasos",
+      "text": "Very bad service. Waited for 1 hr 30 min but still order was not delivered. Worst experience with Faasos. No online tracking system. No to fassos ever."
+    },
+    {
+      "restaurant": "Feast - Sheraton Hyderabad Hotel",
+      "text": "With the kind of price they have for the buffet, I would call this as my worst buffet experience ever. The vegetarian people I had accompanied had nothing to eat at all. There was not even a single pa"
+    },
+    {
+      "restaurant": "Feast - Sheraton Hyderabad Hotel",
+      "text": "We went for a lunch with our team, and all of us were truly disappointed with the food and the service as well. For vegans, they had just 2 starters.. the food did not had any taste, it was more like "
+    },
+    {
+      "restaurant": "Flechazo",
+      "text": "We were 4 people who visited this place on Thursday night....Ambience and service are good .Food is disappointed.Not worth for money we pay."
+    },
+    {
+      "restaurant": "Flechazo",
+      "text": "Here is one of the best buffet places for team lunch in Gachibowli area. This colourful place is so hospitable that you will just go muahhhh...  Ambience is quite good and has optimum free space. This"
+    },
+    {
+      "restaurant": "Frio Bistro",
+      "text": "One of my favorite restaurants in the locality. Great food. Good interiors and good service. I love their set of menu. The quality, portion size and the taste of food never disappoints. Some of my fav"
+    },
+    {
+      "restaurant": "Frio Bistro",
+      "text": "Frio! Like unique name like unique place. Frio is one Awesome place. Whats really nice is now a days you see these black interiors that's really catching the trend and not they have done it real good."
+    },
+    {
+      "restaurant": "GD's",
+      "text": "One of the best innovative burger 🍔 concept. The first bite when I had it was like how come I missed this kind of taste. Awesome must try cheers. I go with mercury burger 🍔 as I am a cheese 🧀 lover. 👌"
+    },
+    {
+      "restaurant": "GD's",
+      "text": "Must try place if you are very hungry late night ! Amazing burgers . Even their veg burger tastes so good . Well my favourite late night joint for burgers"
+    },
+    {
+      "restaurant": "Gal Punjab Di",
+      "text": "Food is good in taste. Specially the rotis are very soft and crispy. Kadhai paneer was okay, as it was not really a Kadhai paneer basically a paneer curry. Service is quick. Overall a value for money."
+    },
+    {
+      "restaurant": "Gal Punjab Di",
+      "text": "Food tastes good..We had hara bara kabaab, aachar paneer tikka in starters..Starters are okk ..Not so great. In main course we had paneer lababdar and veg angara...Veg angara is delicious...Must try d"
+    },
+    {
+      "restaurant": "Green Bawarchi Restaurant",
+      "text": "Ordered food online. Horrible food. Full of spices and oil even after giving specific instructions not to make it spicy. Rotis were raw. Won’t recommend to anyone."
+    },
+    {
+      "restaurant": "Green Bawarchi Restaurant",
+      "text": "There chicken Mandi is the best in gachibowli very tasty and worth the money just that they provide very less Mayonnaise on online orders , also it would be great if they could start a single piece ve"
+    },
+    {
+      "restaurant": "Hitech Bawarchi Food Zone",
+      "text": "Don't order Chicken Biryani Handi, they provide just one chicken piece in handi and the taste was average. Rice was not tasty at all. Will never order again."
+    },
+    {
+      "restaurant": "Hitech Bawarchi Food Zone",
+      "text": "Food was not at all cooked,Such a bad biriyani it was. It was burnt. And very bad response from hotel and the delivery boy didn't respond to my calls to send it back.Never get cheated with the name of"
+    },
+    {
+      "restaurant": "Hotel Zara Hi-Fi",
+      "text": "Terrible. Chicken masala curry had only 1 piece which was about one inch square on the bone. Extremely hot...cant taste any major spiced except loaded red chilly. Gave me gas for a good 30 mins."
+    },
+    {
+      "restaurant": "Hunger Maggi Point",
+      "text": "It is good but i want some spicy if it is spicy it tooooo goood and as per cost qty also good its yummy.please add some vegitables i didnt get any vegitable in my order"
+    },
+    {
+      "restaurant": "Hunger Maggi Point",
+      "text": "Ordered Paneer maggi and it tasted really really good. It was hot and juicy. The quantity of maggi was good but there were only 4-5 tiny pieces of paneer."
+    },
+    {
+      "restaurant": "Hyderabad Chefs",
+      "text": "Perfect Hyderabadi spicy biryani we can find here....one bowl veg biryani will go for 3 people ...curd rice jus yummy 😍...nearest place to dlf to go for lunch or dinner"
+    },
+    {
+      "restaurant": "Hyderabad Chefs",
+      "text": "Went there for lunch..Ordered veg biryani and rayalsima biryani..both were good.Quality of food is good with good quantity. Recommended for those who are nearby DLF and wanted to try biryani and nonve"
+    },
+    {
+      "restaurant": "Hyderabadi Daawat",
+      "text": "i have ordered Veg Biryani from Hyderabad Daawat, the taste is average and quantity is okay. quality of the food need to be improved, I do not see anything except cauliflower and beans in biryani."
+    },
+    {
+      "restaurant": "Hyderabadi Daawat",
+      "text": "I have ordered Paya shobha soup the worst ever that i have ever eaten they have added some veg soup and added some pieces of mutton do you ever think this is paya soup anfI doubt they have got the ord"
+    },
+    {
+      "restaurant": "Hyper Local",
+      "text": "Man this place. Hyperlocal is one of the go to places when you have no plans but wanna go to some place to chill, eat and drink. The food is served in matte black plates which is my favourite part. We"
+    },
+    {
+      "restaurant": "Hyper Local",
+      "text": "Best place to be to hangout with your loved ones 👌🙌🏻 ambience and taste of food... one no need to comprise on that.. friendly staff.. staff sandip very humble and understands your taste.. worth being "
+    },
+    {
+      "restaurant": "Jonathan's Kitchen - Holiday Inn Express & Suites",
+      "text": "Very bad taste including Vegetarian and Non-Vegetarian. Deserts were stale. Paneer was like rubber. AC was not working, and very bad service..."
+    },
+    {
+      "restaurant": "Jonathan's Kitchen - Holiday Inn Express & Suites",
+      "text": "This one's simple. They have great food, be it whichever cuisine. Especially the starters and my favorite Thai curry. However, they could work on the service. I have been here multiple times. One time"
+    },
+    {
+      "restaurant": "KFC",
+      "text": "Good atmosphere to eat with relax.tastes good.quality is good.good serving and serving people.good experience every time when I go KFC..wings are my ever favorite from KFC."
+    },
+    {
+      "restaurant": "KFC",
+      "text": "Ordered zinger doubles and hot and crispy chicken....taste was good....packaging was very good( I really liked the KFC sticker on the outside which made me assured food is not tampered with)....delive"
+    },
+    {
+      "restaurant": "KS Bakers",
+      "text": "Just Average. Ordered some 7-8 times. They could definitely improve on the food quality they deliver. Food quality is always below average. Fast food is Terrible here. They don't know how to make fast"
+    },
+    {
+      "restaurant": "KS Bakers",
+      "text": "very good and had ultimate taste of the cake. It was too good and my friend was so happy for her birthday cake which was so tasty and yummy. The packing and quantity is also too good The delivery boy "
+    },
+    {
+      "restaurant": "Karachi Bakery",
+      "text": "Well you know what they are famous for - Karachi Biscuits. But there is a whole range of stuff to eat at their outlet. There is mini pizzas, fries, Puffs (4/5), Paninis (4/5) and sandwiches. Ofcourse "
+    },
+    {
+      "restaurant": "Karachi Bakery",
+      "text": "I visited their Gachibowli outlet,ambience was really nice.I tried different kinds of pastry's and fast foods, in one word pastry's are AWESOME 👌👌.. Pastry's are big enough and it's difficult to finis"
+    },
+    {
+      "restaurant": "Karachi Cafe",
+      "text": "Pizza didn't taste anything like a pizza. Stale broccoli, don't know what kind of sauce they used for it. Atleast it was hot and well cooked. Won't ever order a pizza again from here."
+    },
+    {
+      "restaurant": "Karachi Cafe",
+      "text": "I have tried Irani Chai and Pasta Sandwich in Karchi cafe and the taste and not that great. I feel this cafe is really hyped and the taste didn't go According to my expectations"
+    },
+    {
+      "restaurant": "Khaan Saab",
+      "text": "Ambience was good and Ofcourse food too :) we ordered some spicy chicken which was a bit spicy 🌶 but tastes good. Also ghost biryani which is ok."
+    },
+    {
+      "restaurant": "Khaan Saab",
+      "text": "Date of Visit: 17 May 2019  Ambience: 3/5 Service: 4.5/5 Quality/Taste: 3.5/5  Items ordered: Rashmi kabab,Paya Soup,Chicken biryani,Mutton biryani  Biryani is okay, soup is nice.  Overall good for on"
+    },
+    {
+      "restaurant": "Komatose - Holiday Inn Express & Suites",
+      "text": "Very limited menu for bar and food. Service is below average. In beers only KF avialble. For finger food orders they take more than 30 minutes. Food quality is below average."
+    },
+    {
+      "restaurant": "Komatose - Holiday Inn Express & Suites",
+      "text": "There is no dance floor. As per zomato it supposed to have live dj and dance floor but there were no such things. Food quality was not as good as expected. We ordered paneer makhan wala. Gravy was too"
+    },
+    {
+      "restaurant": "Kritunga Restaurant",
+      "text": "The worst biryani i ever had in my life till date. I am sure kritunga biryani tastes good, hope this is zomato fault they have delivered me a local biryani instead kritunga, theres no kritunga cover w"
+    },
+    {
+      "restaurant": "Kritunga Restaurant",
+      "text": "Nice food, good. Value for money. The food is much spicy as u like it most. It's quality and food smells very nice. The package also very neat and strong"
+    },
+    {
+      "restaurant": "La La Land - Bar & Kitchen",
+      "text": "Worst service, food is not good. And people are not polite here. Very slow service. Not preffered for professional parties. Only appearance is good"
+    },
+    {
+      "restaurant": "La La Land - Bar & Kitchen",
+      "text": "This is my third time visiting this place.. Good ambience for couples.. Food is absolutely amazing.. HIRAK the staff member is impressive with his attitude and friendly nature.. Good place for weekend"
+    },
+    {
+      "restaurant": "Labonel",
+      "text": "Let me make it simple ! Their brownies are to die for , they have a huge variety of cupcakes but my personal favourite have always been the red velvet and chocolate brownies with walnut topping."
+    },
+    {
+      "restaurant": "Labonel",
+      "text": "This Place has only take aways, so I have ordered Red velvet Creme Cheese cake, and the Cake taste is lip smacking and everyone liked it. We even took a box of fresh brownies which are awfully tasty. "
+    },
+    {
+      "restaurant": "Marsala Food Company",
+      "text": "Went to this place on a weekday. Then also I found this place having a crowd. This is a perfect family and friends restaurant. The quantity of this restaurant is very nice and fulfilling. This place i"
+    },
+    {
+      "restaurant": "Marsala Food Company",
+      "text": "Very friendly staff... Good service... I went for Mandi but even buffet was looking nice. Good and different taste of Mandi as well. #ArabianRestaurant"
+    },
+    {
+      "restaurant": "Mathura Vilas",
+      "text": "There are garlic peels in my garlic naan. Not just one but almost every where. Staff was least bothered in this concern. They don't remove garlic peels from naan"
+    },
+    {
+      "restaurant": "Mathura Vilas",
+      "text": "Good food pocket friendly and healthy. I have ordered few times for luch and I liked it. If you have office nearby order food from this place."
+    },
+    {
+      "restaurant": "Mazzo - Marriott Executive Apartments",
+      "text": "I am a big soup fan and both hot and sour and tomato soup was disappointing. The starter was too paste like in the mouth. The garlic naan was amazing. Daal makhani was below average. They gave us comp"
+    },
+    {
+      "restaurant": "Mazzo - Marriott Executive Apartments",
+      "text": "Lovely ambience. Felt relaxed. Service could be more prompt .... The roof top besides the pool and the entire view of the city is mesmerizing."
+    },
+    {
+      "restaurant": "Mohammedia Shawarma",
+      "text": "Best shawarma served at reasonable price and the mayonnaise is simply awesome.rumali shawarma with/without salad is the best one till date .!"
+    },
+    {
+      "restaurant": "Mohammedia Shawarma",
+      "text": "WASTE RESTAURANT... I ordered special chicken shawarma, but there is no cheese & getting rotten smell in it... It has happened several times, Even ZOMATO people unable to help out. 🖕🖕🖕"
+    },
+    {
+      "restaurant": "Momos Delight",
+      "text": "Ordered because I wanted to eat momos so much and DLF area is popular for street food but I am Disappointed! The momos were undercooked and dry. Had ordered two veg steamed momos and I felt sad becaus"
+    },
+    {
+      "restaurant": "Momos Delight",
+      "text": "So it’s 11:30 on a Friday night, most of the restaurants are closed and we are hungry. We find this restaurant still delivering with ratings more than four. We order Veg Steamed Momos and Chicken Stea"
+    },
+    {
+      "restaurant": "Mustang Terrace Lounge",
+      "text": "Ambience is bit cozy, music is too loud. The food is good and service is little slow but it's okay. It need some modifications in ambience then sure it will be great place to hangout"
+    },
+    {
+      "restaurant": "Mustang Terrace Lounge",
+      "text": "The rooftop view is amazing and the ambience inside the lounge is excellent too coupled with great DJ and service. We enjoyed our time out there.  Food 4/5 Service 5/5 Drinks 5/5 Music 5/5"
+    },
+    {
+      "restaurant": "NorFest - The Dhaba",
+      "text": "So far the best kadhi chawal I have had in Hyderabad. Veg thalis here are amazing. And paneer lababdar is just finger licking. You don't have to think twice to place an order from this place."
+    },
+    {
+      "restaurant": "NorFest - The Dhaba",
+      "text": "Best north indian food in town. The flavours were very well seasoned and we were very much satisfied with the reasonable pricing as well. Ordered naans and combos and it was given in fair quantity in "
+    },
+    {
+      "restaurant": "Olive Garden",
+      "text": "I ordered noodles and manchurian combo from this place, first of all i would like to suggest management to send fork along with the food as they have only sent the spoons and needless to say you canno"
+    },
+    {
+      "restaurant": "Olive Garden",
+      "text": "A really nice place. The ambience was very very good. The views from here are killer. But honestly for me and my friends, their menu was not enough. Still, worth a look."
+    },
+    {
+      "restaurant": "Over The Moon Brew Company",
+      "text": "Great ambience, met an excellent man - Sarbeshwar. Super cool guy and great service. Food and music is excellent. Basil chicken tikka is a must try."
+    },
+    {
+      "restaurant": "Over The Moon Brew Company",
+      "text": "Great service by Sarmeshwar. Nice ambience as always. Fantastic music, fantastic crowd. Good food and everything is nice about the place......"
+    },
+    {
+      "restaurant": "Owm Nom Nom",
+      "text": "Veg biryani they serve here is too good and loved it....located very well nearby to IT sector DLF gate 3. Can be more better and improvements can be made as demand is high in this area"
+    },
+    {
+      "restaurant": "Owm Nom Nom",
+      "text": "Very bad biryani. Ordered fry Biryani but they brought Dum Biryani. Instead of changing they mixed and made food so much worse.  Don't encourage such restaurants where customers are not treated well a"
+    },
+    {
+      "restaurant": "Pakwaan Grand",
+      "text": "Date of Visit: 17/05/2019  Items Ordered: Chicken Haleem, Chicken Biryani  Service: 4/5 Ambience:3/5 Hygiene:2.5/5 Taste and Quantity: 3/5  Overall:3/5  You can give a try if you want a pakka hyderaba"
+    },
+    {
+      "restaurant": "Pakwaan Grand",
+      "text": "It's right one the main road, pretty big haleem joint in hyderabad. What we felt that the service was a bit slow and they were confused which haleem we actually ordered. Coming to the main reason.. It"
+    },
+    {
+      "restaurant": "Paradise",
+      "text": "Paradise Biryani is really good service also good staff friendly ambiance nice I had chicken Biryani and mutton Biryani both are good thank you"
+    },
+    {
+      "restaurant": "Paradise",
+      "text": "Chiken biryani is very good and Spcal chiken cary is very good and testy food And So enjoy the food and Next time visiting again with my family and friends"
+    },
+    {
+      "restaurant": "Pista House",
+      "text": "Living in Manikonda, this has been our go-to place for good mughlai food. If you want authentic Hyderabadi biryani, then this should be a default option.   Have tried multiple dishes from this place s"
+    },
+    {
+      "restaurant": "Pista House",
+      "text": "This place was recommended by people for some good Haleem, and that's the reason we paid this place a visit. We ordered two dishes of Haleem and two full plates and one regular plate of Chicken Biryan"
+    },
+    {
+      "restaurant": "Pot Pourri",
+      "text": "I had bad experience here with Masala Papad. I had went for dinner with colleagues and had order 13 masala papad. Spice level was too high and it was not editable. 15 people were not even able to fini"
+    },
+    {
+      "restaurant": "Pot Pourri",
+      "text": "Nice ambiance....different and delicious food...polite and friendly staff serving...jus loved the paneer starters 😍 recommend to visit this place"
+    },
+    {
+      "restaurant": "PourHouse7",
+      "text": "Pocket-friendly place for a quick round of drinks. Tried their LIIT & Tequila Sunrise, along with a bunch of Chicken, Fish & veg starters. In the drinks, the Tequila Sunrise stood out with a distinct "
+    },
+    {
+      "restaurant": "PourHouse7",
+      "text": "Visited the clubbing section of the resturant must say ambience is too Good. Visited for ladies and bollywood night and one of the most nice DJs i could say.. Coming to drinks and they lived upto expe"
+    },
+    {
+      "restaurant": "Prism Club & Kitchen",
+      "text": "Nice ambience with light systems and music in an international level We partied very hard with amazing cocktails The bartenders were preparing cocktails & shots like india ever had Its not only a club"
+    },
+    {
+      "restaurant": "Prism Club & Kitchen",
+      "text": "Went to attend the Nucleya concert (May 2019). It was very very crowded. But the ambience is great. The interior design is definitely one of its kind. Good place to party with friends. The security is"
+    },
+    {
+      "restaurant": "Royal Spicy Restaurant",
+      "text": "Worst chicken biryani ever had in Hyderabad till now No salt ,less chicken pieces No taste nothing Even road side stall who sell biryani in 60 rs/- provide 100 times better biryani than this"
+    },
+    {
+      "restaurant": "SKYHY",
+      "text": "Starters was ok to taste but after effect lasted for days. The colour of the stools was black for almost 5 days from the day we visited that place. My friends experience after having those starters wa"
+    },
+    {
+      "restaurant": "SKYHY",
+      "text": "The biggest screen in town with a lovely rooftop. But portion size and value for money takes a dip. They have different rules on zomato gold or Dineout. Pricy too !"
+    },
+    {
+      "restaurant": "Sardarji's Chaats & More",
+      "text": "The food is economically reasonable. The North Indian dishes including chole kulche, chole bhature and paneer butter masala are comparatively better than the chaats."
+    },
+    {
+      "restaurant": "Sardarji's Chaats & More",
+      "text": "Oh ho this place serves amazing parathas and their combos are worth it.. You experience it to appreciate it. Lot of crowd at meal times, so u might have to wait 15-20 min for your parantha to be made."
+    },
+    {
+      "restaurant": "Shah Ghouse Hotel & Restaurant",
+      "text": "Haleem, the best place to try out. Avaialble in all multiple outlets. Haleem, usually found in the Ramdan season, months of march to July served by Shah ghouse and badam kheer are must try"
+    },
+    {
+      "restaurant": "Shah Ghouse Hotel & Restaurant",
+      "text": "Ordered Chicken Fried rice. Very good; however, didn't give curry with it. Not sure whether they forgot. But did like the taste of the variety."
+    },
+    {
+      "restaurant": "Shah Ghouse Spl Shawarma",
+      "text": "The biryani here is very delicious, one should must have this biryani if they visit Hyderabad. You will compare all but this tops the chart in satisfaction... 😋"
+    },
+    {
+      "restaurant": "Shah Ghouse Spl Shawarma",
+      "text": "I have ordered khabooz Normal which is with salad.I liked the portion size very much I have never seen that much portion size in any other shawarma outlet.It was very much for me the taste was also go"
+    },
+    {
+      "restaurant": "Shanghai Chef 2",
+      "text": "We went to the first floor confused whether to go to Shanghai Chef or Kobe's, later to realise they are in the same restaurant (i.e they share floor space). We decided to order Chinese. We had the Dim"
+    },
+    {
+      "restaurant": "Shanghai Chef 2",
+      "text": "They have a wide range of food offering. Nothing much to talk about ambiance. I visited this place 2 times in a week. 1st time ordered a sizzler which was fantastic.  2nd time we had a chicken stater,"
+    },
+    {
+      "restaurant": "Shree Santosh Dhaba Family Restaurant",
+      "text": "Irresponsible Restaurant . Please don't order any food from there. I ordered Mushroom masala ( not good in taste) and 3 different types of roti's and in place of roti's they people are delivering whit"
+    },
+    {
+      "restaurant": "Shree Santosh Dhaba Family Restaurant",
+      "text": "I ordered food at 7 pm, but the delivery guy gave low quality food without Santosh dhaba logo and even bill was at 06:35 pm...  Zomato is looting"
+    },
+    {
+      "restaurant": "Squeeze @ The Lime",
+      "text": "I liked the ambience and lighting. However their food quality needs lot of improvement especially sizzlers. They made good lasgna but they had no idea at all about how sizzler is made. Also their serv"
+    },
+    {
+      "restaurant": "Squeeze @ The Lime",
+      "text": "I was searching for a good Veg place around Gachibowli to host my daughters 1st Bday and ended up with Lime. Dinesh was the manager and he made sure the menu and other arrangements are all taken care "
+    },
+    {
+      "restaurant": "T Grill",
+      "text": "the rating is such because of the name we had thought it was like an american grill restaurant shocked by the indian spread  food was ordinary  no choice in red meats and no grill pls change the name,"
+    },
+    {
+      "restaurant": "T Grill",
+      "text": "I was on a work in financial district and it happens to be lunch time, so finalised this place after some search, i parked my car outside and walked inside it was completely empty, as i enter into AC "
+    },
+    {
+      "restaurant": "Tandoori Food Works",
+      "text": "Very less priced restaurant located in SLN terminus. Ordered tangdi kebab and chicken tikka biriyani . Tangdi kebab dint meet the expectations . Bit oily and taste was ok but the mint chutney served w"
+    },
+    {
+      "restaurant": "Tandoori Food Works",
+      "text": "Very pleasant experience at TFW. The stuffed tangdi kabab was fantastic. Succulent, mildly flavoured and a great salad to go with it. The sizzler biryani was a great innovative touch right down to the"
+    },
+    {
+      "restaurant": "Tempteys",
+      "text": "Different base options available here...pretty good ambiance to go with friends and it’s very close to DLF , that’s more than require to hang out here."
+    },
+    {
+      "restaurant": "Tempteys",
+      "text": "I go to the onsite shop and have some shakes there. They are too delicious 😋 I would rate there service as 4.5/5 , food as 4.5/5 , ambience as 4.5/5 . I very much like the idea of writing the reviews "
+    },
+    {
+      "restaurant": "The Chocolate Room",
+      "text": "The chocolate excess cake was awesome. It was a completely filled with chocolate ganache. It is fairly priced. It isn't bitter in taste. The cake was moist and juicy. The ambience of this place is goo"
+    },
+    {
+      "restaurant": "The Chocolate Room",
+      "text": "The chocolate brownie and waffles will take you by an awwww! For someone who craves for chocolate, it's a perfect place. The ambience is just decent."
+    },
+    {
+      "restaurant": "The Fisherman's Wharf",
+      "text": "One of the best restaurants visited till date in HYD. The have amazing ambience, delicious food and extremely courteous staff. They are pro at making all the different delicacies and try to make sure "
+    },
+    {
+      "restaurant": "The Fisherman's Wharf",
+      "text": "Special occasions call for unique celebrations accompanied by some fantastic fare. Dinner last night at Fisherman’s Wharf was one such memorable experience. Spread across an acre, with multiple dining"
+    },
+    {
+      "restaurant": "The Foodie Monster Kitchen",
+      "text": "Big fan of All day Breakfast in bed? Order from this amazing little eatery!  From vegetarian heart shaped nutella pancakes to a classic English breakfast with omelettes and hash browns they’ve got it "
+    },
+    {
+      "restaurant": "The Foodie Monster Kitchen",
+      "text": "As of now, I have tried 2 rice bowls and 1 shawarma from here - 1) non veg green slimy monster bowl 2) veg the iron monster bowl 3) desi original chicken shawarma  All 3 of them i liked a lot, especia"
+    },
+    {
+      "restaurant": "The Glass Onion",
+      "text": "Yesterday I was here with my two friends, it was raining and weather was amazing. The best fusion food I could ever eat. It's a must go place guys, I would rather say best place for romantic couples, "
+    },
+    {
+      "restaurant": "The Glass Onion",
+      "text": "I liked the food very much. The best part is the ambience of it, you cannot ask for a better one in Hyderabad. It is so peaceful and one could spend hours sitting there. We had a hard time finding par"
+    },
+    {
+      "restaurant": "The Indi Grill",
+      "text": "Raza, Ritam, Ekrabul. Ambiance and food quality is good. Impressed with service also. No.of items also worth the money. Can visit with the family."
+    },
+    {
+      "restaurant": "The Indi Grill",
+      "text": "Had a great time at Indi grill.....Food was very delicious and specially chili paneer, awesome.... must try.... service was very good and Subondo was great"
+    },
+    {
+      "restaurant": "The Lal Street - Bar Exchange",
+      "text": "This place is amazing for weekend fun hangouts and let your tireness go away. The DJ is awesome and plays best bollywood songs and punjabi too. The veg pizza and pastas are pretty good to try along wi"
+    },
+    {
+      "restaurant": "The Lal Street - Bar Exchange",
+      "text": "This is what we were served today when we ordered for Grilled Paneer. I think this was someone's left over which we were served. Giving the benefit of doubt that they might have made some mistake, I i"
+    },
+    {
+      "restaurant": "The Old Madras Baking Company",
+      "text": "Nestled between the hustle bustle of Gachibowli is a small cafe OMBC. One of the very few places in the city with amazing cookies and bagels. Having visited the cafe a handful of times, some of our fa"
+    },
+    {
+      "restaurant": "The Old Madras Baking Company",
+      "text": "One of the best pizzas to try. It served with the fresh crust and the topping of veggies are fresh and the taste of the ingredients was awesome and it is fully overloaded with Cheese. I would like to "
+    },
+    {
+      "restaurant": "The Tilt Bar Republic",
+      "text": "Visited last Saturday heard live music.. Sonalin Priyadarshini is just fabulous.. wanted to listen her again and again. 😍 Such a good Singer she is😊😊"
+    },
+    {
+      "restaurant": "The Tilt Bar Republic",
+      "text": "Wanted to listen her again n again .. Sonalin Priyadarshini has very good voice.. such a talented girl,.. really appreciate .. nice place nice lightning"
+    },
+    {
+      "restaurant": "Tiki Shack",
+      "text": "A very bad experience. I went here with my team, but the staff made sure that we had the worst experience. The food was cold, served very late. Drinks were of bad quality. Staff behavior was also very"
+    },
+    {
+      "restaurant": "Tiki Shack",
+      "text": "Everything since I entered the restaurant was a disaster. I received cold food after 45 minutes after I placed the order, that too after multiple complaints. The drinks quality was not good. It happen"
+    },
+    {
+      "restaurant": "Triptify",
+      "text": "This place might be good but it's the worst now. Ordered a Chicken Keema paratha and got some vegetarian paratha instead. Not only was the order incorrect but it was burnt! Zomato refused to help on t"
+    },
+    {
+      "restaurant": "Triptify",
+      "text": "A very nice option for Paranthas lovers with so many different options. The taste is quite good and I love that they provide option to customise each combo so that we can select any combination of Par"
+    },
+    {
+      "restaurant": "Udipi's Upahar",
+      "text": "Ok ok food is not that tastey & I will not recommend this place for eating Place is not so clean & the kitchen counter is not good. Cost is more"
+    },
+    {
+      "restaurant": "Udipi's Upahar",
+      "text": "Good south Indian breakfast items .. u can try all the south indian items like idly and diffrnt kinds of dosas ... Also u can try out various chutneys"
+    },
+    {
+      "restaurant": "Ulavacharu",
+      "text": "The food was not up to the mark. I just couldn't eat a bit. The so called special 'Raju gari Pulao' was just a nightmare. Don't recommend to anyone"
+    },
+    {
+      "restaurant": "Ulavacharu",
+      "text": "Ambience- 5/5 Food - being a vegetarian couldn’t find a lot of options, but the food is tasty except for some dishes which completely ruin the day 4/5"
+    },
+    {
+      "restaurant": "Urban Asia - Kitchen & Bar",
+      "text": "This place is highly recommended. It is working with Eat India Company under the same roof, may be kitchen as well. Basically u ca order any of the two’s menu from one table. Eat India Company has Ind"
+    },
+    {
+      "restaurant": "Urban Asia - Kitchen & Bar",
+      "text": "We had evening dinner at this restaurant. Food was delicious. We had Chinese as well as north indian. Both were delicious. I recommend for weekend food with family here"
+    },
+    {
+      "restaurant": "Yum Yum Tree - The Arabian Food Court",
+      "text": "It is at 6th floor of Act Boutique building that the entrance gate is just opposite to Karachi Bakery. The building is little bit inside. Once you get there, u will find a cafe on the ground floor. Th"
+    },
+    {
+      "restaurant": "Yum Yum Tree - The Arabian Food Court",
+      "text": "I am new to Hyderabad.. heard of the Hyderabadi Haleem here is very famous so ordered haleem from this restaurant. It was a disastrous experience. Please dont try any kind of haleem here. I haven't tr"
+    },
+    {
+      "restaurant": "Zega - Sheraton Hyderabad Hotel",
+      "text": "My husband and I, visited Zega for their dimsum festival and we were not disappointed. The service started with a delicious bowl of thukpa, which had a perfect blend of spice. Followed by an array of "
+    },
+    {
+      "restaurant": "Zega - Sheraton Hyderabad Hotel",
+      "text": "Delicious,mouthwatering dishes and a must try dim sum lunch which is pocket friendly. The view,service and the food are 10 on 10. Kudos!!! to the team"
+    },
+    {
+      "restaurant": "Zing's Northeast Kitchen",
+      "text": "The food is toooooooooo good. The interior and the ambiance both are very cozy. Only the staffs could have been a little more attentive. The wash basin and toilet should have been as neat and clean as"
+    },
+    {
+      "restaurant": "Zing's Northeast Kitchen",
+      "text": "The food is too good. The place is very cosy and will give you a homely vibe. People there just welcome you with a big heart and a broad smile. I’m in love with this restaurant."
+    },
+    {
+      "restaurant": "eat.fit",
+      "text": "I had ordered gobi methi paratha.. it was ok. Not good. It was too oily. Not much taste. It tasted like it was a re-heated paratha. Not fresh."
+    },
+    {
+      "restaurant": "eat.fit",
+      "text": "Food was good but it was all leaking from the plate. And so quantity was very less as compared and i expected rice as well with the thali but it was missing"
+    }
+  ]
+}
