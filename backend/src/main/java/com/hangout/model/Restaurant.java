@@ -19,6 +19,7 @@ public class Restaurant {
     private String cuisine;
     private String description;
     private String image;
+    private String menuImage;
     private String address;
     private String phone;
     private String openingHours;

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { restaurantService } from '../../services/restaurant/restaurantService';
+import RestaurantFormModal from '../../components/RestaurantFormModal';
+import { resolveRestaurantMediaUrl, restaurantService } from '../../services/restaurant/restaurantService';
 import { reviewService } from '../../services/review/reviewService';
 import { Restaurant, Review } from '../../types';
 import { useAuth } from '../../context/AuthContext';
@@ -14,6 +15,7 @@ const RestaurantDetailPage = () => {
   const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -40,6 +42,20 @@ const RestaurantDetailPage = () => {
       setReviews(data);
     } catch (error) {
       console.error('Failed to load reviews:', error);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!restaurant || !window.confirm(`Delete "${restaurant.name}"?`)) {
+      return;
+    }
+
+    try {
+      await restaurantService.remove(restaurant.id);
+      toast.success('Restaurant deleted');
+      navigate('/restaurants');
+    } catch (error) {
+      console.error('Failed to delete restaurant:', error);
     }
   };
 
@@ -97,7 +113,7 @@ const RestaurantDetailPage = () => {
                 <span className="meta-item cuisine">{restaurant.cuisine}</span>
                 <span className="meta-separator">·</span>
                 <span className="meta-item rating">
-                  {restaurant.rating.toFixed(1)} ★
+                  {(restaurant.rating ?? 0).toFixed(1)} ★
                 </span>
                 <span className="meta-separator">·</span>
                 <span className="meta-item">{restaurant.reviewCount} reviews</span>
@@ -108,6 +124,20 @@ const RestaurantDetailPage = () => {
               </div>
             </div>
             <div className="header-actions">
+              <button
+                type="button"
+                className="btn btn-outline"
+                onClick={() => setIsFormOpen(true)}
+              >
+                Edit
+              </button>
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={handleDelete}
+              >
+                Delete
+              </button>
               <button 
                 className="btn btn-primary btn-lg"
                 onClick={handleReservation}
@@ -130,6 +160,24 @@ const RestaurantDetailPage = () => {
                 <h2 className="section-title">About</h2>
                 <p className="section-text">{restaurant.description}</p>
               </section>
+
+              {restaurant.menuImage && (
+                <section className="content-section">
+                  <h2 className="section-title">Menu</h2>
+                  <a
+                    href={resolveRestaurantMediaUrl(restaurant.menuImage)}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="menu-image-link"
+                  >
+                    <img
+                      src={resolveRestaurantMediaUrl(restaurant.menuImage)}
+                      alt={`${restaurant.name} menu`}
+                      className="menu-image"
+                    />
+                  </a>
+                </section>
+              )}
 
               {/* Features */}
               {restaurant.features && restaurant.features.length > 0 && (
@@ -260,6 +308,14 @@ const RestaurantDetailPage = () => {
           </div>
         </div>
       </div>
+
+      {isFormOpen && restaurant && (
+        <RestaurantFormModal
+          restaurant={restaurant}
+          onClose={() => setIsFormOpen(false)}
+          onSaved={(saved) => setRestaurant(saved)}
+        />
+      )}
     </div>
   );
 };

@@ -38,6 +38,7 @@ export interface Restaurant {
   cuisine: string;
   description: string;
   image: string;
+  menuImage?: string;
   address: string;
   phone: string;
   openingHours: string;

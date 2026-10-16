@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import RestaurantFormModal from '../../components/RestaurantFormModal';
 import { restaurantService } from '../../services/restaurant/restaurantService';
 import { Restaurant } from '../../types';
 import './RestaurantsPage.css';
@@ -12,6 +14,9 @@ const RestaurantsPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCuisine, setSelectedCuisine] = useState('All');
   const [onlyOpenNow, setOnlyOpenNow] = useState(false);
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [editingRestaurant, setEditingRestaurant] = useState<Restaurant | null>(null);
+  const [loadError, setLoadError] = useState('');
 
   useEffect(() => {
     loadRestaurants();
@@ -21,20 +26,28 @@ const RestaurantsPage = () => {
     filterRestaurants();
   }, [restaurants, searchQuery, selectedCuisine, onlyOpenNow]);
 
+  useEffect(() => {
+    if (restaurants.length === 0) {
+      setFeaturedRestaurant(null);
+      return;
+    }
+    setFeaturedRestaurant(
+      restaurants.reduce((prev, current) =>
+        ((current.rating ?? 0) > (prev.rating ?? 0)) ? current : prev
+      )
+    );
+  }, [restaurants]);
+
   const loadRestaurants = async () => {
     try {
       const data = await restaurantService.getAll();
-      setRestaurants(data);
-      
-      // Set highest rated as featured
-      if (data.length > 0) {
-        const featured = data.reduce((prev, current) => 
-          (current.rating > prev.rating) ? current : prev
-        );
-        setFeaturedRestaurant(featured);
-      }
+      const list = Array.isArray(data) ? data : [];
+      setRestaurants(list);
+      setLoadError('');
     } catch (error) {
       console.error('Failed to load restaurants:', error);
+      setRestaurants([]);
+      setLoadError('The backend is not running. Start it with mvn spring-boot:run in the backend folder, then refresh this page.');
     } finally {
       setLoading(false);
     }
@@ -44,10 +57,11 @@ const RestaurantsPage = () => {
     let filtered = [...restaurants];
 
     if (searchQuery) {
+      const query = searchQuery.toLowerCase();
       filtered = filtered.filter(r =>
-        r.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        r.cuisine.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        r.description.toLowerCase().includes(searchQuery.toLowerCase())
+        (r.name || '').toLowerCase().includes(query) ||
+        (r.cuisine || '').toLowerCase().includes(query) ||
+        (r.description || '').toLowerCase().includes(query)
       );
     }
 
@@ -60,6 +74,32 @@ const RestaurantsPage = () => {
     }
 
     setFilteredRestaurants(filtered);
+  };
+
+  const handleRestaurantSaved = (saved: Restaurant) => {
+    setRestaurants((prev) => {
+      const exists = prev.some((item) => item.id === saved.id);
+      return exists ? prev.map((item) => (item.id === saved.id ? saved : item)) : [saved, ...prev];
+    });
+  };
+
+  const handleEdit = (restaurant: Restaurant) => {
+    setEditingRestaurant(restaurant);
+    setIsFormOpen(true);
+  };
+
+  const handleDelete = async (restaurant: Restaurant) => {
+    if (!window.confirm(`Delete "${restaurant.name}"?`)) {
+      return;
+    }
+
+    try {
+      await restaurantService.remove(restaurant.id);
+      setRestaurants((prev) => prev.filter((item) => item.id !== restaurant.id));
+      toast.success('Restaurant deleted');
+    } catch (error) {
+      console.error('Failed to delete restaurant:', error);
+    }
   };
 
   const cuisines = ['All', ...new Set(restaurants.map(r => r.cuisine))];
@@ -95,6 +135,16 @@ const RestaurantsPage = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
+              <button
+                type="button"
+                className="btn btn-primary add-restaurant-btn"
+                onClick={() => {
+                  setEditingRestaurant(null);
+                  setIsFormOpen(true);
+                }}
+              >
+                Add restaurant
+              </button>
             </div>
           </div>
         </div>
@@ -117,7 +167,7 @@ const RestaurantsPage = () => {
                 <div className="featured-meta">
                   <span className="cuisine-badge">{featuredRestaurant.cuisine}</span>
                   <span className="rating-large">
-                    <span className="rating-value">{featuredRestaurant.rating.toFixed(1)}</span>
+                    <span className="rating-value">{(featuredRestaurant.rating ?? 0).toFixed(1)}</span>
                     <span className="rating-stars">★</span>
                   </span>
                 </div>
@@ -161,7 +211,15 @@ const RestaurantsPage = () => {
       {/* Restaurant Grid */}
       <section className="restaurants-section">
         <div className="container-wide">
-          {filteredRestaurants.length === 0 ? (
+          {loadError ? (
+            <div className="empty-state">
+              <h3>Cannot load restaurants</h3>
+              <p>{loadError}</p>
+              <button className="btn btn-primary" onClick={() => { setLoading(true); loadRestaurants(); }}>
+                Retry
+              </button>
+            </div>
+          ) : filteredRestaurants.length === 0 ? (
             <div className="empty-state">
               <h3>No restaurants found</h3>
               <p>Try adjusting your filters or search terms</p>
@@ -179,33 +237,58 @@ const RestaurantsPage = () => {
           ) : (
             <div className="restaurant-grid">
               {filteredRestaurants.map((restaurant) => (
-                <Link 
-                  key={restaurant.id} 
-                  to={`/restaurants/${restaurant.id}`}
-                  className="restaurant-card"
-                >
-                  <div className="restaurant-image-wrapper">
-                    <img src={restaurant.image} alt={restaurant.name} className="restaurant-image" />
-                    {!restaurant.isOpen && (
-                      <div className="closed-badge">Closed</div>
-                    )}
-                  </div>
-                  <div className="restaurant-card-content">
-                    <h3 className="restaurant-name">{restaurant.name}</h3>
-                    <p className="restaurant-cuisine">{restaurant.cuisine}</p>
-                    <div className="restaurant-card-footer">
-                      <span className="restaurant-rating">
-                        {restaurant.rating.toFixed(1)} ★
-                      </span>
-                      <span className="restaurant-price">{restaurant.priceRange}</span>
+                <article key={restaurant.id} className="restaurant-card">
+                  <Link to={`/restaurants/${restaurant.id}`} className="restaurant-card-link">
+                    <div className="restaurant-image-wrapper">
+                      <img src={restaurant.image} alt={restaurant.name} className="restaurant-image" />
+                      {!restaurant.isOpen && (
+                        <div className="closed-badge">Closed</div>
+                      )}
                     </div>
+                    <div className="restaurant-card-content">
+                      <h3 className="restaurant-name">{restaurant.name}</h3>
+                      <p className="restaurant-cuisine">{restaurant.cuisine}</p>
+                      <div className="restaurant-card-footer">
+                        <span className="restaurant-rating">
+                          {(restaurant.rating ?? 0).toFixed(1)} ★
+                        </span>
+                        <span className="restaurant-price">{restaurant.priceRange}</span>
+                      </div>
+                    </div>
+                  </Link>
+                  <div className="restaurant-card-actions">
+                    <button
+                      type="button"
+                      className="btn btn-outline btn-sm"
+                      onClick={() => handleEdit(restaurant)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-danger btn-sm"
+                      onClick={() => handleDelete(restaurant)}
+                    >
+                      Delete
+                    </button>
                   </div>
-                </Link>
+                </article>
               ))}
             </div>
           )}
         </div>
       </section>
+
+      {isFormOpen && (
+        <RestaurantFormModal
+          restaurant={editingRestaurant}
+          onClose={() => {
+            setIsFormOpen(false);
+            setEditingRestaurant(null);
+          }}
+          onSaved={handleRestaurantSaved}
+        />
+      )}
     </div>
   );
 };
