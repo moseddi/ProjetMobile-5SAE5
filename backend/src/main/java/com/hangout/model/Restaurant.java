@@ -19,9 +19,11 @@ public class Restaurant {
     private String cuisine;
     private String description;
     private String image;
+    private String menuImage;
     private String address;
     private String phone;
-    private String openingHours;
+    private String openingHours; // e.g. "11:00 AM - 10:00 PM", parsed by OpeningHoursParser
+    private Integer seatingCapacity; // total seats; null -> reservation.default-capacity
     private Double rating; // Calculated from reviews
     private Integer reviewCount = 0;
     private Boolean isOpen;

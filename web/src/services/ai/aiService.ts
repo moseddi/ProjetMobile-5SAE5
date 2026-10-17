@@ -27,7 +27,6 @@ export interface RecommendationResponse {
 }
 
 const N8N_ANALYZE_URL = 'http://localhost:5678/webhook-test/analyze-review';
-const N8N_PROD_URL = 'http://localhost:5678/webhook/analyze-review';
 const RAG_ADD_URL = 'http://localhost:8000/add-review';
 const RAG_RECOMMEND_URL = 'http://localhost:8000/recommend';
 

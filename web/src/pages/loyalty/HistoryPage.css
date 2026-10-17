@@ -1,0 +1,64 @@
+.history-page {
+  padding: var(--space-3xl) 0;
+  max-width: 720px;
+}
+
+.history-tabs {
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-xl);
+}
+
+.history-tab {
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-tertiary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.history-tab.active {
+  background: var(--color-primary);
+  color: white;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.history-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-md) var(--space-lg);
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.history-row-title {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.history-row-date {
+  font-size: 0.75rem;
+  color: var(--color-text-tertiary);
+}
+
+.history-row-points {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.history-row-points.positive {
+  color: #15803d;
+}
+
+.history-row-points.negative {
+  color: #dc2626;
+}

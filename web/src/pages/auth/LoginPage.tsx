@@ -92,6 +92,10 @@ const LoginPage = () => {
               Don't have an account? <Link to="/register" className="auth-link">Create one</Link>
             </p>
 
+            <Link to="/restaurants" className="auth-guest-link">
+              Continue without an account →
+            </Link>
+
             <div className="demo-info">
               <p className="demo-title">Demo Account</p>
               <p className="demo-text">Email: <strong>demo@example.com</strong></p>

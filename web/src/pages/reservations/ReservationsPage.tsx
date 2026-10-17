@@ -1,17 +1,26 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { reservationService } from '../../services/reservation/reservationService';
-import { Reservation } from '../../types';
+import { restaurantService } from '../../services/restaurant/restaurantService';
+import { eventService } from '../../services/event/eventService';
+import { eventBookingService } from '../../services/eventBooking/eventBookingService';
+import { EventBooking, Reservation } from '../../types';
 import { useAuth } from '../../context/AuthContext';
 import { toast } from 'react-toastify';
+import ReservationChatbot, { ChatbotMode } from '../../components/ReservationChatbot';
 import './ReservationsPage.css';
 
 const ReservationsPage = () => {
   const { user } = useAuth();
   const location = useLocation();
   const [reservations, setReservations] = useState<Reservation[]>([]);
+  const [eventBookings, setEventBookings] = useState<EventBooking[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<'all' | 'upcoming' | 'past'>('all');
+  const [restaurantNames, setRestaurantNames] = useState<Record<string, string>>({});
+  const [eventTitles, setEventTitles] = useState<Record<string, string>>({});
+  const [section, setSection] = useState<'restaurants' | 'events'>('restaurants');
+  const [chatbot, setChatbot] = useState<ChatbotMode | null>(null);
 
   // New reservation form (if coming from restaurant detail)
   const restaurantId = location.state?.restaurantId;
@@ -25,8 +34,19 @@ const ReservationsPage = () => {
   useEffect(() => {
     if (user) {
       loadReservations();
+      loadEventBookings();
     }
   }, [user]);
+
+  // Show restaurant / event names instead of raw ids
+  useEffect(() => {
+    restaurantService.getAll()
+      .then((list) => setRestaurantNames(Object.fromEntries(list.map((r) => [r.id, r.name]))))
+      .catch(() => setRestaurantNames({}));
+    eventService.getAll()
+      .then((list) => setEventTitles(Object.fromEntries(list.map((e) => [e.id, e.title]))))
+      .catch(() => setEventTitles({}));
+  }, []);
 
   const loadReservations = async () => {
     try {
@@ -41,9 +61,19 @@ const ReservationsPage = () => {
     }
   };
 
+  const loadEventBookings = async () => {
+    try {
+      if (!user?.id) return;
+      const data = await eventBookingService.getUserBookings(user.id);
+      setEventBookings(data);
+    } catch (error) {
+      console.error('Failed to load event bookings:', error);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!restaurantId) {
       toast.error('Restaurant ID is missing');
       return;
@@ -54,7 +84,7 @@ const ReservationsPage = () => {
         toast.error('User not logged in');
         return;
       }
-      await reservationService.create(user.id, {
+      await reservationService.create({
         restaurantId,
         ...formData
       });
@@ -82,6 +112,21 @@ const ReservationsPage = () => {
     }
   };
 
+  const handleCancelEventBooking = async (id: string) => {
+    if (!window.confirm('Are you sure you want to cancel this booking?')) {
+      return;
+    }
+
+    try {
+      await eventBookingService.cancel(id);
+      toast.success('Booking cancelled');
+      loadEventBookings();
+    } catch (error) {
+      console.error('Failed to cancel event booking:', error);
+      toast.error('Failed to cancel booking');
+    }
+  };
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'CONFIRMED': return 'status-confirmed';
@@ -100,16 +145,28 @@ const ReservationsPage = () => {
     return true;
   });
 
+  const filteredEventBookings = eventBookings;
+
   return (
     <div className="reservations-page">
       <div className="page-header">
         <div className="container">
           <h1>My Reservations</h1>
-          <p>Manage your restaurant reservations</p>
+          <p>Manage your restaurant and event reservations</p>
         </div>
       </div>
 
       <div className="container">
+        {/* Call to action: open the assistant for a restaurant table or an event */}
+        <div className="reservation-cta-row">
+          <button type="button" className="btn btn-primary" onClick={() => setChatbot('restaurant')}>
+            🍽️ Reserve a Restaurant Table
+          </button>
+          <button type="button" className="btn btn-outline" onClick={() => setChatbot('event')}>
+            🎉 Reserve an Event
+          </button>
+        </div>
+
         {/* New Reservation Form */}
         {showForm && (
           <div className="reservation-form-card">
@@ -169,99 +226,185 @@ const ReservationsPage = () => {
           </div>
         )}
 
-        {/* Filters */}
+        {/* Restaurant vs Event section toggle */}
         <div className="filter-tabs">
           <button
-            className={`filter-tab ${filter === 'all' ? 'active' : ''}`}
-            onClick={() => setFilter('all')}
+            className={`filter-tab ${section === 'restaurants' ? 'active' : ''}`}
+            onClick={() => setSection('restaurants')}
           >
-            All Reservations
+            Restaurant Tables
           </button>
           <button
-            className={`filter-tab ${filter === 'upcoming' ? 'active' : ''}`}
-            onClick={() => setFilter('upcoming')}
+            className={`filter-tab ${section === 'events' ? 'active' : ''}`}
+            onClick={() => setSection('events')}
           >
-            Upcoming
-          </button>
-          <button
-            className={`filter-tab ${filter === 'past' ? 'active' : ''}`}
-            onClick={() => setFilter('past')}
-          >
-            Past
+            Events
           </button>
         </div>
 
-        {/* Reservations List */}
-        {loading ? (
-          <div className="loading-state">
-            <div className="spinner"></div>
-            <p>Loading reservations...</p>
-          </div>
-        ) : filteredReservations.length === 0 ? (
-          <div className="empty-state">
-            <p>No reservations found</p>
-          </div>
-        ) : (
-          <div className="reservations-list">
-            {filteredReservations.map(reservation => (
-              <div key={reservation.id} className="reservation-card">
-                <div className="reservation-header">
-                  <h3>Restaurant #{reservation.restaurantId}</h3>
-                  <span className={`status-badge ${getStatusColor(reservation.status)}`}>
-                    {reservation.status}
-                  </span>
-                </div>
+        {section === 'restaurants' && (
+          <>
+            {/* Filters */}
+            <div className="filter-tabs">
+              <button
+                className={`filter-tab ${filter === 'all' ? 'active' : ''}`}
+                onClick={() => setFilter('all')}
+              >
+                All Reservations
+              </button>
+              <button
+                className={`filter-tab ${filter === 'upcoming' ? 'active' : ''}`}
+                onClick={() => setFilter('upcoming')}
+              >
+                Upcoming
+              </button>
+              <button
+                className={`filter-tab ${filter === 'past' ? 'active' : ''}`}
+                onClick={() => setFilter('past')}
+              >
+                Past
+              </button>
+            </div>
 
-                <div className="reservation-details">
-                  <div className="detail-item">
-                    <span className="detail-label">📅 Date & Time</span>
-                    <span className="detail-value">
-                      {new Date(reservation.reservationDateTime).toLocaleString('en-US', {
-                        weekday: 'long',
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                      })}
-                    </span>
-                  </div>
-
-                  <div className="detail-item">
-                    <span className="detail-label">👥 Party Size</span>
-                    <span className="detail-value">{reservation.partySize} guests</span>
-                  </div>
-
-                  {reservation.specialRequests && (
-                    <div className="detail-item">
-                      <span className="detail-label">📝 Special Requests</span>
-                      <span className="detail-value">{reservation.specialRequests}</span>
-                    </div>
-                  )}
-
-                  <div className="detail-item">
-                    <span className="detail-label">Created</span>
-                    <span className="detail-value">
-                      {new Date(reservation.createdAt).toLocaleDateString()}
-                    </span>
-                  </div>
-                </div>
-
-                {reservation.status !== 'CANCELLED' && reservation.status !== 'COMPLETED' && (
-                  <div className="reservation-actions">
-                    <button
-                      className="btn btn-danger-outline"
-                      onClick={() => handleCancel(reservation.id)}
-                    >
-                      Cancel Reservation
-                    </button>
-                  </div>
-                )}
+            {/* Reservations List */}
+            {loading ? (
+              <div className="loading-state">
+                <div className="spinner"></div>
+                <p>Loading reservations...</p>
               </div>
-            ))}
-          </div>
+            ) : filteredReservations.length === 0 ? (
+              <div className="empty-state">
+                <p>No reservations found</p>
+              </div>
+            ) : (
+              <div className="reservations-list">
+                {filteredReservations.map(reservation => (
+                  <div key={reservation.id} className="reservation-card">
+                    <div className="reservation-header">
+                      <h3>{restaurantNames[reservation.restaurantId] ?? `Restaurant #${reservation.restaurantId}`}</h3>
+                      <span className={`status-badge ${getStatusColor(reservation.status)}`}>
+                        {reservation.status}
+                      </span>
+                    </div>
+
+                    <div className="reservation-details">
+                      <div className="detail-item">
+                        <span className="detail-label">📅 Date & Time</span>
+                        <span className="detail-value">
+                          {new Date(reservation.reservationDateTime).toLocaleString('en-US', {
+                            weekday: 'long',
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                          })}
+                        </span>
+                      </div>
+
+                      <div className="detail-item">
+                        <span className="detail-label">👥 Party Size</span>
+                        <span className="detail-value">{reservation.partySize} guests</span>
+                      </div>
+
+                      {reservation.specialRequests && (
+                        <div className="detail-item">
+                          <span className="detail-label">📝 Special Requests</span>
+                          <span className="detail-value">{reservation.specialRequests}</span>
+                        </div>
+                      )}
+
+                      <div className="detail-item">
+                        <span className="detail-label">Created</span>
+                        <span className="detail-value">
+                          {new Date(reservation.createdAt).toLocaleDateString()}
+                        </span>
+                      </div>
+                    </div>
+
+                    {reservation.status !== 'CANCELLED' && reservation.status !== 'COMPLETED' && (
+                      <div className="reservation-actions">
+                        <button
+                          className="btn btn-danger-outline"
+                          onClick={() => handleCancel(reservation.id)}
+                        >
+                          Cancel Reservation
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
+        )}
+
+        {section === 'events' && (
+          <>
+            {loading ? (
+              <div className="loading-state">
+                <div className="spinner"></div>
+                <p>Loading bookings...</p>
+              </div>
+            ) : filteredEventBookings.length === 0 ? (
+              <div className="empty-state">
+                <p>No event bookings found</p>
+              </div>
+            ) : (
+              <div className="reservations-list">
+                {filteredEventBookings.map(booking => (
+                  <div key={booking.id} className="reservation-card">
+                    <div className="reservation-header">
+                      <h3>{eventTitles[booking.eventId] ?? `Event #${booking.eventId}`}</h3>
+                      <span className={`status-badge ${getStatusColor(booking.status)}`}>
+                        {booking.status}
+                      </span>
+                    </div>
+
+                    <div className="reservation-details">
+                      <div className="detail-item">
+                        <span className="detail-label">👥 Party Size</span>
+                        <span className="detail-value">{booking.partySize} guests</span>
+                      </div>
+
+                      <div className="detail-item">
+                        <span className="detail-label">Created</span>
+                        <span className="detail-value">
+                          {new Date(booking.createdAt).toLocaleDateString()}
+                        </span>
+                      </div>
+                    </div>
+
+                    {booking.status !== 'CANCELLED' && (
+                      <div className="reservation-actions">
+                        <button
+                          className="btn btn-danger-outline"
+                          onClick={() => handleCancelEventBooking(booking.id)}
+                        >
+                          Cancel Booking
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
         )}
       </div>
+
+      {/* AI reservation assistant: hidden until the user clicks one of the two buttons above */}
+      {chatbot && (
+        <ReservationChatbot
+          mode={chatbot}
+          restaurantId={chatbot === 'restaurant' ? restaurantId : undefined}
+          onReservationChanged={() => {
+            loadReservations();
+            loadEventBookings();
+          }}
+          onClose={() => setChatbot(null)}
+        />
+      )}
     </div>
   );
 };

@@ -1,4 +1,6 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import { reviewService } from '../../services/review/reviewService';
 import { restaurantService } from '../../services/restaurant/restaurantService';
 import { Review, Restaurant } from '../../types';
@@ -65,6 +67,7 @@ function toFiveScale(scoreOutOfTen: number): string {
 
 // ─── Component ───────────────────────────────────────────────────────────────
 const ReviewsPage = () => {
+  const { isAuthenticated } = useAuth();
   const [reviews, setReviews] = useState<Review[]>([]);
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
   const [filteredReviews, setFilteredReviews] = useState<Review[]>([]);
@@ -146,13 +149,13 @@ const ReviewsPage = () => {
       ]);
 
       const ragDatasetRestaurants: Restaurant[] = [
-        { id: 'rag_1', name: 'Beyond Flavours', cuisine: 'North Indian / Asian', priceRange: 'MODERATE', rating: 4.8, reviewCount: 142, isOpen: true, address: 'Plot 36, HITEC City', phone: '+91 40 6815 6789', openingHours: '12:00 PM - 11:30 PM', description: 'Renommé pour son ambiance et son service courtois.', image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&fit=crop' },
-        { id: 'rag_2', name: 'Paradise', cuisine: 'Biryani / Mughlai', priceRange: 'MODERATE', rating: 4.5, reviewCount: 230, isOpen: true, address: 'SD Road, Secunderabad', phone: '+91 40 2784 3115', openingHours: '11:00 AM - 11:00 PM', description: 'Institution légendaire pour la gastronomie.', image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&fit=crop' },
-        { id: 'rag_3', name: 'Over The Moon Brew Company', cuisine: 'Continental / Finger Food', priceRange: 'EXPENSIVE', rating: 4.6, reviewCount: 95, isOpen: true, address: 'Daspalla Hotel, Jubilee Hills', phone: '+91 40 6684 4444', openingHours: '01:00 PM - 12:00 AM', description: 'Brasserie haut de gamme et vue panoramique.', image: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=400&fit=crop' },
-        { id: 'rag_4', name: 'Flechazo', cuisine: 'Mediterranean / Asian', priceRange: 'MODERATE', rating: 4.2, reviewCount: 110, isOpen: true, address: 'Madhapur Main Road', phone: '+91 40 3316 5233', openingHours: '11:30 AM - 11:00 PM', description: 'Buffet méditerranéen et expérience festive.', image: 'https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?w=400&fit=crop' },
-        { id: 'rag_5', name: "The Fisherman's Wharf", cuisine: 'Seafood / Goan', priceRange: 'EXPENSIVE', rating: 4.4, reviewCount: 88, isOpen: true, address: 'Financial District, Gachibowli', phone: '+91 40 6733 1133', openingHours: '12:00 PM - 11:00 PM', description: 'Spécialités de poissons et cadre tropical.', image: 'https://images.unsplash.com/photo-1537047902294-62a40c20a6ae?w=400&fit=crop' },
-        { id: 'rag_6', name: 'Sushi Zen', cuisine: 'Japanese / Sushi Bar', priceRange: 'EXPENSIVE', rating: 4.7, reviewCount: 78, isOpen: true, address: 'Little Tokyo, Downtown', phone: '+33 1 42 68 00 11', openingHours: '12:00 PM - 10:30 PM', description: "Poissons d'une fraîcheur exceptionnelle.", image: 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=400&fit=crop' },
-        { id: 'rag_7', name: 'Shah Ghouse Hotel & Restaurant', cuisine: 'Hyderabadi / Biryani', priceRange: 'BUDGET', rating: 4.3, reviewCount: 310, isOpen: true, address: 'Tolichowki, Hyderabad', phone: '+91 40 2354 1234', openingHours: '11:00 AM - 12:00 AM', description: 'Haleem et biryani légendaires.', image: 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400&fit=crop' },
+        { id: 'rag_1', name: 'Beyond Flavours', cuisine: 'North Indian / Asian', priceRange: 'MODERATE', rating: 4.8, reviewCount: 142, isOpen: true, address: 'Plot 36, HITEC City', phone: '+91 40 6815 6789', openingHours: '12:00 PM - 11:30 PM', description: 'Renommé pour son ambiance et son service courtois.', image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&fit=crop', features: [], createdAt: '', updatedAt: '' },
+        { id: 'rag_2', name: 'Paradise', cuisine: 'Biryani / Mughlai', priceRange: 'MODERATE', rating: 4.5, reviewCount: 230, isOpen: true, address: 'SD Road, Secunderabad', phone: '+91 40 2784 3115', openingHours: '11:00 AM - 11:00 PM', description: 'Institution légendaire pour la gastronomie.', image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&fit=crop', features: [], createdAt: '', updatedAt: '' },
+        { id: 'rag_3', name: 'Over The Moon Brew Company', cuisine: 'Continental / Finger Food', priceRange: 'EXPENSIVE', rating: 4.6, reviewCount: 95, isOpen: true, address: 'Daspalla Hotel, Jubilee Hills', phone: '+91 40 6684 4444', openingHours: '01:00 PM - 12:00 AM', description: 'Brasserie haut de gamme et vue panoramique.', image: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=400&fit=crop', features: [], createdAt: '', updatedAt: '' },
+        { id: 'rag_4', name: 'Flechazo', cuisine: 'Mediterranean / Asian', priceRange: 'MODERATE', rating: 4.2, reviewCount: 110, isOpen: true, address: 'Madhapur Main Road', phone: '+91 40 3316 5233', openingHours: '11:30 AM - 11:00 PM', description: 'Buffet méditerranéen et expérience festive.', image: 'https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?w=400&fit=crop', features: [], createdAt: '', updatedAt: '' },
+        { id: 'rag_5', name: "The Fisherman's Wharf", cuisine: 'Seafood / Goan', priceRange: 'EXPENSIVE', rating: 4.4, reviewCount: 88, isOpen: true, address: 'Financial District, Gachibowli', phone: '+91 40 6733 1133', openingHours: '12:00 PM - 11:00 PM', description: 'Spécialités de poissons et cadre tropical.', image: 'https://images.unsplash.com/photo-1537047902294-62a40c20a6ae?w=400&fit=crop', features: [], createdAt: '', updatedAt: '' },
+        { id: 'rag_6', name: 'Sushi Zen', cuisine: 'Japanese / Sushi Bar', priceRange: 'EXPENSIVE', rating: 4.7, reviewCount: 78, isOpen: true, address: 'Little Tokyo, Downtown', phone: '+33 1 42 68 00 11', openingHours: '12:00 PM - 10:30 PM', description: "Poissons d'une fraîcheur exceptionnelle.", image: 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=400&fit=crop', features: [], createdAt: '', updatedAt: '' },
+        { id: 'rag_7', name: 'Shah Ghouse Hotel & Restaurant', cuisine: 'Hyderabadi / Biryani', priceRange: 'BUDGET', rating: 4.3, reviewCount: 310, isOpen: true, address: 'Tolichowki, Hyderabad', phone: '+91 40 2354 1234', openingHours: '11:00 AM - 12:00 AM', description: 'Haleem et biryani légendaires.', image: 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400&fit=crop', features: [], createdAt: '', updatedAt: '' },
       ];
 
       const combined = [...restaurantData, ...ragDatasetRestaurants.filter(r => !restaurantData.some(b => b.name === r.name))];
@@ -242,6 +245,8 @@ const ReviewsPage = () => {
       rating: overallRating,
       title: reviewTitle || 'Expérience culinaire',
       comment: comment,
+      helpfulCount: 0,
+      status: 'PUBLISHED',
       createdAt: new Date().toISOString()
     };
 
@@ -302,6 +307,14 @@ const ReviewsPage = () => {
 
       <div className="container">
         {/* ── Review Form ── */}
+        {!isAuthenticated ? (
+          <div className="review-card review-card-guest" style={{ marginBottom: 'var(--space-2xl)', textAlign: 'center' }}>
+            <p style={{ marginBottom: '12px', color: 'var(--color-text-secondary)' }}>
+              Sign in to write a review and share your dining experience.
+            </p>
+            <Link to="/login" className="btn btn-primary btn-sm">Sign in</Link>
+          </div>
+        ) : (
         <div className="review-card" style={{ marginBottom: 'var(--space-2xl)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
             <span style={{ fontSize: '1.5rem' }}>✍️</span>
@@ -485,6 +498,7 @@ const ReviewsPage = () => {
             </div>
           )}
         </div>
+        )}
 
         {/* ── Reviews List with Sidebar ── */}
         <div className="reviews-layout">

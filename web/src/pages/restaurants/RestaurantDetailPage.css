@@ -83,6 +83,31 @@
 
 .header-actions {
   flex-shrink: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.btn-danger {
+  background: var(--color-error);
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #dc2626;
+}
+
+.menu-image-link {
+  display: block;
+}
+
+.menu-image {
+  width: 100%;
+  max-height: 720px;
+  object-fit: contain;
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
 }
 
 /* Detail Content */

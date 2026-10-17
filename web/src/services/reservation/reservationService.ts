@@ -1,5 +1,5 @@
 import { apiClient } from '../api/apiClient';
-import { Reservation, ReservationRequest } from '../../types';
+import { AvailabilityResult, Reservation, ReservationRequest } from '../../types';
 
 class ReservationService {
   async getUserReservations(userId: string): Promise<Reservation[]> {
@@ -10,12 +10,21 @@ class ReservationService {
     return apiClient.get<Reservation>(`/reservations/${id}`);
   }
 
-  async create(userId: string, data: ReservationRequest): Promise<Reservation> {
-    return apiClient.post<Reservation>('/reservations', data, { userId });
+  // The backend identifies the user from the JWT sent by apiClient
+  async create(data: ReservationRequest): Promise<Reservation> {
+    return apiClient.post<Reservation>('/reservations', data);
+  }
+
+  async update(id: string, data: ReservationRequest): Promise<Reservation> {
+    return apiClient.put<Reservation>(`/reservations/${id}`, data);
   }
 
   async cancel(id: string): Promise<void> {
     return apiClient.delete<void>(`/reservations/${id}`);
+  }
+
+  async checkAvailability(restaurantId: string, dateTime: string, partySize: number): Promise<AvailabilityResult> {
+    return apiClient.get<AvailabilityResult>('/reservations/availability', { restaurantId, dateTime, partySize });
   }
 }
 

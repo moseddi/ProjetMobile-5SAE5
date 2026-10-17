@@ -1,0 +1,85 @@
+.games-catalog-page {
+  padding: var(--space-3xl) 0;
+}
+
+.games-catalog-subtitle {
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-2xl);
+}
+
+.games-catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-xl);
+}
+
+.game-catalog-card {
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  display: flex;
+  gap: var(--space-lg);
+  box-shadow: var(--shadow-subtle);
+}
+
+.game-catalog-icon {
+  font-size: 2.5rem;
+  flex-shrink: 0;
+}
+
+.game-catalog-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.game-catalog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-xs);
+}
+
+.game-catalog-header h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  color: var(--color-text-primary);
+}
+
+.difficulty-badge {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-secondary);
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+
+.game-catalog-description {
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-xs);
+}
+
+.game-catalog-rules {
+  font-size: 0.8125rem;
+  color: var(--color-text-tertiary);
+  margin-bottom: var(--space-md);
+}
+
+.game-catalog-meta {
+  display: flex;
+  gap: var(--space-md);
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-lg);
+  flex-wrap: wrap;
+}
+
+.btn-disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}

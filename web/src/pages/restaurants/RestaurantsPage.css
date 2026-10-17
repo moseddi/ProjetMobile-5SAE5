@@ -45,6 +45,14 @@
 .search-container {
   max-width: 600px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-md);
+}
+
+.add-restaurant-btn {
+  align-self: center;
 }
 
 .search-input-large {
@@ -277,14 +285,35 @@
 
 /* Restaurant Card */
 .restaurant-card {
-  display: block;
+  display: flex;
+  flex-direction: column;
   background: white;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   overflow: hidden;
-  text-decoration: none;
   transition: all 0.3s ease;
   box-shadow: var(--shadow-subtle);
+}
+
+.restaurant-card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.restaurant-card-actions {
+  display: flex;
+  gap: var(--space-sm);
+  padding: 0 var(--space-lg) var(--space-lg);
+}
+
+.btn-danger {
+  background: var(--color-error);
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #dc2626;
 }
 
 .restaurant-card:hover {

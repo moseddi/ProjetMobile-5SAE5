@@ -184,6 +184,23 @@
   text-decoration: underline;
 }
 
+.auth-guest-link {
+  display: block;
+  text-align: center;
+  margin-top: var(--space-lg);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9375rem;
+  font-weight: var(--font-medium);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.auth-guest-link:hover {
+  color: var(--color-text-primary);
+  text-decoration: underline;
+}
+
 /* Demo Info */
 .demo-info {
   margin-top: var(--space-2xl);

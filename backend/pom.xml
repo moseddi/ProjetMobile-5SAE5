@@ -87,6 +87,14 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!-- Embedded MongoDB for tests (no Docker, no Atlas connection needed) -->
+        <dependency>
+            <groupId>de.flapdoodle.embed</groupId>
+            <artifactId>de.flapdoodle.embed.mongo.spring3x</artifactId>
+            <version>4.13.0</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     
     <build>

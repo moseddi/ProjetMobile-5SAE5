@@ -12,6 +12,13 @@
   margin-bottom: var(--space-xl);
 }
 
+.reservation-cta-row {
+  display: flex;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-xl);
+}
+
 /* Reservation Form Card */
 .reservation-form-card {
   background: var(--color-surface);

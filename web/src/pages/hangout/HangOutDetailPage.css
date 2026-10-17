@@ -1,0 +1,284 @@
+/* HangOut Detail Page */
+.hangout-detail-page {
+  min-height: 100vh;
+  background: var(--color-bg-primary);
+  padding-top: 72px;
+  padding-bottom: var(--space-4xl);
+}
+
+.hangout-detail-hero {
+  position: relative;
+  height: 360px;
+  overflow: hidden;
+  background: var(--color-text-primary);
+}
+
+.hangout-detail-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.55;
+}
+
+.hangout-detail-hero-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: var(--space-2xl);
+  background: linear-gradient(180deg, rgba(26, 26, 26, 0.15) 0%, rgba(26, 26, 26, 0.75) 100%);
+  color: #fff;
+}
+
+.back-link {
+  background: none;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0;
+  margin-bottom: var(--space-lg);
+  align-self: flex-start;
+  transition: color 0.2s ease;
+}
+
+.back-link:hover {
+  color: #fff;
+}
+
+.detail-hero-badges {
+  display: flex;
+  gap: 8px;
+  margin-bottom: var(--space-md);
+}
+
+.detail-hero-badges .status-badge-hangout {
+  position: static;
+}
+
+.hangout-detail-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4.5vw, 3.25rem);
+  color: #fff;
+  margin-bottom: var(--space-sm);
+  letter-spacing: -0.02em;
+}
+
+.hangout-detail-restaurant {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.0625rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.hangout-detail-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space-xl);
+  margin-top: var(--space-2xl);
+  align-items: start;
+}
+
+.hangout-detail-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.detail-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-soft);
+}
+
+.detail-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.375rem;
+  font-weight: 600;
+  margin-bottom: var(--space-lg);
+}
+
+.hangout-detail-description {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-xl);
+}
+
+.detail-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+}
+
+.detail-info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.detail-info-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-tertiary);
+}
+
+.detail-info-value {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9375rem;
+  color: var(--color-text-primary);
+  line-height: 1.4;
+}
+
+/* Participants */
+.participants-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.participant {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.participant img,
+.participant-avatar-fallback {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.participant-avatar-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-secondary);
+  font-family: 'Playfair Display', serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.participant-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.participant-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.organizer-tag {
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-primary);
+  background: rgba(230, 57, 70, 0.1);
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.participant-status {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8125rem;
+  color: var(--color-text-tertiary);
+  text-transform: capitalize;
+}
+
+/* Sidebar */
+.sticky-card {
+  position: sticky;
+  top: 96px;
+}
+
+.sidebar-creator {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin: var(--space-sm) 0 var(--space-lg);
+}
+
+.sidebar-creator img,
+.sidebar-creator .participant-avatar-fallback {
+  width: 48px;
+  height: 48px;
+}
+
+.sidebar-creator span {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.sidebar-hint {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  color: var(--color-text-tertiary);
+  margin-bottom: var(--space-md);
+  line-height: 1.5;
+}
+
+.sidebar-hint-success {
+  color: var(--color-success);
+  font-weight: 600;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.btn-danger-outline {
+  border: 1.5px solid var(--color-error);
+  color: var(--color-error);
+  background: transparent;
+}
+
+.btn-danger-outline:hover {
+  background: var(--color-error);
+  color: #fff;
+}
+
+@media (max-width: 900px) {
+  .hangout-detail-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sticky-card {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .hangout-detail-page {
+    padding-top: 64px;
+  }
+
+  .hangout-detail-hero {
+    height: 300px;
+  }
+
+  .detail-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-card {
+    padding: var(--space-lg);
+  }
+}

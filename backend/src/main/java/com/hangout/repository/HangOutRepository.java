@@ -11,4 +11,7 @@ public interface HangOutRepository extends MongoRepository<HangOut, String> {
     List<HangOut> findByCreatorId(String creatorId);
     List<HangOut> findByRestaurantId(String restaurantId);
     List<HangOut> findByStatus(HangOut.HangOutStatus status);
+    List<HangOut> findByStatusInOrderByPlannedDateTimeAsc(List<HangOut.HangOutStatus> statuses);
+    List<HangOut> findAllByOrderByPlannedDateTimeAsc();
+    List<HangOut> findByParticipantsUserId(String userId);
 }

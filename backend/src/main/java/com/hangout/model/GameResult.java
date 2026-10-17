@@ -17,12 +17,13 @@ public class GameResult {
     private GameType gameType;
     private Integer pointsEarned;
     private GameOutcome outcome;
-    
+    private Integer score;
+
     @CreatedDate
     private LocalDateTime playedAt;
-    
+
     public enum GameType {
-        CARD_MEMORY, LUCKY_WHEEL
+        QUIZ, CARD_MEMORY, SCRATCH_CARD, DAILY_WHEEL
     }
     
     public enum GameOutcome {

@@ -26,36 +26,52 @@ public class DataSeeder implements CommandLineRunner {
     private final ReviewRepository reviewRepository;
     private final EventRepository eventRepository;
     private final HangOutRepository hangOutRepository;
+    private final QuizQuestionRepository quizQuestionRepository;
+    private final RewardRepository rewardRepository;
     private final PasswordEncoder passwordEncoder;
     
     @Override
     public void run(String... args) {
-        if (userRepository.count() > 0) {
-            log.info("Database already seeded, skipping...");
-            return;
+        if (userRepository.count() == 0) {
+            log.info("Seeding database...");
+
+            // Seed Users
+            List<User> users = seedUsers();
+
+            // Seed Restaurants
+            List<Restaurant> restaurants = seedRestaurants();
+
+            // Seed Menu Items
+            seedMenuItems(restaurants);
+
+            // Seed Reviews
+            seedReviews(users, restaurants);
+
+            // Seed Events
+            seedEvents(restaurants);
+
+            // Seed HangOuts
+            seedHangOuts(users, restaurants);
+
+            log.info("Database seeding completed!");
+        } else {
+            log.info("Database already seeded, skipping core seed data...");
         }
-        
-        log.info("Seeding database...");
-        
-        // Seed Users
-        List<User> users = seedUsers();
-        
-        // Seed Restaurants
-        List<Restaurant> restaurants = seedRestaurants();
-        
-        // Seed Menu Items
-        seedMenuItems(restaurants);
-        
-        // Seed Reviews
-        seedReviews(users, restaurants);
-        
-        // Seed Events
-        seedEvents(restaurants);
-        
-        // Seed HangOuts
-        seedHangOuts(users, restaurants);
-        
-        log.info("Database seeding completed!");
+
+        // Loyalty seed data is independent of the core seed guard above, so it also
+        // backfills a database that was seeded before the loyalty feature existed.
+        if (quizQuestionRepository.count() == 0) {
+            seedQuizQuestions();
+            log.info("Seeded quiz questions.");
+        }
+        if (rewardRepository.count() == 0) {
+            seedRewards();
+            log.info("Seeded rewards catalog.");
+        }
+        if (rewardRepository.findByActiveTrueAndRestaurantIdNotNull().isEmpty()) {
+            seedRestaurantRewards();
+            log.info("Seeded restaurant-specific rewards.");
+        }
     }
     
     private List<User> seedUsers() {
@@ -98,6 +114,7 @@ public class DataSeeder implements CommandLineRunner {
         r1.setImage("https://images.unsplash.com/photo-1414235077428-338989a2e8c0");
         r1.setAddress("123 Main St, Downtown");
         r1.setPhone("+1-555-0101");
+        r1.setSeatingCapacity(40);
         r1.setOpeningHours("11:00 AM - 10:00 PM");
         r1.setRating(4.5);
         r1.setReviewCount(0);
@@ -112,6 +129,7 @@ public class DataSeeder implements CommandLineRunner {
         r2.setImage("https://images.unsplash.com/photo-1579584425555-c3ce17fd4351");
         r2.setAddress("456 Oak Ave, Midtown");
         r2.setPhone("+1-555-0102");
+        r2.setSeatingCapacity(30);
         r2.setOpeningHours("12:00 PM - 11:00 PM");
         r2.setRating(4.7);
         r2.setReviewCount(0);
@@ -126,6 +144,7 @@ public class DataSeeder implements CommandLineRunner {
         r3.setImage("https://images.unsplash.com/photo-1555396273-367ea4eb4db5");
         r3.setAddress("789 Pine Rd, Little Italy");
         r3.setPhone("+1-555-0103");
+        r3.setSeatingCapacity(50);
         r3.setOpeningHours("11:30 AM - 10:30 PM");
         r3.setRating(4.3);
         r3.setReviewCount(0);
@@ -237,5 +256,158 @@ public class DataSeeder implements CommandLineRunner {
         
         hangouts.add(h1);
         hangOutRepository.saveAll(hangouts);
+    }
+
+    private void seedQuizQuestions() {
+        List<QuizQuestion> questions = new ArrayList<>();
+
+        questions.add(quizQuestion(
+            "A quelle temperature ideale sert-on generalement un vin rouge leger ?",
+            List.of("4-6°C", "12-14°C", "18-20°C", "25-28°C"), 1,
+            "Un vin rouge leger (comme un Beaujolais) se sert legerement frais, autour de 12-14°C, pour preserver ses aromes fruites.",
+            "Vin", QuizQuestion.Difficulty.MEDIUM));
+
+        questions.add(quizQuestion(
+            "Quel ingredient est la base d'un risotto traditionnel ?",
+            List.of("Riz Arborio", "Pates", "Semoule", "Quinoa"), 0,
+            "Le risotto italien se prepare traditionnellement avec du riz Arborio, riche en amidon, pour obtenir sa texture cremeuse.",
+            "Cuisine", QuizQuestion.Difficulty.EASY));
+
+        questions.add(quizQuestion(
+            "Combien de points gagne-t-on generalement en laissant un avis sur un restaurant ?",
+            List.of("Cela depend du programme", "0 point", "1000 points", "Un avis ne rapporte jamais de points"), 0,
+            "Les points accordes pour un avis dependent des regles du programme de fidelite en vigueur dans l'application.",
+            "Programme fidelite", QuizQuestion.Difficulty.EASY));
+
+        questions.add(quizQuestion(
+            "Quelle cuisine est reputee pour le sushi et le ramen ?",
+            List.of("Italienne", "Japonaise", "Mexicaine", "Indienne"), 1,
+            "Le sushi et le ramen sont des plats embematiques de la cuisine japonaise.",
+            "Cuisine", QuizQuestion.Difficulty.EASY));
+
+        questions.add(quizQuestion(
+            "Dans un menu, que designe generalement le terme 'entree' en France ?",
+            List.of("Le plat principal", "Le dessert", "Le premier service avant le plat principal", "La boisson d'accueil"), 2,
+            "En France, l'entree est le service qui precede le plat principal, contrairement aux Etats-Unis ou 'entree' designe le plat principal.",
+            "Culture culinaire", QuizQuestion.Difficulty.MEDIUM));
+
+        questions.add(quizQuestion(
+            "Quel est l'ingredient principal du guacamole ?",
+            List.of("Tomate", "Avocat", "Poivron", "Mais"), 1,
+            "Le guacamole est une preparation mexicaine a base d'avocat ecrase.",
+            "Cuisine", QuizQuestion.Difficulty.EASY));
+
+        questions.add(quizQuestion(
+            "Qu'est-ce qu'un 'amuse-bouche' au restaurant ?",
+            List.of("Une petite bouchee offerte avant le repas", "Le plat principal", "Un digestif", "Le pain de la table"), 0,
+            "L'amuse-bouche est une petite bouchee, generalement offerte par le chef, servie avant le debut du repas.",
+            "Culture culinaire", QuizQuestion.Difficulty.MEDIUM));
+
+        questions.add(quizQuestion(
+            "Quel fromage est traditionnellement utilise sur une pizza margherita ?",
+            List.of("Roquefort", "Mozzarella", "Comte", "Feta"), 1,
+            "La pizza margherita traditionnelle utilise de la mozzarella, en reference aux couleurs du drapeau italien avec la tomate et le basilic.",
+            "Cuisine", QuizQuestion.Difficulty.EASY));
+
+        questions.add(quizQuestion(
+            "Combien de tentatives gratuites a-t-on generalement par jour pour la roue quotidienne ?",
+            List.of("1", "5", "10", "Illimite"), 0,
+            "La roue quotidienne de fidelite offre generalement 1 tour gratuit par jour.",
+            "Programme fidelite", QuizQuestion.Difficulty.EASY));
+
+        questions.add(quizQuestion(
+            "Quelle epice donne sa couleur jaune caracteristique au curry ?",
+            List.of("Paprika", "Curcuma", "Cannelle", "Safran"), 1,
+            "Le curcuma est l'epice responsable de la couleur jaune vif de nombreux curry.",
+            "Cuisine", QuizQuestion.Difficulty.MEDIUM));
+
+        quizQuestionRepository.saveAll(questions);
+    }
+
+    private QuizQuestion quizQuestion(String question, List<String> options, int correctIndex, String explanation, String category, QuizQuestion.Difficulty difficulty) {
+        QuizQuestion q = new QuizQuestion();
+        q.setQuestion(question);
+        q.setOptions(options);
+        q.setCorrectAnswerIndex(correctIndex);
+        q.setExplanation(explanation);
+        q.setCategory(category);
+        q.setDifficulty(difficulty);
+        q.setActive(true);
+        return q;
+    }
+
+    private void seedRewards() {
+        List<Reward> rewards = new ArrayList<>();
+
+        rewards.add(reward("Credit de 10$", "10$ de reduction sur ta prochaine reservation", Reward.RewardCategory.DISCOUNT, 500, null,
+            "https://images.unsplash.com/photo-1511920170033-f8396924c348?w=400", "Valable sur une seule reservation, non cumulable."));
+
+        rewards.add(reward("Entree offerte", "Une entree offerte dans les restaurants partenaires", Reward.RewardCategory.FREE_ITEM, 300, 50,
+            "https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=400", "Valable 30 jours apres l'echange, une seule entree par reservation."));
+
+        rewards.add(reward("Credit de 25$", "25$ de reduction sur ta prochaine reservation", Reward.RewardCategory.DISCOUNT, 1000, null,
+            "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400", "Valable sur une seule reservation, non cumulable."));
+
+        rewards.add(reward("Dessert offert", "Un dessert offert pour toute la table", Reward.RewardCategory.FREE_ITEM, 450, 30,
+            "https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400", "Valable pour une table de maximum 4 personnes."));
+
+        rewards.add(reward("Experience degustation", "Acces a une degustation exclusive avec un chef partenaire", Reward.RewardCategory.EXPERIENCE, 2000, 10,
+            "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400", "Sur reservation uniquement, places limitees."));
+
+        rewards.add(reward("Statut VIP 1 mois", "Acces prioritaire aux reservations pendant 1 mois", Reward.RewardCategory.TIER_PERK, 1500, null,
+            "https://images.unsplash.com/photo-1529636798458-92182e662485?w=400", "Avantage valable 30 jours a compter de l'echange."));
+
+        rewards.add(reward("Credit de 50$", "50$ de reduction sur ta prochaine reservation", Reward.RewardCategory.DISCOUNT, 1800, null,
+            "https://images.unsplash.com/photo-1424847651672-bf20a4b0982b?w=400", "Valable sur une seule reservation, non cumulable."));
+
+        rewards.add(reward("Diner pour 2 offert", "Un diner complet offert pour deux personnes", Reward.RewardCategory.EXPERIENCE, 3500, 5,
+            "https://images.unsplash.com/photo-1424847651672-bf20a4b0982b?w=400", "Sur reservation, hors boissons alcoolisees."));
+
+        rewardRepository.saveAll(rewards);
+    }
+
+    private void seedRestaurantRewards() {
+        List<Restaurant> restaurants = restaurantRepository.findAll();
+        if (restaurants.isEmpty()) {
+            return;
+        }
+        List<Reward> rewards = new ArrayList<>();
+        LocalDateTime inTwoMonths = LocalDateTime.now().plusMonths(2);
+
+        for (Restaurant r : restaurants) {
+            Reward starter = restaurantReward("Entree offerte chez " + r.getName(),
+                "Une entree offerte pour ta prochaine visite chez " + r.getName() + ".",
+                Reward.RewardCategory.FREE_ITEM, 250, 20, r.getImage(), r.getId(),
+                "Valable pour une reservation chez " + r.getName() + " uniquement.", inTwoMonths);
+            Reward premium = restaurantReward("Menu degustation chez " + r.getName(),
+                "Un menu degustation complet pour deux personnes chez " + r.getName() + ".",
+                Reward.RewardCategory.EXPERIENCE, 1200, 8, r.getImage(), r.getId(),
+                "Sur reservation uniquement chez " + r.getName() + ", places limitees.", inTwoMonths);
+            rewards.add(starter);
+            rewards.add(premium);
+        }
+
+        rewardRepository.saveAll(rewards);
+    }
+
+    private Reward restaurantReward(String name, String description, Reward.RewardCategory category, int pointsCost,
+                                     Integer stock, String imageUrl, String restaurantId, String terms, LocalDateTime expiry) {
+        Reward r = reward(name, description, category, pointsCost, stock, imageUrl, terms);
+        r.setRestaurantId(restaurantId);
+        r.setExpiryDate(expiry);
+        return r;
+    }
+
+    private Reward reward(String name, String description, Reward.RewardCategory category, int pointsCost, Integer stock, String imageUrl, String terms) {
+        Reward r = new Reward();
+        r.setName(name);
+        r.setDescription(description);
+        r.setCategory(category);
+        r.setPointsCost(pointsCost);
+        r.setStock(stock);
+        r.setActive(true);
+        r.setImageUrl(imageUrl);
+        r.setTermsAndConditions(terms);
+        return r;
     }
 }

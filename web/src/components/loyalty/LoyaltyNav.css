@@ -1,0 +1,40 @@
+.loyalty-nav {
+  position: sticky;
+  top: 72px;
+  z-index: 10;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.loyalty-nav-inner {
+  display: flex;
+  gap: var(--space-xs);
+  overflow-x: auto;
+}
+
+.loyalty-nav-tab {
+  padding: 14px 18px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.loyalty-nav-tab:hover {
+  color: var(--color-text-primary);
+}
+
+.loyalty-nav-tab.active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .loyalty-nav {
+    top: 64px;
+  }
+}

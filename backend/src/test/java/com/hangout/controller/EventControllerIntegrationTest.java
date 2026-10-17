@@ -7,6 +7,7 @@ import com.hangout.ai.GeneratedDescription;
 import com.hangout.ai.SimpleRateLimiter;
 import com.hangout.model.Event;
 import com.hangout.service.EventService;
+import com.hangout.service.JwtService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,10 @@ class EventControllerIntegrationTest {
 
     @MockBean
     private SimpleRateLimiter rateLimiter;
+
+    // Not used by these tests, but SecurityConfig's JwtAuthFilter needs it to build in this slice
+    @MockBean
+    private JwtService jwtService;
 
     @Test
     @DisplayName("GET /api/events -> 200 OK with list of events")

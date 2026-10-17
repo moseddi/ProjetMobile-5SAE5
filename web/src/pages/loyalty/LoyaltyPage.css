@@ -244,6 +244,238 @@
   color: var(--color-text-secondary);
 }
 
+.loading {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-4xl) 0;
+}
+
+.section-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-xl);
+}
+
+.link-see-all {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+/* Challenges */
+.challenges-section {
+  padding: var(--space-xl) 0;
+}
+
+.challenges-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-lg);
+}
+
+.challenge-card {
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-subtle);
+}
+
+.challenge-card.completed {
+  border-color: var(--color-success, #15803d);
+  background: #f0fdf4;
+}
+
+.challenge-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-sm);
+}
+
+.challenge-card-header h4 {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.challenge-points {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.challenge-card p {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-md);
+}
+
+.progress-bar-container.small {
+  height: 6px;
+  margin-bottom: var(--space-sm);
+}
+
+.challenge-progress-label {
+  font-size: 0.8125rem;
+  color: var(--color-text-tertiary);
+  font-weight: 500;
+}
+
+/* Games preview grid */
+.games-section {
+  padding: var(--space-xl) 0;
+}
+
+.games-grid-preview {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--space-lg);
+}
+
+.game-tile {
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-xl) var(--space-lg);
+  text-align: center;
+  transition: all 0.25s ease;
+  box-shadow: var(--shadow-subtle);
+}
+
+.game-tile:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-soft);
+}
+
+.game-tile-icon {
+  font-size: 2.5rem;
+  margin-bottom: var(--space-sm);
+}
+
+.game-tile h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.0625rem;
+  color: var(--color-text-primary);
+  margin-bottom: 4px;
+}
+
+.game-tile p {
+  font-size: 0.8125rem;
+  color: var(--color-text-tertiary);
+  margin-bottom: var(--space-sm);
+}
+
+.game-tile-status {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.game-tile-status.available {
+  background: #ecfdf5;
+  color: #15803d;
+}
+
+.game-tile-status.unavailable {
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-tertiary);
+}
+
+.rewards-affordable-hint {
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary);
+}
+
+/* Recommendation CTA */
+.recommendation-cta-section {
+  padding: var(--space-xl) 0 0;
+}
+
+.recommendation-cta-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  color: white;
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl) var(--space-2xl);
+  box-shadow: var(--shadow-medium);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.recommendation-cta-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-soft);
+}
+
+.recommendation-cta-icon {
+  font-size: 2.5rem;
+  flex-shrink: 0;
+}
+
+.recommendation-cta-text {
+  flex: 1;
+}
+
+.recommendation-cta-text h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.375rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.recommendation-cta-text p {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9375rem;
+  opacity: 0.92;
+}
+
+.recommendation-cta-arrow {
+  font-size: 1.75rem;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .recommendation-cta-card {
+    flex-wrap: wrap;
+    padding: var(--space-lg);
+  }
+}
+
+/* Assistant teaser */
+.assistant-teaser {
+  padding: var(--space-xl) 0 var(--space-3xl);
+}
+
+.assistant-teaser-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  background: linear-gradient(135deg, var(--color-bg-secondary) 0%, var(--color-surface) 100%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-2xl);
+  flex-wrap: wrap;
+}
+
+.assistant-teaser-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.375rem;
+  margin-bottom: 4px;
+}
+
+.assistant-teaser-card p {
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary);
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
   .loyalty-overview {

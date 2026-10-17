@@ -22,7 +22,8 @@ public class HangOut {
     private Integer maxParticipants;
     private List<Participant> participants;
     private HangOutStatus status = HangOutStatus.OPEN;
-    
+    private Boolean aiGenerated = false;
+
     @CreatedDate
     private LocalDateTime createdAt;
     

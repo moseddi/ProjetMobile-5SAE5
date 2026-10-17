@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router-dom';
+import AssistantWidget from '../components/AssistantWidget';
 import Navbar from '../components/Navbar';
 import './Layout.css';
 
@@ -14,6 +15,7 @@ const Layout = () => {
           <p>&copy; 2024 HangOut. All rights reserved.</p>
         </div>
       </footer>
+      <AssistantWidget />
     </div>
   );
 };

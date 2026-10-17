@@ -3,6 +3,7 @@ package com.hangout.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hangout.dto.ReviewRequest;
 import com.hangout.dto.ReviewResponse;
+import com.hangout.service.JwtService;
 import com.hangout.service.ReviewService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -41,6 +42,10 @@ class ReviewControllerIntegrationTest {
 
     @MockBean
     private ReviewService reviewService;
+
+    // Not used by these tests, but SecurityConfig's JwtAuthFilter needs it to build in this slice
+    @MockBean
+    private JwtService jwtService;
 
     @Test
     @DisplayName("GET /api/reviews -> 200 OK with all reviews")

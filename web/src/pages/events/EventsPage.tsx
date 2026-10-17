@@ -1,6 +1,8 @@
 import './EventsPage.css';
 import { useCallback, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useAuth } from '../../context/AuthContext';
 import EventAIForm from '../../components/EventAIForm';
 import { eventService } from '../../services/event/eventService';
 import type { Event as AppEvent } from '../../types';
@@ -10,6 +12,8 @@ const DEFAULT_IMAGE =
   'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80';
 
 const EventsPage = () => {
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
   const [showAIForm, setShowAIForm] = useState(false);
   const [events, setEvents] = useState<AppEvent[]>([]);
   const [restaurantNames, setRestaurantNames] = useState<Record<string, string>>({});
@@ -50,6 +54,15 @@ const EventsPage = () => {
   const formatTime = (iso: string) =>
     new Date(iso).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
 
+  const handleToggleAIForm = () => {
+    if (!isAuthenticated) {
+      toast.info('Please sign in to create an event');
+      navigate('/login', { state: { from: '/events' } });
+      return;
+    }
+    setShowAIForm((v) => !v);
+  };
+
   return (
     <div className="events-page">
       {/* Hero Section */}
@@ -73,13 +86,13 @@ const EventsPage = () => {
             <button
               type="button"
               className="btn btn-primary"
-              onClick={() => setShowAIForm(!showAIForm)}
+              onClick={handleToggleAIForm}
             >
               {showAIForm ? 'Close form' : '✨ New event with AI'}
             </button>
           </div>
 
-          {showAIForm && (
+          {showAIForm && isAuthenticated && (
             <EventAIForm
               onSaved={() => {
                 setShowAIForm(false);

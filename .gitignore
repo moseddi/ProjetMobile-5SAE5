@@ -6,6 +6,7 @@ mobile/.flutter-plugins-dependencies
 # Backend (Spring Boot / Maven)
 backend/target/
 backend/.env
+backend/uploads/
 
 # Web (React / Vite)
 web/node_modules/

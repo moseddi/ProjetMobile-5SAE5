@@ -1,0 +1,180 @@
+.recommendations-page {
+  padding: var(--space-2xl) 0 var(--space-4xl);
+}
+
+.recommendations-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-xl);
+}
+
+.recommendations-subtitle {
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary);
+  max-width: 560px;
+}
+
+.goal-toggle {
+  display: flex;
+  gap: var(--space-sm);
+  flex-shrink: 0;
+}
+
+.recommendations-notice {
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  color: #9a3412;
+  border-radius: var(--radius-md);
+  padding: var(--space-md) var(--space-lg);
+  font-size: 0.875rem;
+  margin-bottom: var(--space-lg);
+}
+
+.recommendations-message {
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-xl);
+}
+
+.recommendations-error,
+.recommendations-empty {
+  text-align: center;
+  padding: var(--space-3xl) var(--space-lg);
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-lg);
+}
+
+.recommendations-empty-hint {
+  color: var(--color-text-tertiary);
+  font-size: 0.875rem;
+  margin-top: var(--space-sm);
+}
+
+.recommendations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--space-lg);
+}
+
+.recommendation-card {
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-subtle);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.recommendation-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-soft);
+}
+
+.recommendation-card.locked {
+  opacity: 0.85;
+}
+
+.recommendation-card-image {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+.recommendation-card-body {
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  flex: 1;
+}
+
+.recommendation-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.recommendation-card-top h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1875rem;
+  color: var(--color-text-primary);
+}
+
+.recommendation-rating {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #b45309;
+  flex-shrink: 0;
+}
+
+.recommendation-card-meta {
+  display: flex;
+  gap: var(--space-sm);
+  font-size: 0.8125rem;
+  color: var(--color-text-tertiary);
+}
+
+.recommendation-reward-box {
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-sm);
+  padding: var(--space-sm) var(--space-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--space-xs);
+}
+
+.recommendation-reward-name {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.recommendation-reward-cost {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.recommendation-status {
+  font-size: 0.8125rem;
+}
+
+.recommendation-status.affordable {
+  color: #15803d;
+}
+
+.recommendation-status.locked-text {
+  color: #b45309;
+}
+
+.recommendation-terms,
+.recommendation-expiry {
+  font-size: 0.75rem;
+  color: var(--color-text-tertiary);
+}
+
+.recommendation-reason {
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+.recommendation-actions {
+  display: flex;
+  gap: var(--space-sm);
+  margin-top: auto;
+  padding-top: var(--space-sm);
+}
+
+@media (max-width: 768px) {
+  .recommendations-grid {
+    grid-template-columns: 1fr;
+  }
+}

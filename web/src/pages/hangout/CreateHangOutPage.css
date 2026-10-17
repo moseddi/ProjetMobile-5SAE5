@@ -1,0 +1,208 @@
+/* Create HangOut Page */
+.create-hangout-page {
+  min-height: 100vh;
+  background: var(--color-bg-primary);
+  padding-top: 72px;
+  padding-bottom: var(--space-4xl);
+}
+
+.page-header-create {
+  background: linear-gradient(135deg, var(--color-bg-secondary) 0%, var(--color-surface) 100%);
+  padding: var(--space-3xl) 0 var(--space-2xl);
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: var(--space-3xl);
+  text-align: center;
+}
+
+.page-header-create h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.25rem, 4vw, 3rem);
+  margin-bottom: var(--space-sm);
+}
+
+.page-header-create p {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.0625rem;
+  color: var(--color-text-secondary);
+}
+
+.create-hangout-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+/* AI panel */
+.ai-panel,
+.hangout-form {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-soft);
+}
+
+.ai-panel {
+  border-top: 3px solid var(--color-primary);
+}
+
+.ai-panel-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.ai-spark {
+  font-size: 1.75rem;
+}
+
+.ai-panel-header h2,
+.hangout-form h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.ai-panel-header p {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  color: var(--color-text-tertiary);
+}
+
+/* Form controls */
+.form-group {
+  margin-bottom: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 14px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9375rem;
+  color: var(--color-text-primary);
+  background: var(--color-bg-primary);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+  resize: vertical;
+}
+
+.form-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.1);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+.form-actions {
+  display: flex;
+  gap: var(--space-md);
+  margin-top: var(--space-sm);
+}
+
+.btn-block {
+  width: 100%;
+}
+
+/* AI result */
+.ai-result {
+  margin-top: var(--space-lg);
+  padding-top: var(--space-lg);
+  border-top: 1px dashed var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.ai-provider-tag {
+  align-self: flex-start;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.ai-ok {
+  background: rgba(230, 57, 70, 0.1);
+  color: var(--color-primary);
+}
+
+.ai-fallback {
+  background: rgba(245, 158, 11, 0.14);
+  color: #B45309;
+}
+
+.ai-reason {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary);
+  line-height: 1.55;
+}
+
+.ai-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ai-keyword {
+  padding: 5px 12px;
+  background: var(--color-bg-tertiary);
+  border-radius: 999px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary);
+}
+
+.ai-notice {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8125rem;
+  color: #B45309;
+  background: rgba(245, 158, 11, 0.08);
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+  .create-hangout-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .create-hangout-page {
+    padding-top: 64px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+}

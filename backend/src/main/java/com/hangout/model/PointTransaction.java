@@ -23,6 +23,6 @@ public class PointTransaction {
     private LocalDateTime createdAt;
     
     public enum TransactionType {
-        EARN_RESERVATION, EARN_ORDER, EARN_REVIEW, EARN_GAME, REDEEM, ADJUSTMENT
+        EARN_RESERVATION, EARN_ORDER, EARN_REVIEW, EARN_GAME, EARN_CHALLENGE, REDEEM, ADJUSTMENT
     }
 }
