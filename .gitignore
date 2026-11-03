@@ -1,0 +1,25 @@
+# Mobile (Flutter) - see mobile/.gitignore for details
+mobile/.dart_tool/
+mobile/build/
+mobile/.flutter-plugins-dependencies
+
+# Backend (Spring Boot / Maven)
+backend/target/
+backend/.env
+
+# Web (React / Vite)
+web/node_modules/
+web/dist/
+web/.env
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Misc
+*.log
+.DS_Store
+
+# Claude local files
+.claude/
