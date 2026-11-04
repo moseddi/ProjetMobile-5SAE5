@@ -32,10 +32,12 @@ class _MainScreenState extends State<MainScreen> {
   ];
 
   @override
-  void initState() {
-    super.initState();
+void initState() {
+  super.initState();
+  WidgetsBinding.instance.addPostFrameCallback((_) {
     _loadData();
-  }
+  });
+}
 
   Future<void> _loadData() async {
     final authProvider = context.read<AuthProvider>();

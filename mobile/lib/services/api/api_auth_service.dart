@@ -31,7 +31,7 @@ class ApiAuthService implements AuthService {
       'email': email,
       'password': password,
       'phone': '',
-      'avatar': 'https://i.pravatar.cc/150?img=1',
+      'avatar': 'https://randomuser.me/api/portraits/men/1.jpg',
     };
 
     final response = await ApiClient.post('/auth/register', body);
