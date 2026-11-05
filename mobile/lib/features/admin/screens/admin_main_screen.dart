@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../../../core/theme/app_colors.dart';
 import '../providers/owner_requests_provider.dart';
 import 'admin_dashboard_screen.dart';
+import 'admin_events_screen.dart';
 import 'admin_owner_requests_screen.dart';
 import 'admin_profile_screen.dart';
 import 'admin_restaurants_screen.dart';
@@ -25,6 +26,7 @@ class _AdminMainScreenState extends State<AdminMainScreen> {
     AdminOwnerRequestsScreen(),
     AdminUsersScreen(),
     AdminRestaurantsScreen(),
+    AdminEventsScreen(),
     AdminReviewsScreen(),
     AdminProfileScreen(),
   ];
@@ -79,6 +81,11 @@ class _AdminMainScreenState extends State<AdminMainScreen> {
             icon: Icon(Icons.restaurant_outlined),
             selectedIcon: Icon(Icons.restaurant),
             label: 'Restaurants',
+          ),
+          const NavigationDestination(
+            icon: Icon(Icons.event_outlined),
+            selectedIcon: Icon(Icons.event),
+            label: 'Events',
           ),
           const NavigationDestination(
             icon: Icon(Icons.rate_review_outlined),

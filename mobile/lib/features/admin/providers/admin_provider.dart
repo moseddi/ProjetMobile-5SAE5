@@ -1,10 +1,12 @@
 import 'package:flutter/foundation.dart';
 import '../../../models/admin_stats.dart';
 import '../../../models/admin_user.dart';
+import '../../../models/event.dart';
 import '../../../models/reservation.dart';
 import '../../../models/restaurant.dart';
 import '../../../models/review.dart';
 import '../../../services/interfaces/admin_service.dart';
+import '../../../core/api/api_client.dart';
 
 class AdminProvider extends ChangeNotifier {
   final AdminService _adminService;
@@ -165,6 +167,57 @@ class AdminProvider extends ChangeNotifier {
     }
     _isLoadingReservations = false;
     notifyListeners();
+  }
+
+  // --- Events (admin oversight) -----------------------------------------
+
+  List<Event> _events = [];
+  List<AdminUser> _owners = [];
+  bool _isLoadingEvents = false;
+  String? _eventsError;
+
+  List<Event> get adminEvents => _events;
+  List<AdminUser> get eventOwners => _owners;
+  bool get isLoadingEvents => _isLoadingEvents;
+  String? get eventsError => _eventsError;
+
+  Future<void> loadAdminEvents() async {
+    _isLoadingEvents = true;
+    _eventsError = null;
+    notifyListeners();
+
+    try {
+      // Load events from the public endpoint + owners list in parallel
+      final results = await Future.wait([
+        ApiClient.get('/events').then((r) {
+          final data = ApiClient.handleResponse(r) as List;
+          return data.map((e) => Event.fromJson(e)).toList();
+        }),
+        _adminService.getUsers(role: 'RESTAURANT_OWNER'),
+      ]);
+      _events = results[0] as List<Event>;
+      _owners = results[1] as List<AdminUser>;
+    } catch (e) {
+      _eventsError = e.toString().replaceAll('Exception: ', '');
+    }
+    _isLoadingEvents = false;
+    notifyListeners();
+  }
+
+  Future<void> deleteAdminEvent(String id) async {
+    final response = await ApiClient.delete('/admin/events/$id');
+    ApiClient.handleResponse(response);
+    _events = _events.where((e) => e.id != id).toList();
+    notifyListeners();
+  }
+
+  /// Returns the owner name for a given restaurantId, or null if not found.
+  String? ownerNameForRestaurant(String restaurantId) {
+    try {
+      return _owners.firstWhere((o) => o.restaurantId == restaurantId).name;
+    } catch (_) {
+      return null;
+    }
   }
 
   // --- Stats -----------------------------------------------------------

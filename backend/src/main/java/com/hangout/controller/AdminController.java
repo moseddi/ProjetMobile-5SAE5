@@ -11,6 +11,7 @@ import com.hangout.model.Reservation;
 import com.hangout.model.User;
 import com.hangout.repository.ReservationRepository;
 import com.hangout.service.AdminService;
+import com.hangout.service.EventService;
 import com.hangout.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,7 @@ public class AdminController {
 
     private final AdminService adminService;
     private final ReviewService reviewService;
+    private final EventService eventService;
     private final ReservationRepository reservationRepository;
     private final com.hangout.service.OwnerApplicationService ownerApplicationService;
 
@@ -155,6 +157,12 @@ public class AdminController {
     @DeleteMapping("/reviews/{id}")
     public ResponseEntity<Void> deleteReview(@PathVariable String id) {
         reviewService.deleteReview(id, SecurityUtils.getCurrentUserId(), true);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/events/{id}")
+    public ResponseEntity<Void> deleteEvent(@PathVariable String id) {
+        eventService.delete(id);
         return ResponseEntity.ok().build();
     }
 
