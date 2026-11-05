@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../models/event.dart';
+
+import '../../../models/weather.dart'; 
+import '../../../widgets/event_weather_card.dart'; 
+import '../../../services/api/api_event_service.dart';
+
 import 'event_registration_screen.dart';
 import '../../../widgets/event_widgets.dart';
 
@@ -17,11 +22,13 @@ class EventDetailsScreen extends StatefulWidget {
 class _EventDetailsScreenState extends State<EventDetailsScreen> {
   late Event _event;
   bool _registered = false;
+  late Future<Weather> _weatherFuture;
 
   @override
   void initState() {
     super.initState();
     _event = widget.event;
+     _weatherFuture = ApiEventService().getEventWeather(_event.id);
   }
 
   Future<void> _register() async {
@@ -143,6 +150,17 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                       '\$${_event.price.toStringAsFixed(2)} per person',
                     ),
                   ],
+                  const SizedBox(height: 24),
+                  const Text(
+                    'Weather Forecast',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.textPrimary,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  EventWeatherCard(future: _weatherFuture),
                   const SizedBox(height: 24),
                   const Text(
                     'About this Event',

@@ -30,6 +30,8 @@ public class Restaurant {
     private Boolean isOpen;
     private List<String> features;
     private PriceRange priceRange;
+
+    
     
     @CreatedDate
     private LocalDateTime createdAt;

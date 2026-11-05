@@ -4,15 +4,21 @@ import com.hangout.config.SecurityUtils;
 import com.hangout.dto.EventRegistrationRequest;
 import com.hangout.dto.EventResponse;
 import com.hangout.dto.ReservationResponse;
+import com.hangout.dto.WeatherDto;
 import com.hangout.model.Event;
+import com.hangout.repository.EventRepository;
 import com.hangout.service.EventService;
 import com.hangout.service.ReservationService;
+import com.hangout.service.WeatherService;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.http.HttpStatus;
 import java.util.List;
+import org.springframework.web.server.ResponseStatusException;
+
 
 @RestController
 @RequestMapping("/api/events")
@@ -21,6 +27,8 @@ public class EventController {
 
     private final EventService eventService;
     private final ReservationService reservationService;
+    private final WeatherService weatherService;
+    private final EventRepository eventRepository;  
 
     @GetMapping
     public ResponseEntity<List<EventResponse>> getAll() {
@@ -52,4 +60,14 @@ public class EventController {
         Event event = eventService.reserveSpots(id, request.getPartySize());
         return ResponseEntity.ok(reservationService.createForEvent(userId, event, request));
     }
+
+
+   @GetMapping("/{id}/weather")
+    public ResponseEntity<WeatherDto> getWeather(@PathVariable String id) {
+        Event event = eventRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found"));
+        return ResponseEntity.ok(weatherService.getWeatherForEvent(event));
+    }
+
+
 }

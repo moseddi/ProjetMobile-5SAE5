@@ -2,6 +2,8 @@ import '../../core/api/api_client.dart';
 import '../../models/event.dart';
 import '../../models/reservation.dart';
 import '../interfaces/event_service.dart';
+import '../../models/weather.dart'; 
+
 
 class ApiEventService implements EventService {
   @override
@@ -45,5 +47,23 @@ class ApiEventService implements EventService {
     });
     final data = ApiClient.handleResponse(response);
     return Reservation.fromJson(data);
+  }
+
+
+
+  @override
+  Future<Weather> getEventWeather(String eventId) async {
+    try {
+      final response = await ApiClient.get('/events/$eventId/weather');
+      final data = ApiClient.handleResponse(response);
+
+      if (data != null) {
+        return Weather.fromJson(data as Map<String, dynamic>);
+      }
+    } catch (e) {
+      // En cas d'erreur réseau ou de parsing
+      print('Erreur météo: $e');
+    }
+    return Weather(available: false, message: 'Météo indisponible');
   }
 }
