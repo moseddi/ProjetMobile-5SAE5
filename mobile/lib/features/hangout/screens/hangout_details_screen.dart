@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../models/hangout.dart';
+import '../../../widgets/hangout_map_widget.dart';
+import '../../../widgets/safe_avatar.dart';
 import '../../auth/providers/auth_provider.dart';
 import '../providers/hangout_provider.dart';
 
@@ -49,6 +51,8 @@ class HangOutDetailsScreen extends StatelessWidget {
             const SizedBox(height: 20),
             _buildRestaurantSection(),
             const SizedBox(height: 20),
+            _buildMapSection(),
+            const SizedBox(height: 20),
             _buildDetailsSection(),
             const SizedBox(height: 20),
             _buildParticipantsSection(),
@@ -68,10 +72,10 @@ class HangOutDetailsScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Row(
           children: [
-            CircleAvatar(
+            SafeAvatar(
+              imageUrl: hangout.creatorAvatar,
+              name: hangout.creatorName,
               radius: 28,
-              backgroundImage: NetworkImage(hangout.creatorAvatar),
-              backgroundColor: AppColors.accent,
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -154,6 +158,15 @@ class HangOutDetailsScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _buildMapSection() {
+    // Check if we have GPS coordinates
+    if (hangout.restaurantLatitude == null || hangout.restaurantLongitude == null) {
+      return const SizedBox.shrink(); // Don't display if no coordinates
+    }
+
+    return HangOutMapWidget(hangOut: hangout);
   }
 
   Widget _buildDetailsSection() {
@@ -277,10 +290,10 @@ class HangOutDetailsScreen extends StatelessWidget {
                 margin: const EdgeInsets.only(bottom: 12),
                 child: Row(
                   children: [
-                    CircleAvatar(
+                    SafeAvatar(
+                      imageUrl: request.userAvatar,
+                      name: request.userName,
                       radius: 20,
-                      backgroundImage: NetworkImage(request.userAvatar),
-                      backgroundColor: AppColors.accent,
                     ),
                     const SizedBox(width: 12),
                     Expanded(

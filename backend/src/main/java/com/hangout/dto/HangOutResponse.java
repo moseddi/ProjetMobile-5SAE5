@@ -21,6 +21,15 @@ public class HangOutResponse {
     private Integer maxParticipants;
     private String status;
 
+    // GPS Coordinates for the restaurant
+    private Double restaurantLatitude;
+    private Double restaurantLongitude;
+
+    // Meeting point details
+    private String meetingPointName;
+    private Double meetingPointLatitude;
+    private Double meetingPointLongitude;
+
     /** The viewer's own request on this hangout: PENDING, ACCEPTED, DECLINED, or null if they never asked. */
     private String myRequestStatus;
     private List<ParticipantBrief> participants; // accepted members

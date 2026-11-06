@@ -38,6 +38,15 @@ class HangOut {
   /// The signed-in user's own request on this hangout, or null if they never asked.
   final JoinRequestStatus? myRequestStatus;
 
+  /// GPS Coordinates of the restaurant
+  final double? restaurantLatitude;
+  final double? restaurantLongitude;
+
+  /// Meeting point details
+  final String? meetingPointName;
+  final double? meetingPointLatitude;
+  final double? meetingPointLongitude;
+
   HangOut({
     required this.id,
     required this.creatorId,
@@ -54,6 +63,11 @@ class HangOut {
     this.title = '',
     this.members = const [],
     this.myRequestStatus,
+    this.restaurantLatitude,
+    this.restaurantLongitude,
+    this.meetingPointName,
+    this.meetingPointLatitude,
+    this.meetingPointLongitude,
   });
 
   bool get isPast => datetime.isBefore(DateTime.now());
@@ -87,6 +101,19 @@ class HangOut {
       myRequestStatus: json['myRequestStatus'] == null
           ? null
           : JoinRequest.statusFromString(json['myRequestStatus']),
+      restaurantLatitude: json['restaurantLatitude'] != null
+          ? (json['restaurantLatitude'] as num).toDouble()
+          : null,
+      restaurantLongitude: json['restaurantLongitude'] != null
+          ? (json['restaurantLongitude'] as num).toDouble()
+          : null,
+      meetingPointName: json['meetingPointName'] ?? '',
+      meetingPointLatitude: json['meetingPointLatitude'] != null
+          ? (json['meetingPointLatitude'] as num).toDouble()
+          : null,
+      meetingPointLongitude: json['meetingPointLongitude'] != null
+          ? (json['meetingPointLongitude'] as num).toDouble()
+          : null,
     );
   }
 
@@ -106,6 +133,11 @@ class HangOut {
     String? title,
     List<HangOutMember>? members,
     JoinRequestStatus? myRequestStatus,
+    double? restaurantLatitude,
+    double? restaurantLongitude,
+    String? meetingPointName,
+    double? meetingPointLatitude,
+    double? meetingPointLongitude,
   }) {
     return HangOut(
       id: id ?? this.id,
@@ -123,6 +155,11 @@ class HangOut {
       title: title ?? this.title,
       members: members ?? this.members,
       myRequestStatus: myRequestStatus ?? this.myRequestStatus,
+      restaurantLatitude: restaurantLatitude ?? this.restaurantLatitude,
+      restaurantLongitude: restaurantLongitude ?? this.restaurantLongitude,
+      meetingPointName: meetingPointName ?? this.meetingPointName,
+      meetingPointLatitude: meetingPointLatitude ?? this.meetingPointLatitude,
+      meetingPointLongitude: meetingPointLongitude ?? this.meetingPointLongitude,
     );
   }
 }

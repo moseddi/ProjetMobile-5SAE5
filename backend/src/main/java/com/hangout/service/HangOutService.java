@@ -71,6 +71,15 @@ public class HangOutService {
         hangOut.setMaxParticipants(request.getMaxParticipants());
         hangOut.setParticipants(new ArrayList<>());
         hangOut.setStatus(HangOut.HangOutStatus.OPEN);
+        
+        // Set GPS coordinates
+        hangOut.setRestaurantLatitude(request.getRestaurantLatitude());
+        hangOut.setRestaurantLongitude(request.getRestaurantLongitude());
+        
+        // Set meeting point if provided
+        hangOut.setMeetingPointName(request.getMeetingPointName());
+        hangOut.setMeetingPointLatitude(request.getMeetingPointLatitude());
+        hangOut.setMeetingPointLongitude(request.getMeetingPointLongitude());
 
         return toResponse(hangOutRepository.save(hangOut));
     }
@@ -210,6 +219,47 @@ public class HangOutService {
         hangOutRepository.delete(hangOut);
     }
 
+    @Transactional
+    public HangOutResponse updateMeetingPoint(String hangOutId, String userId, java.util.Map<String, Object> meetingPointData) {
+        HangOut hangOut = getOrThrow(hangOutId);
+        if (!hangOut.getCreatorId().equals(userId)) {
+            throw new AccessDeniedException("Only the creator can update the meeting point");
+        }
+
+        if (meetingPointData.containsKey("meetingPointName")) {
+            hangOut.setMeetingPointName((String) meetingPointData.get("meetingPointName"));
+        }
+        if (meetingPointData.containsKey("meetingPointLatitude")) {
+            Object lat = meetingPointData.get("meetingPointLatitude");
+            hangOut.setMeetingPointLatitude(lat instanceof Number ? ((Number) lat).doubleValue() : null);
+        }
+        if (meetingPointData.containsKey("meetingPointLongitude")) {
+            Object lon = meetingPointData.get("meetingPointLongitude");
+            hangOut.setMeetingPointLongitude(lon instanceof Number ? ((Number) lon).doubleValue() : null);
+        }
+
+        return toResponse(hangOutRepository.save(hangOut));
+    }
+
+    @Transactional
+    public HangOutResponse updateRestaurantCoordinates(String hangOutId, String userId, java.util.Map<String, Object> coordinatesData) {
+        HangOut hangOut = getOrThrow(hangOutId);
+        if (!hangOut.getCreatorId().equals(userId)) {
+            throw new AccessDeniedException("Only the creator can update restaurant coordinates");
+        }
+
+        if (coordinatesData.containsKey("restaurantLatitude")) {
+            Object lat = coordinatesData.get("restaurantLatitude");
+            hangOut.setRestaurantLatitude(lat instanceof Number ? ((Number) lat).doubleValue() : null);
+        }
+        if (coordinatesData.containsKey("restaurantLongitude")) {
+            Object lon = coordinatesData.get("restaurantLongitude");
+            hangOut.setRestaurantLongitude(lon instanceof Number ? ((Number) lon).doubleValue() : null);
+        }
+
+        return toResponse(hangOutRepository.save(hangOut));
+    }
+
     private void notify(String userId, String hangOutId, String title, String message) {
         Notification notification = new Notification();
         notification.setUserId(userId);
@@ -285,6 +335,15 @@ public class HangOutService {
         response.setStatus(hangOut.getStatus().name());
         response.setMyRequestStatus(myRequestStatus(hangOut));
         response.setCreatedAt(hangOut.getCreatedAt());
+        
+        // Map GPS coordinates
+        response.setRestaurantLatitude(hangOut.getRestaurantLatitude());
+        response.setRestaurantLongitude(hangOut.getRestaurantLongitude());
+        
+        // Map meeting point
+        response.setMeetingPointName(hangOut.getMeetingPointName());
+        response.setMeetingPointLatitude(hangOut.getMeetingPointLatitude());
+        response.setMeetingPointLongitude(hangOut.getMeetingPointLongitude());
 
         List<HangOut.Participant> participants = hangOut.getParticipants() != null ? hangOut.getParticipants() : List.of();
 

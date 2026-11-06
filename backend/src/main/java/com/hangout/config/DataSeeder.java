@@ -44,22 +44,22 @@ public class DataSeeder implements CommandLineRunner {
         Restaurant bellaItalia = ensureRestaurant(seedBellaItalia());
 
         User admin = ensureUser("admin@hangout.com", "admin123", "Platform Admin",
-            "+1-555-0001", "https://i.pravatar.cc/150?img=12", User.Role.ADMIN, null);
+            "+1-555-0001", "", User.Role.ADMIN, null);
 
         User ownerLeGourmet = ensureUser("owner.legourmet@hangout.com", "owner123", "Marie Dubois",
-            "+1-555-0101", "https://i.pravatar.cc/150?img=5", User.Role.RESTAURANT_OWNER, leGourmet.getId());
+            "+1-555-0101", "", User.Role.RESTAURANT_OWNER, leGourmet.getId());
         linkOwner(leGourmet, ownerLeGourmet.getId());
 
         User ownerSushi = ensureUser("owner.sushi@hangout.com", "owner123", "Kenji Tanaka",
-            "+1-555-0102", "https://i.pravatar.cc/150?img=6", User.Role.RESTAURANT_OWNER, sushiParadise.getId());
+            "+1-555-0102", "", User.Role.RESTAURANT_OWNER, sushiParadise.getId());
         linkOwner(sushiParadise, ownerSushi.getId());
 
         User demo = ensureUser("demo@example.com", "123456", "Demo User",
-            "+1234567890", "https://i.pravatar.cc/150?img=1", User.Role.CLIENT, null);
+            "+1234567890", "", User.Role.CLIENT, null);
         User john = ensureUser("john@example.com", "password", "John Smith",
-            "+1234567891", "https://i.pravatar.cc/150?img=2", User.Role.CLIENT, null);
+            "+1234567891", "", User.Role.CLIENT, null);
         User emily = ensureUser("emily@example.com", "password", "Emily Chen",
-            "+1234567892", "https://i.pravatar.cc/150?img=3", User.Role.CLIENT, null);
+            "+1234567892", "", User.Role.CLIENT, null);
 
         ensureMenuItems(leGourmet, sushiParadise);
         ensureReviews(leGourmet, sushiParadise, demo, john);
@@ -268,6 +268,12 @@ public class DataSeeder implements CommandLineRunner {
         h1.setPlannedDateTime(LocalDateTime.now().plusDays(5));
         h1.setMaxParticipants(6);
         h1.setStatus(HangOut.HangOutStatus.OPEN);
+        
+        // Add GPS coordinates for map display
+        h1.setRestaurantLatitude(48.8566);
+        h1.setRestaurantLongitude(2.3522);
+        h1.setMeetingPointLatitude(48.8568);
+        h1.setMeetingPointLongitude(2.3524);
 
         List<HangOut.Participant> participants = new ArrayList<>();
         HangOut.Participant p1 = new HangOut.Participant();

@@ -22,4 +22,13 @@ public class HangOutRequest {
     @NotNull(message = "Max participants is required")
     @Min(value = 2, message = "A hangout needs at least 2 participants")
     private Integer maxParticipants;
+
+    // GPS Coordinates for the restaurant
+    private Double restaurantLatitude;
+    private Double restaurantLongitude;
+
+    // Meeting point details
+    private String meetingPointName;
+    private Double meetingPointLatitude;
+    private Double meetingPointLongitude;
 }

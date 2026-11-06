@@ -26,6 +26,11 @@ class ApiHangOutService implements HangOutService {
       'description': hangout.message,
       'plannedDateTime': hangout.datetime.toIso8601String(),
       'maxParticipants': hangout.maxParticipants,
+      'restaurantLatitude': hangout.restaurantLatitude,
+      'restaurantLongitude': hangout.restaurantLongitude,
+      'meetingPointName': hangout.meetingPointName,
+      'meetingPointLatitude': hangout.meetingPointLatitude,
+      'meetingPointLongitude': hangout.meetingPointLongitude,
     };
 
     final response = await ApiClient.post('/hangouts', body);
@@ -49,5 +54,41 @@ class ApiHangOutService implements HangOutService {
   Future<void> declineRequest(String hangoutId, String requestId) async {
     final response = await ApiClient.put('/hangouts/$hangoutId/requests/$requestId/decline', {});
     ApiClient.handleResponse(response);
+  }
+
+  /// Update restaurant GPS coordinates for a hangout
+  Future<HangOut> updateRestaurantCoordinates(
+    String hangoutId,
+    double latitude,
+    double longitude,
+  ) async {
+    final body = {
+      'restaurantLatitude': latitude,
+      'restaurantLongitude': longitude,
+    };
+    final response = await ApiClient.put(
+      '/hangouts/$hangoutId/restaurant-coordinates',
+      body,
+    );
+    return HangOut.fromJson(ApiClient.handleResponse(response));
+  }
+
+  /// Update meeting point details for a hangout
+  Future<HangOut> updateMeetingPoint(
+    String hangoutId,
+    String? meetingPointName,
+    double? latitude,
+    double? longitude,
+  ) async {
+    final body = {
+      'meetingPointName': meetingPointName,
+      'meetingPointLatitude': latitude,
+      'meetingPointLongitude': longitude,
+    };
+    final response = await ApiClient.put(
+      '/hangouts/$hangoutId/meeting-point',
+      body,
+    );
+    return HangOut.fromJson(ApiClient.handleResponse(response));
   }
 }

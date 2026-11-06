@@ -23,6 +23,15 @@ public class HangOut {
     private List<Participant> participants;
     private HangOutStatus status = HangOutStatus.OPEN;
     
+    // GPS Coordinates for the restaurant
+    private Double restaurantLatitude;
+    private Double restaurantLongitude;
+    
+    // Meeting point details
+    private String meetingPointName;
+    private Double meetingPointLatitude;
+    private Double meetingPointLongitude;
+    
     @CreatedDate
     private LocalDateTime createdAt;
     
