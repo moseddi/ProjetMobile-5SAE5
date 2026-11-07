@@ -17,7 +17,9 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<AdminProvider>().loadStats();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) context.read<AdminProvider>().loadStats();
+    });
   }
 
   @override

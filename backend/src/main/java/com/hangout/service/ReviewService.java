@@ -1,8 +1,10 @@
 package com.hangout.service;
 
-import com.hangout.util.Newest;
+import com.hangout.dto.AiAnalysisResult;
+import com.hangout.dto.RestaurantRecommendation;
 import com.hangout.dto.ReviewRequest;
 import com.hangout.dto.ReviewResponse;
+import com.hangout.exception.BadRequestException;
 import com.hangout.exception.ResourceNotFoundException;
 import com.hangout.model.Restaurant;
 import com.hangout.model.Review;
@@ -10,16 +12,20 @@ import com.hangout.model.User;
 import com.hangout.repository.RestaurantRepository;
 import com.hangout.repository.ReviewRepository;
 import com.hangout.repository.UserRepository;
+import com.hangout.util.Newest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ReviewService {
 
     private static final int POINTS_FOR_REVIEW = 10;
@@ -29,6 +35,7 @@ public class ReviewService {
     private final UserRepository userRepository;
     private final NotificationService notificationService;
     private final LoyaltyService loyaltyService;
+    private final AiReviewService aiReviewService;
 
     public List<ReviewResponse> getAllReviews() {
         return reviewRepository.findAll().stream()
@@ -69,6 +76,24 @@ public class ReviewService {
         User user = userRepository.findById(userId)
             .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
+        // 1. Déclenchement de l'IA Multi-Agent (ABSA), Anti-Fraude & RAG
+        AiAnalysisResult aiResult = aiReviewService.analyzeReview(
+                request.getComment(),
+                request.getRating(),
+                request.getFoodRating(),
+                request.getServiceRating(),
+                request.getPriceRating(),
+                request.getAmbianceRating(),
+                restaurantId
+        );
+
+        // 2. Détection Anti-Fraude : Bloquer immédiatement si avis contradictoire
+        if (Boolean.TRUE.equals(aiResult.getIsAnomaly())) {
+            log.warn("Tentative de publication d'avis frauduleux/contradictoire par l'utilisateur {}: {}",
+                    userId, aiResult.getAnomalyReason());
+            throw new BadRequestException(aiResult.getAnomalyReason());
+        }
+
         Review review = new Review();
         review.setRestaurantId(restaurantId);
         review.setUserId(userId);
@@ -77,6 +102,17 @@ public class ReviewService {
         review.setComment(request.getComment());
         review.setPhotoUrl(request.getPhotoUrl());
         review.setStatus(Review.ReviewStatus.PUBLISHED);
+
+        // Enregistrement des scores granulaires issus des 4 Agents IA
+        review.setFoodScore(aiResult.getFoodScore());
+        review.setServiceScore(aiResult.getServiceScore());
+        review.setPriceScore(aiResult.getPriceScore());
+        review.setAmbianceScore(aiResult.getAmbianceScore());
+        review.setFoodThought(aiResult.getFoodThought());
+        review.setServiceThought(aiResult.getServiceThought());
+        review.setPriceThought(aiResult.getPriceThought());
+        review.setAmbianceThought(aiResult.getAmbianceThought());
+        review.setIsAnomaly(false);
 
         review = reviewRepository.save(review);
 
@@ -99,7 +135,10 @@ public class ReviewService {
             notificationService.createNotification(notification);
         }
 
-        return toResponse(review);
+        ReviewResponse response = toResponse(review);
+        // Joindre les recommandations RAG pour l'utilisateur déçu
+        response.setRecommendations(aiResult.getRecommendations() != null ? aiResult.getRecommendations() : new ArrayList<>());
+        return response;
     }
 
     @Transactional
@@ -109,15 +148,42 @@ public class ReviewService {
             throw new AccessDeniedException("You can only edit your own reviews");
         }
 
+        // Réanalyse IA lors de la modification
+        AiAnalysisResult aiResult = aiReviewService.analyzeReview(
+                request.getComment(),
+                request.getRating(),
+                request.getFoodRating(),
+                request.getServiceRating(),
+                request.getPriceRating(),
+                request.getAmbianceRating(),
+                review.getRestaurantId()
+        );
+
+        if (Boolean.TRUE.equals(aiResult.getIsAnomaly())) {
+            throw new BadRequestException(aiResult.getAnomalyReason());
+        }
+
         review.setRating(request.getRating());
         review.setTitle(request.getTitle());
         review.setComment(request.getComment());
         review.setPhotoUrl(request.getPhotoUrl());
+
+        review.setFoodScore(aiResult.getFoodScore());
+        review.setServiceScore(aiResult.getServiceScore());
+        review.setPriceScore(aiResult.getPriceScore());
+        review.setAmbianceScore(aiResult.getAmbianceScore());
+        review.setFoodThought(aiResult.getFoodThought());
+        review.setServiceThought(aiResult.getServiceThought());
+        review.setPriceThought(aiResult.getPriceThought());
+        review.setAmbianceThought(aiResult.getAmbianceThought());
+
         review = reviewRepository.save(review);
 
         updateRestaurantRating(review.getRestaurantId());
 
-        return toResponse(review);
+        ReviewResponse response = toResponse(review);
+        response.setRecommendations(aiResult.getRecommendations() != null ? aiResult.getRecommendations() : new ArrayList<>());
+        return response;
     }
 
     @Transactional
@@ -197,6 +263,18 @@ public class ReviewService {
         response.setStatus(review.getStatus().name());
         response.setCreatedAt(review.getCreatedAt());
         response.setUpdatedAt(review.getUpdatedAt());
+
+        // Mapping des attributs IA
+        response.setFoodScore(review.getFoodScore());
+        response.setServiceScore(review.getServiceScore());
+        response.setPriceScore(review.getPriceScore());
+        response.setAmbianceScore(review.getAmbianceScore());
+        response.setFoodThought(review.getFoodThought());
+        response.setServiceThought(review.getServiceThought());
+        response.setPriceThought(review.getPriceThought());
+        response.setAmbianceThought(review.getAmbianceThought());
+        response.setIsAnomaly(review.getIsAnomaly());
+        response.setAnomalyReason(review.getAnomalyReason());
 
         return response;
     }

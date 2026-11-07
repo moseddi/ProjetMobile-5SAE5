@@ -22,6 +22,22 @@ public class Review {
     private String photoUrl;
     private Integer helpfulCount = 0;
     private ReviewStatus status = ReviewStatus.PUBLISHED;
+
+    // AI Multi-Agent ABSA Scores (1 to 10)
+    private Integer foodScore;
+    private Integer serviceScore;
+    private Integer priceScore;
+    private Integer ambianceScore;
+
+    // AI Multi-Agent Chain-of-Thought (CoT) Reasonings
+    private String foodThought;
+    private String serviceThought;
+    private String priceThought;
+    private String ambianceThought;
+
+    // Anti-Fraud / Real-time Anomaly Detection
+    private Boolean isAnomaly = false;
+    private String anomalyReason;
     
     @CreatedDate
     private LocalDateTime createdAt;

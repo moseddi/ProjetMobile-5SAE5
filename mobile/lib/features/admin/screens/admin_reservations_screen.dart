@@ -79,7 +79,9 @@ class _AdminReservationsScreenState extends State<AdminReservationsScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<AdminProvider>().loadReservations();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) context.read<AdminProvider>().loadReservations();
+    });
     _loadRestaurants();
   }
 
