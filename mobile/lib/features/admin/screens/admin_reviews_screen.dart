@@ -63,7 +63,9 @@ class _AdminReviewsScreenState extends State<AdminReviewsScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<AdminProvider>().loadReviews();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) context.read<AdminProvider>().loadReviews();
+    });
   }
 
   Future<void> _deleteReview(Review review) async {

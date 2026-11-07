@@ -374,6 +374,22 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                 color: AppColors.textPrimary,
               ),
             ),
+
+            // Mini badges de l'analyse IA Multi-Agent
+            if (review.foodScore != null) ...[
+              const SizedBox(height: 10),
+              Wrap(
+                spacing: 6,
+                runSpacing: 4,
+                children: [
+                  _buildMiniScoreChip('🍔 Cuisine', review.foodScore!),
+                  if (review.serviceScore != null) _buildMiniScoreChip('🤝 Service', review.serviceScore!),
+                  if (review.priceScore != null) _buildMiniScoreChip('💶 Prix', review.priceScore!),
+                  if (review.ambianceScore != null) _buildMiniScoreChip('🏠 Ambiance', review.ambianceScore!),
+                ],
+              ),
+            ],
+
             const SizedBox(height: 12),
             Row(
               children: [
@@ -391,6 +407,27 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildMiniScoreChip(String label, int score) {
+    double stars = (score / 2.0 * 10).round() / 10.0;
+    Color color = stars >= 4.0
+        ? Colors.green.shade700
+        : stars >= 3.0
+            ? Colors.orange.shade700
+            : Colors.red.shade700;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.08),
+        borderRadius: BorderRadius.circular(6),
+        border: Border.all(color: color.withOpacity(0.2)),
+      ),
+      child: Text(
+        '$label: ${stars.toStringAsFixed(stars.truncateToDouble() == stars ? 0 : 1)} ⭐',
+        style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: color),
       ),
     );
   }

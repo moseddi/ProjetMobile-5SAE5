@@ -46,15 +46,16 @@ class ReviewProvider with ChangeNotifier {
     return await _reviewService.getRestaurantReviews(restaurantId);
   }
 
-  Future<void> createReview(Review review) async {
+  Future<Review> createReview(Review review) async {
     _isLoading = true;
     notifyListeners();
     
     try {
-      await _reviewService.createReview(review);
+      final created = await _reviewService.createReview(review);
       await loadReviews();
       _isLoading = false;
       notifyListeners();
+      return created;
     } catch (e) {
       _errorMessage = e.toString();
       _isLoading = false;

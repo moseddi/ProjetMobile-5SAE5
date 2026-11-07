@@ -53,7 +53,9 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<AdminProvider>().loadUsers();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) context.read<AdminProvider>().loadUsers();
+    });
   }
 
   Future<void> _openUser(AdminUser user) async {

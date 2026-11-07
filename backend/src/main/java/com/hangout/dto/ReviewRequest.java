@@ -18,4 +18,10 @@ public class ReviewRequest {
     private String comment;
     
     private String photoUrl;
+
+    // Critères détaillés optionnels (1 à 5 étoiles)
+    private Double foodRating;
+    private Double serviceRating;
+    private Double priceRating;
+    private Double ambianceRating;
 }

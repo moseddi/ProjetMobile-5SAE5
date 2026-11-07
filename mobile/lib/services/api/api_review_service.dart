@@ -76,6 +76,10 @@ class ApiReviewService implements ReviewService {
       'title': review.title,
       'comment': review.comment,
       'photoUrl': review.photoUrl,
+      if (review.foodScore != null) 'foodRating': review.foodScore! / 2.0,
+      if (review.serviceScore != null) 'serviceRating': review.serviceScore! / 2.0,
+      if (review.priceScore != null) 'priceRating': review.priceScore! / 2.0,
+      if (review.ambianceScore != null) 'ambianceRating': review.ambianceScore! / 2.0,
     };
     
     final response = await ApiClient.post(
@@ -94,6 +98,10 @@ class ApiReviewService implements ReviewService {
       'title': review.title,
       'comment': review.comment,
       'photoUrl': review.photoUrl,
+      if (review.foodScore != null) 'foodRating': review.foodScore! / 2.0,
+      if (review.serviceScore != null) 'serviceRating': review.serviceScore! / 2.0,
+      if (review.priceScore != null) 'priceRating': review.priceScore! / 2.0,
+      if (review.ambianceScore != null) 'ambianceRating': review.ambianceScore! / 2.0,
     };
     
     final response = await ApiClient.put('/reviews/$id', body);
