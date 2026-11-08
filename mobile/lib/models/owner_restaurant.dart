@@ -65,6 +65,9 @@ class OwnerRestaurant {
   final double rating;
   final int reviewCount;
   final bool isOpen;
+
+  /// Whether the restaurant runs the loyalty rewards programme.
+  final bool loyaltyEnabled;
   final List<String> features;
   final PriceRange priceRange;
   final DateTime? createdAt;
@@ -83,6 +86,7 @@ class OwnerRestaurant {
     this.rating = 0.0,
     this.reviewCount = 0,
     this.isOpen = true,
+    this.loyaltyEnabled = true,
     this.features = const [],
     this.priceRange = PriceRange.moderate,
     this.createdAt,
@@ -114,6 +118,7 @@ class OwnerRestaurant {
       rating: rating,
       reviewCount: reviewCount,
       isOpen: isOpen ?? this.isOpen,
+      loyaltyEnabled: loyaltyEnabled,
       features: features ?? this.features,
       priceRange: priceRange ?? this.priceRange,
       createdAt: createdAt,
@@ -135,6 +140,7 @@ class OwnerRestaurant {
       rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
       reviewCount: json['reviewCount'] ?? 0,
       isOpen: json['isOpen'] ?? false,
+      loyaltyEnabled: json['loyaltyEnabled'] != false,
       features: json['features'] != null
           ? List<String>.from(json['features'] as List)
           : const [],

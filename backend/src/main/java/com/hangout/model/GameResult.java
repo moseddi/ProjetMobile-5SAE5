@@ -14,6 +14,7 @@ public class GameResult {
     private String id;
     
     private String userId;
+    private String restaurantId;
     private GameType gameType;
     private Integer pointsEarned;
     private GameOutcome outcome;
@@ -22,9 +23,9 @@ public class GameResult {
     private LocalDateTime playedAt;
     
     public enum GameType {
-        CARD_MEMORY, LUCKY_WHEEL,
+        CARD_MEMORY, LUCKY_WHEEL, SCRATCH_CARD, LUCKY_DICE,
         // Legacy values kept for backward-compatibility with existing data; not used by new code.
-        DAILY_WHEEL, QUIZ, SCRATCH_CARD
+        DAILY_WHEEL, QUIZ
     }
     
     public enum GameOutcome {

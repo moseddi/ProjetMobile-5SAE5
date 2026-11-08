@@ -1,3 +1,4 @@
+import '../../models/loyalty.dart';
 import '../../models/restaurant.dart';
 import '../../models/reservation.dart';
 import '../../models/review.dart';
@@ -28,4 +29,13 @@ abstract class OwnerService {
   Future<List<Review>> getMyReviews();
 
   Future<OwnerStats> getStats();
+
+  /// Switches the restaurant's loyalty rewards programme on or off.
+  Future<OwnerRestaurant> setLoyaltyEnabled(bool enabled);
+
+  /// Cashier: who a client QR code belongs to, with what they can use at my restaurant.
+  Future<MemberLookup> lookupMember(String code);
+
+  /// Cashier: validates one of my restaurant's rewards (once only).
+  Future<Voucher> useVoucher(String voucherId);
 }

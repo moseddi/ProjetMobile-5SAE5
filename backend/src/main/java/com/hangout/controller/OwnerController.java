@@ -15,7 +15,10 @@ import com.hangout.repository.MenuItemRepository;
 import com.hangout.repository.ReservationRepository;
 import com.hangout.repository.ReviewRepository;
 import com.hangout.model.Review;
+import com.hangout.dto.MemberLookupResponse;
+import com.hangout.dto.VoucherResponse;
 import com.hangout.service.EventService;
+import com.hangout.service.LoyaltyService;
 import com.hangout.service.MenuItemService;
 import com.hangout.service.ReservationService;
 import com.hangout.service.RestaurantService;
@@ -38,6 +41,7 @@ public class OwnerController {
     private final EventService eventService;
     private final ReservationService reservationService;
     private final ReviewService reviewService;
+    private final LoyaltyService loyaltyService;
 
     private final ReservationRepository reservationRepository;
     private final MenuItemRepository menuItemRepository;
@@ -50,6 +54,29 @@ public class OwnerController {
 
     private Restaurant myRestaurant() {
         return restaurantService.getOwnRestaurant(myId());
+    }
+
+    // ---- Cashier: scan a client's QR, validate rewards ----
+
+    @GetMapping("/members/{code}")
+    public ResponseEntity<MemberLookupResponse> lookupMember(@PathVariable String code) {
+        return ResponseEntity.ok(loyaltyService.lookupMember(myRestaurant().getId(), code));
+    }
+
+    @PostMapping("/vouchers/{id}/use")
+    public ResponseEntity<VoucherResponse> useVoucher(@PathVariable String id) {
+        return ResponseEntity.ok(loyaltyService.useVoucher(myRestaurant().getId(), id));
+    }
+
+    // ---- Loyalty programme on/off ----
+
+    @PutMapping("/loyalty")
+    public ResponseEntity<Restaurant> setLoyalty(@RequestBody Map<String, Boolean> body) {
+        Boolean enabled = body.get("enabled");
+        if (enabled == null) {
+            throw new BadRequestException("enabled is required");
+        }
+        return ResponseEntity.ok(restaurantService.setOwnLoyaltyEnabled(myId(), enabled));
     }
 
     // ---- Restaurant profile ----

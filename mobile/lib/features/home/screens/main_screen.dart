@@ -44,7 +44,7 @@ void initState() {
     final userId = authProvider.currentUser?.id;
     if (userId != null) {
       context.read<HangOutProvider>().load(userId);
-      context.read<LoyaltyProvider>().loadGameHistory(userId);
+      context.read<LoyaltyProvider>().load();
       context.read<ProfileProvider>().loadNotifications(userId);
       context.read<ReviewProvider>().loadReviews();
     }

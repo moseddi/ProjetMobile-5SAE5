@@ -8,6 +8,7 @@ import 'services/api/api_restaurant_service.dart';
 import 'services/api/api_review_service.dart';
 import 'services/api/api_reservation_service.dart';
 import 'services/api/api_loyalty_service.dart';
+import 'services/api/api_recommendation_service.dart';
 import 'services/api/api_event_service.dart';
 import 'services/api/api_hangout_service.dart';
 import 'services/api/api_profile_service.dart';
@@ -17,12 +18,15 @@ import 'services/interfaces/restaurant_service.dart';
 import 'services/interfaces/review_service.dart';
 import 'services/interfaces/reservation_service.dart';
 import 'services/interfaces/loyalty_service.dart';
+import 'services/interfaces/recommendation_service.dart';
 import 'services/interfaces/event_service.dart';
 import 'services/interfaces/hangout_service.dart';
 import 'services/interfaces/profile_service.dart';
 import 'services/interfaces/menu_item_service.dart';
 import 'features/auth/providers/auth_provider.dart';
 import 'features/loyalty/providers/loyalty_provider.dart';
+import 'features/recommendations/providers/recommendation_provider.dart';
+import 'features/owner/providers/cashier_provider.dart';
 import 'features/hangout/providers/hangout_provider.dart';
 import 'features/profile/providers/profile_provider.dart';
 import 'features/reviews/providers/review_provider.dart';
@@ -56,6 +60,7 @@ class HangOutApp extends StatelessWidget {
     final ReviewService reviewService = ApiReviewService();
     final ReservationService reservationService = ApiReservationService();
     final LoyaltyService loyaltyService = ApiLoyaltyService();
+    final RecommendationService recommendationService = ApiRecommendationService();
     final EventService eventService = ApiEventService();
     final HangOutService hangOutService = ApiHangOutService();
     final ProfileService profileService = ApiProfileService();
@@ -69,6 +74,7 @@ class HangOutApp extends StatelessWidget {
         Provider<RestaurantService>.value(value: restaurantService),
         Provider<ReservationService>.value(value: reservationService),
         Provider<LoyaltyService>.value(value: loyaltyService),
+        Provider<RecommendationService>.value(value: recommendationService),
         Provider<EventService>.value(value: eventService),
         Provider<HangOutService>.value(value: hangOutService),
         Provider<ProfileService>.value(value: profileService),
@@ -114,6 +120,12 @@ class HangOutApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => OwnerRequestsProvider(context.read<AdminService>()),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => CashierProvider(context.read<OwnerService>()),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => RecommendationProvider(context.read<RecommendationService>()),
         ),
       ],
       child: MaterialApp(

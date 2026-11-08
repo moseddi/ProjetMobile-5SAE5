@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../providers/owner_provider.dart';
 import 'owner_dashboard_screen.dart';
 import 'owner_reservations_screen.dart';
+import 'owner_cashier_screen.dart';
 import 'owner_menu_screen.dart';
 import 'owner_events_screen.dart';
 import 'owner_reviews_screen.dart';
@@ -25,6 +26,7 @@ class _OwnerMainScreenState extends State<OwnerMainScreen> {
   final List<Widget> _screens = const [
     OwnerDashboardScreen(),
     OwnerReservationsScreen(),
+    OwnerCashierScreen(),
     OwnerMenuScreen(),
     OwnerEventsScreen(),
     OwnerReviewsScreen(),
@@ -61,6 +63,11 @@ class _OwnerMainScreenState extends State<OwnerMainScreen> {
             icon: Icon(Icons.event_note_outlined),
             activeIcon: Icon(Icons.event_note),
             label: 'Bookings',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.qr_code_scanner),
+            activeIcon: Icon(Icons.qr_code_scanner),
+            label: 'Cashier',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.restaurant_menu_outlined),

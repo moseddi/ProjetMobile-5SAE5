@@ -14,6 +14,8 @@ public class PointTransaction {
     private String id;
     
     private String userId;
+    /** Restaurant these points belong to (null for older, restaurant-less points). */
+    private String restaurantId;
     private Integer points;
     private TransactionType type;
     private String description;

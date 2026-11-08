@@ -7,8 +7,6 @@ import '../../features/home/screens/main_screen.dart';
 import '../../features/restaurants/screens/restaurant_details_screen.dart';
 import '../../features/reservations/screens/reservation_screen.dart';
 import '../../features/reservations/screens/reservation_summary_screen.dart';
-import '../../features/loyalty/screens/card_game_screen.dart';
-import '../../features/loyalty/screens/lucky_wheel_screen.dart';
 import '../../features/events/screens/event_details_screen.dart';
 import '../../features/hangout/screens/create_hangout_screen.dart';
 import '../../features/hangout/screens/hangout_details_screen.dart';
@@ -45,8 +43,6 @@ class AppRouter {
   static const String restaurantDetails = '/restaurant-details';
   static const String reservation = '/reservation';
   static const String reservationSummary = '/reservation-summary';
-  static const String cardGame = '/card-game';
-  static const String luckyWheel = '/lucky-wheel';
   static const String eventDetails = '/event-details';
   static const String createHangout = '/create-hangout';
   static const String hangoutDetails = '/hangout-details';
@@ -83,10 +79,6 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => ReservationSummaryScreen(reservation: reservation),
         );
-      case cardGame:
-        return MaterialPageRoute(builder: (_) => const CardGameScreen());
-      case luckyWheel:
-        return MaterialPageRoute(builder: (_) => const LuckyWheelScreen());
       case eventDetails:
         final event = settings.arguments as Event;
         return MaterialPageRoute(

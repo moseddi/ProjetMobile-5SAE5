@@ -1,40 +1,66 @@
 import 'package:flutter/foundation.dart';
+import '../../../models/loyalty.dart';
 import '../../../services/interfaces/loyalty_service.dart';
-import '../../../models/game_result.dart';
 
+/// Loyalty module: points per restaurant, the four daily games, exchanges and vouchers.
 class LoyaltyProvider with ChangeNotifier {
   final LoyaltyService _loyaltyService;
-  
-  List<GameResult> _gameHistory = [];
-  bool _isLoading = false;
 
   LoyaltyProvider(this._loyaltyService);
 
-  List<GameResult> get gameHistory => _gameHistory;
-  bool get isLoading => _isLoading;
+  LoyaltyOverview? _overview;
+  List<Voucher> _vouchers = [];
+  bool _isLoading = false;
+  String? _error;
 
-  Future<void> loadGameHistory(String userId) async {
+  LoyaltyOverview? get overview => _overview;
+  List<Voucher> get vouchers => _vouchers;
+  bool get isLoading => _isLoading;
+  String? get error => _error;
+
+  int? get totalPoints => _overview?.totalPoints;
+
+  GameStatus? statusOf(GameType type) {
+    for (final status in _overview?.games ?? const <GameStatus>[]) {
+      if (status.type == type) return status;
+    }
+    return null;
+  }
+
+  Future<void> load() async {
     _isLoading = true;
+    _error = null;
     notifyListeners();
-    
-    _gameHistory = await _loyaltyService.getGameHistory(userId);
-    
+    try {
+      final results = await Future.wait([_loyaltyService.getOverview(), _loyaltyService.getVouchers()]);
+      _overview = results[0] as LoyaltyOverview;
+      _vouchers = results[1] as List<Voucher>;
+    } catch (e) {
+      _error = e.toString().replaceAll('Exception: ', '');
+    }
     _isLoading = false;
     notifyListeners();
   }
 
-  Future<GameResult> playGame(String userId, GameType gameType, int pointsWon) async {
-    final result = await _loyaltyService.playGame(userId, gameType, pointsWon);
-    _gameHistory.insert(0, result);
+  /// Forget everything when another account signs in.
+  void clear() {
+    _overview = null;
+    _vouchers = [];
+    _error = null;
     notifyListeners();
+  }
+
+  /// Plays a game. Throws with the server's message when refused.
+  Future<GamePlayResult> play(GameType type, String restaurantId) async {
+    final result = await _loyaltyService.playGame(type, restaurantId);
+    await load();
     return result;
   }
 
-  String getLoyaltyLevel(int points) {
-    return _loyaltyService.getLoyaltyLevel(points);
-  }
-
-  int getNextLevelPoints(int currentPoints) {
-    return _loyaltyService.getNextLevelPoints(currentPoints);
+  /// Buys a reward with a restaurant's points. Throws when points are not enough.
+  Future<Voucher> redeem(String restaurantId, String rewardType) async {
+    final voucher = await _loyaltyService.redeem(restaurantId, rewardType);
+    await load();
+    return voucher;
   }
 }

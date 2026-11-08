@@ -1,4 +1,5 @@
 import '../../core/api/api_client.dart';
+import '../../models/loyalty.dart';
 import '../../models/restaurant.dart';
 import '../../models/reservation.dart';
 import '../../models/review.dart';
@@ -117,5 +118,23 @@ class ApiOwnerService implements OwnerService {
     final response = await ApiClient.get('/owner/stats');
     final data = ApiClient.handleResponse(response);
     return OwnerStats.fromJson(data);
+  }
+
+  @override
+  Future<OwnerRestaurant> setLoyaltyEnabled(bool enabled) async {
+    final response = await ApiClient.put('/owner/loyalty', {'enabled': enabled});
+    return OwnerRestaurant.fromJson(ApiClient.handleResponse(response));
+  }
+
+  @override
+  Future<MemberLookup> lookupMember(String code) async {
+    final response = await ApiClient.get('/owner/members/${Uri.encodeComponent(code)}');
+    return MemberLookup.fromJson(ApiClient.handleResponse(response) as Map<String, dynamic>);
+  }
+
+  @override
+  Future<Voucher> useVoucher(String voucherId) async {
+    final response = await ApiClient.post('/owner/vouchers/$voucherId/use', {});
+    return Voucher.fromJson(ApiClient.handleResponse(response) as Map<String, dynamic>);
   }
 }

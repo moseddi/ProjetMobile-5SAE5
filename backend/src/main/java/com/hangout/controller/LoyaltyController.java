@@ -1,6 +1,8 @@
 package com.hangout.controller;
 
 import com.hangout.config.SecurityUtils;
+import com.hangout.dto.LoyaltyOverview;
+import com.hangout.dto.VoucherResponse;
 import com.hangout.exception.BadRequestException;
 import com.hangout.model.PointTransaction;
 import com.hangout.service.LoyaltyService;
@@ -20,8 +22,13 @@ public class LoyaltyController {
 
     @GetMapping("/points")
     public ResponseEntity<Map<String, Integer>> getPoints() {
-        int balance = loyaltyService.getBalance(SecurityUtils.getCurrentUserId());
-        return ResponseEntity.ok(Map.of("points", balance));
+        return ResponseEntity.ok(Map.of("points", loyaltyService.getBalance(SecurityUtils.getCurrentUserId())));
+    }
+
+    /** Total points, daily games status, and per-restaurant balances with what each offer needs. */
+    @GetMapping("/overview")
+    public ResponseEntity<LoyaltyOverview> overview() {
+        return ResponseEntity.ok(loyaltyService.getOverview(SecurityUtils.getCurrentUserId()));
     }
 
     @GetMapping("/history")
@@ -29,15 +36,19 @@ public class LoyaltyController {
         return ResponseEntity.ok(loyaltyService.getHistory(SecurityUtils.getCurrentUserId()));
     }
 
+    /** Exchange a restaurant's points for a reward voucher. */
     @PostMapping("/redeem")
-    public ResponseEntity<Void> redeem(@RequestBody Map<String, Object> body) {
-        Object pointsValue = body.get("points");
-        if (!(pointsValue instanceof Number)) {
-            throw new BadRequestException("points is required");
+    public ResponseEntity<VoucherResponse> redeem(@RequestBody Map<String, String> body) {
+        String restaurantId = body.get("restaurantId");
+        String reward = body.get("rewardType");
+        if (restaurantId == null || restaurantId.isBlank() || reward == null || reward.isBlank()) {
+            throw new BadRequestException("restaurantId and rewardType are required");
         }
-        int points = ((Number) pointsValue).intValue();
-        String description = body.getOrDefault("description", "Points redeemed").toString();
-        loyaltyService.redeemPoints(SecurityUtils.getCurrentUserId(), points, description);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(loyaltyService.redeem(SecurityUtils.getCurrentUserId(), restaurantId, reward));
+    }
+
+    @GetMapping("/vouchers")
+    public ResponseEntity<List<VoucherResponse>> vouchers() {
+        return ResponseEntity.ok(loyaltyService.getVouchers(SecurityUtils.getCurrentUserId()));
     }
 }

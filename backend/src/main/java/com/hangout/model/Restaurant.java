@@ -28,10 +28,11 @@ public class Restaurant {
     private Double rating; // Calculated from reviews
     private Integer reviewCount = 0;
     private Boolean isOpen;
+
+    // The owner can switch the loyalty rewards programme off; missing means on.
+    private Boolean loyaltyEnabled = true;
     private List<String> features;
     private PriceRange priceRange;
-
-    
     
     @CreatedDate
     private LocalDateTime createdAt;

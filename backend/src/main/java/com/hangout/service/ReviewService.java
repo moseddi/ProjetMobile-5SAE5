@@ -123,7 +123,7 @@ public class ReviewService {
 
         loyaltyService.awardPoints(userId, POINTS_FOR_REVIEW,
             com.hangout.model.PointTransaction.TransactionType.EARN_REVIEW,
-            "Thanks for your review!", review.getId());
+            "Thanks for your review!", review.getId(), restaurantId);
 
         if (restaurant.getOwnerId() != null) {
             var notification = new com.hangout.model.Notification();

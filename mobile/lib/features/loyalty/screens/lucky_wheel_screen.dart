@@ -1,33 +1,43 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../models/game_result.dart';
-import '../../auth/providers/auth_provider.dart';
-import '../providers/loyalty_provider.dart';
+import '../../../models/loyalty.dart';
+import '../widgets/game_widgets.dart';
 
+/// Lucky Wheel: the server draws the reward, the wheel is only the animation.
 class LuckyWheelScreen extends StatefulWidget {
-  const LuckyWheelScreen({super.key});
+  final String restaurantId;
+  final String restaurantName;
+
+  const LuckyWheelScreen({super.key, required this.restaurantId, required this.restaurantName});
 
   @override
   State<LuckyWheelScreen> createState() => _LuckyWheelScreenState();
 }
 
-class _LuckyWheelScreenState extends State<LuckyWheelScreen>
-    with SingleTickerProviderStateMixin {
-  final List<int> _rewards = [10, 50, 20, 100, 10, 20, 50, 0];
-  late AnimationController _controller;
-  late Animation<double> _rotationAnimation;
-  bool _isSpinning = false;
-  int? _wonPoints;
+class _LuckyWheelScreenState extends State<LuckyWheelScreen> with SingleTickerProviderStateMixin {
+  // Values printed on the wheel; every value the server can draw appears at least once.
+  static const _segments = [5, 10, 20, 30, 50, 100, 10, 20];
+  static const _colors = [
+    Color(0xFFFF9A3C),
+    Color(0xFF2C2C2C),
+    Color(0xFFFF5E62),
+    Color(0xFFD4A574),
+    Color(0xFF4CAF50),
+    Color(0xFF7F7FD5),
+    Color(0xFFE94E77),
+    Color(0xFF42A5F5),
+  ];
+
+  late final AnimationController _controller;
+  Animation<double> _rotation = const AlwaysStoppedAnimation(0);
+  bool _busy = false;
+  bool _done = false;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      duration: const Duration(seconds: 3),
-      vsync: this,
-    );
+    _controller = AnimationController(vsync: this, duration: const Duration(seconds: 4));
   }
 
   @override
@@ -36,187 +46,90 @@ class _LuckyWheelScreenState extends State<LuckyWheelScreen>
     super.dispose();
   }
 
-  Future<void> _spinWheel() async {
-    if (_isSpinning) return;
+  Future<void> _spin() async {
+    if (_busy || _done) return;
+    setState(() => _busy = true);
 
-    setState(() {
-      _isSpinning = true;
-      _wonPoints = null;
-    });
-
-    final random = Random();
-    final rewardIndex = random.nextInt(_rewards.length);
-    final points = _rewards[rewardIndex];
-    
-    final targetAngle = (2 * pi * 5) + (rewardIndex * 2 * pi / _rewards.length);
-
-    _rotationAnimation = Tween<double>(
-      begin: 0,
-      end: targetAngle,
-    ).animate(CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeOut,
-    ));
-
-    _controller.forward(from: 0);
-
-    await Future.delayed(const Duration(seconds: 3));
-
-    setState(() {
-      _wonPoints = points;
-      _isSpinning = false;
-    });
-
-    if (points > 0) {
-      final user = context.read<AuthProvider>().currentUser;
-      if (user != null) {
-        await context.read<LoyaltyProvider>().playGame(
-              user.id,
-              GameType.luckyWheel,
-              points,
-            );
-        
-        final updatedUser = user.copyWith(points: user.points + points);
-        context.read<AuthProvider>().updateUser(updatedUser);
-      }
+    final result = await playOnServer(context, GameType.luckyWheel, widget.restaurantId);
+    if (!mounted) return;
+    if (result == null) {
+      setState(() => _busy = false);
+      return;
     }
 
-    if (mounted) {
-      _showResultDialog(points);
-    }
-  }
+    // Land on a segment showing exactly the points the server drew.
+    final matches = [
+      for (var i = 0; i < _segments.length; i++)
+        if (_segments[i] == result.pointsEarned) i
+    ];
+    final index = matches.isEmpty ? 0 : matches[Random().nextInt(matches.length)];
+    final segmentAngle = 2 * pi / _segments.length;
+    final centerOfSegment = (index + 0.5) * segmentAngle;
+    final target = 2 * pi * 5 + (2 * pi - centerOfSegment);
 
-  void _showResultDialog(int points) {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: Row(
-          children: [
-            Icon(
-              points > 0 ? Icons.celebration : Icons.sentiment_neutral,
-              color: points > 0 ? AppColors.success : AppColors.textSecondary,
-              size: 32,
-            ),
-            const SizedBox(width: 12),
-            Text(points > 0 ? 'You Won!' : 'Try Again'),
-          ],
-        ),
-        content: Text(
-          points > 0
-              ? 'Congratulations! You won $points points!'
-              : 'Better luck next time!',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const Text('Play Again'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              Navigator.of(context).pop();
-            },
-            child: const Text('Done'),
-          ),
-        ],
-      ),
-    );
+    _rotation = Tween<double>(begin: 0, end: target)
+        .animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic));
+    await _controller.forward(from: 0);
+
+    if (!mounted) return;
+    setState(() {
+      _busy = false;
+      _done = true;
+    });
+    await showWinDialog(context, result);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(
-        title: const Text('Lucky Wheel'),
-      ),
-      body: Padding(
+      appBar: AppBar(title: const Text('Lucky Wheel')),
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            const Text(
-              'Spin the Wheel',
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                color: AppColors.textPrimary,
-              ),
+            GameHeader(
+              type: GameType.luckyWheel,
+              restaurantName: widget.restaurantName,
+              instruction: 'Spin once a day and win points.',
             ),
-            const SizedBox(height: 12),
-            Text(
-              _isSpinning
-                  ? 'Spinning...'
-                  : _wonPoints != null
-                      ? 'You won $_wonPoints points!'
-                      : 'Tap the button to spin',
-              style: const TextStyle(
-                fontSize: 16,
-                color: AppColors.textSecondary,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 40),
-            Expanded(
-              child: Center(
-                child: AnimatedBuilder(
-                  animation: _controller,
-                  builder: (context, child) {
-                    return Transform.rotate(
-                      angle: _rotationAnimation.value,
-                      child: Container(
-                        width: 280,
-                        height: 280,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              blurRadius: 20,
-                              offset: const Offset(0, 10),
-                            ),
-                          ],
-                        ),
-                        child: CustomPaint(
-                          painter: WheelPainter(_rewards),
-                        ),
+            const SizedBox(height: 28),
+            SizedBox(
+              width: 300,
+              height: 320,
+              child: Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  Positioned(
+                    top: 20,
+                    child: AnimatedBuilder(
+                      animation: _controller,
+                      builder: (context, child) => Transform.rotate(angle: _rotation.value, child: child),
+                      child: SizedBox(
+                        width: 290,
+                        height: 290,
+                        child: CustomPaint(painter: _WheelPainter(_segments, _colors)),
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  ),
+                  const Icon(Icons.arrow_drop_down_circle, size: 40, color: AppColors.primary),
+                ],
               ),
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 24),
             SizedBox(
               width: double.infinity,
-              height: 56,
-              child: ElevatedButton(
-                onPressed: _isSpinning ? null : _spinWheel,
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(28),
-                  ),
-                ),
-                child: _isSpinning
+              height: 54,
+              child: ElevatedButton.icon(
+                onPressed: _busy || _done ? null : _spin,
+                icon: _busy
                     ? const SizedBox(
-                        height: 24,
-                        width: 24,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          color: AppColors.surface,
-                        ),
+                        width: 18,
+                        height: 18,
+                        child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
                       )
-                    : const Text(
-                        'SPIN',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 1.2,
-                        ),
-                      ),
+                    : const Icon(Icons.autorenew),
+                label: Text(_done ? 'Played today' : _busy ? 'Spinning...' : 'Spin the wheel'),
               ),
             ),
           ],
@@ -226,77 +139,56 @@ class _LuckyWheelScreenState extends State<LuckyWheelScreen>
   }
 }
 
-class WheelPainter extends CustomPainter {
-  final List<int> rewards;
+class _WheelPainter extends CustomPainter {
+  final List<int> segments;
+  final List<Color> colors;
 
-  WheelPainter(this.rewards);
+  _WheelPainter(this.segments, this.colors);
 
   @override
   void paint(Canvas canvas, Size size) {
-    final center = Offset(size.width / 2, size.height / 2);
+    final center = size.center(Offset.zero);
     final radius = size.width / 2;
-    final sectionAngle = 2 * pi / rewards.length;
+    final rect = Rect.fromCircle(center: center, radius: radius);
+    final segmentAngle = 2 * pi / segments.length;
 
-    final colors = [
-      AppColors.accent,
-      AppColors.accentLight,
-      const Color(0xFFE8B87D),
-      const Color(0xFFC89968),
-    ];
-
-    for (int i = 0; i < rewards.length; i++) {
-      final paint = Paint()
-        ..color = colors[i % colors.length]
-        ..style = PaintingStyle.fill;
-
-      final startAngle = i * sectionAngle - pi / 2;
+    for (var i = 0; i < segments.length; i++) {
+      final start = -pi / 2 + i * segmentAngle;
+      canvas.drawArc(rect, start, segmentAngle, true, Paint()..color = colors[i % colors.length]);
       canvas.drawArc(
-        Rect.fromCircle(center: center, radius: radius),
-        startAngle,
-        sectionAngle,
+        rect,
+        start,
+        segmentAngle,
         true,
-        paint,
+        Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 2
+          ..color = Colors.white,
       );
 
-      final textAngle = startAngle + sectionAngle / 2;
-      final textRadius = radius * 0.7;
-      final textX = center.dx + textRadius * cos(textAngle);
-      final textY = center.dy + textRadius * sin(textAngle);
-
-      final textPainter = TextPainter(
+      final labelAngle = start + segmentAngle / 2;
+      final labelCenter = center + Offset(cos(labelAngle), sin(labelAngle)) * (radius * 0.68);
+      final painter = TextPainter(
         text: TextSpan(
-          text: rewards[i] > 0 ? '+${rewards[i]}' : '0',
-          style: const TextStyle(
-            color: AppColors.textPrimary,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
+          text: '${segments[i]}',
+          style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w900),
         ),
         textDirection: TextDirection.ltr,
-      );
-      textPainter.layout();
-      textPainter.paint(
-        canvas,
-        Offset(textX - textPainter.width / 2, textY - textPainter.height / 2),
-      );
+      )..layout();
+      canvas.save();
+      canvas.translate(labelCenter.dx, labelCenter.dy);
+      canvas.rotate(labelAngle + pi / 2);
+      painter.paint(canvas, Offset(-painter.width / 2, -painter.height / 2));
+      canvas.restore();
     }
 
-    final centerPaint = Paint()
-      ..color = AppColors.primary
-      ..style = PaintingStyle.fill;
-    canvas.drawCircle(center, 15, centerPaint);
-
-    final pointerPaint = Paint()
-      ..color = AppColors.error
-      ..style = PaintingStyle.fill;
-    final pointerPath = Path()
-      ..moveTo(center.dx, 10)
-      ..lineTo(center.dx - 12, 40)
-      ..lineTo(center.dx + 12, 40)
-      ..close();
-    canvas.drawPath(pointerPath, pointerPaint);
+    canvas.drawCircle(center, 22, Paint()..color = Colors.white);
+    canvas.drawCircle(center, 22, Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 3
+      ..color = AppColors.primary);
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(covariant _WheelPainter oldDelegate) => false;
 }

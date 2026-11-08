@@ -10,4 +10,6 @@ import java.util.List;
 public interface GameResultRepository extends MongoRepository<GameResult, String> {
     List<GameResult> findByUserId(String userId);
     List<GameResult> findByUserIdOrderByPlayedAtDesc(String userId);
+
+    List<GameResult> findByUserIdAndPlayedAtGreaterThanEqual(String userId, java.time.LocalDateTime since);
 }

@@ -96,6 +96,12 @@ class OwnerProvider with ChangeNotifier {
     }
   }
 
+  /// Turns the loyalty programme on/off; throws with the server's message on failure.
+  Future<void> setLoyaltyEnabled(bool enabled) async {
+    _restaurant = await _ownerService.setLoyaltyEnabled(enabled);
+    notifyListeners();
+  }
+
   // --- Menu ---
 
   Future<void> loadMenuItems() async {

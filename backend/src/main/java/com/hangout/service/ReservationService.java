@@ -308,7 +308,8 @@ public class ReservationService {
             POINTS_FOR_HONORED_RESERVATION,
             PointTransaction.TransactionType.EARN_RESERVATION,
             "Reservation honored",
-            reservation.getId()
+            reservation.getId(),
+            reservation.getRestaurantId()
         );
     }
 

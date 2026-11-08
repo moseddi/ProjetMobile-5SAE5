@@ -38,6 +38,8 @@ public class RestaurantService {
         Restaurant existing = getRestaurantById(id);
         restaurant.setId(id);
         restaurant.setCreatedAt(existing.getCreatedAt());
+        // The loyalty switch belongs to the owner; an admin edit must not reset it.
+        restaurant.setLoyaltyEnabled(existing.getLoyaltyEnabled());
         return restaurantRepository.save(restaurant);
     }
     
@@ -51,6 +53,12 @@ public class RestaurantService {
     public Restaurant getOwnRestaurant(String ownerId) {
         return restaurantRepository.findByOwnerId(ownerId)
             .orElseThrow(() -> new ResourceNotFoundException("You do not manage any restaurant yet"));
+    }
+
+    public Restaurant setOwnLoyaltyEnabled(String ownerId, boolean enabled) {
+        Restaurant existing = getOwnRestaurant(ownerId);
+        existing.setLoyaltyEnabled(enabled);
+        return restaurantRepository.save(existing);
     }
 
     public Restaurant updateOwnRestaurant(String ownerId, Restaurant update) {

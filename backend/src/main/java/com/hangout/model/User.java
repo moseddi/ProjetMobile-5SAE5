@@ -35,6 +35,9 @@ public class User {
     // Admin can deactivate an account instead of deleting it
     private Boolean active = true;
 
+    // Permanent code behind the client's QR: created once, never changes.
+    private String memberCode;
+
     @CreatedDate
     private LocalDateTime createdAt;
 

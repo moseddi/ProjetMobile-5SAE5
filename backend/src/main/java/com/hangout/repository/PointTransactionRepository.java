@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface PointTransactionRepository extends MongoRepository<PointTransaction, String> {
     List<PointTransaction> findByUserIdOrderByCreatedAtDesc(String userId);
+
+    List<PointTransaction> findByUserId(String userId);
 }
