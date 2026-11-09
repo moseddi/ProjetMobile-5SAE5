@@ -16,6 +16,7 @@ public class OwnerApplicationResponse {
     private String cuisine;
     private String description;
     private String image;
+    private String menuImage;
     private String address;
     private String restaurantPhone;
     private String openingHours;
@@ -37,6 +38,7 @@ public class OwnerApplicationResponse {
         r.setCuisine(a.getCuisine());
         r.setDescription(a.getDescription());
         r.setImage(a.getImage());
+        r.setMenuImage(a.getMenuImage());
         r.setAddress(a.getAddress());
         r.setRestaurantPhone(a.getRestaurantPhone());
         r.setOpeningHours(a.getOpeningHours());

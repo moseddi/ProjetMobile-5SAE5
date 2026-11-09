@@ -35,6 +35,16 @@ public class GlobalExceptionHandler {
         );
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
+
+    @ExceptionHandler(ChatUnavailableException.class)
+    public ResponseEntity<ErrorResponse> handleChatUnavailable(ChatUnavailableException ex) {
+        ErrorResponse error = new ErrorResponse(
+            HttpStatus.SERVICE_UNAVAILABLE.value(),
+            ex.getMessage(),
+            LocalDateTime.now()
+        );
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(error);
+    }
     
     @ExceptionHandler(org.springframework.web.HttpRequestMethodNotSupportedException.class)
     public ResponseEntity<ErrorResponse> handleMethodNotSupported(org.springframework.web.HttpRequestMethodNotSupportedException ex) {

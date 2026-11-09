@@ -99,7 +99,17 @@ void initState() {
                       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 12),
+                  OutlinedButton.icon(
+                    onPressed: () => Navigator.of(context)
+                        .pushNamed(AppRouter.menuAssistant),
+                    icon: const Icon(Icons.chat_bubble_outline),
+                    label: const Text('Find a dish with AI'),
+                    style: OutlinedButton.styleFrom(
+                      minimumSize: const Size(double.infinity, 48),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
                   OutlinedButton.icon(
                     onPressed: () {
                       Navigator.of(context).push(

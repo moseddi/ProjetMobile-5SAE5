@@ -61,6 +61,7 @@ public class RestaurantService {
         existing.setCuisine(update.getCuisine());
         existing.setDescription(update.getDescription());
         existing.setImage(update.getImage());
+        existing.setMenuImage(update.getMenuImage());
         existing.setAddress(update.getAddress());
         existing.setPhone(update.getPhone());
         existing.setOpeningHours(update.getOpeningHours());

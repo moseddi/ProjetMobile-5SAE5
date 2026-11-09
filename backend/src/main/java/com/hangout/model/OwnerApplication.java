@@ -28,6 +28,7 @@ public class OwnerApplication {
     private String cuisine;
     private String description;
     private String image;
+    private String menuImage;
     private String address;
     private String restaurantPhone;
     private String openingHours;

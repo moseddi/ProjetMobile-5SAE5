@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../../../core/navigation/app_router.dart';
 import '../../../core/theme/app_colors.dart';
 import '../providers/auth_provider.dart';
+import '../../../widgets/menu_image_picker.dart';
 
 const _priceRanges = <String, String>{
   'BUDGET': 'Budget (\$)',
@@ -35,6 +36,9 @@ class _OwnerSignupScreenState extends State<OwnerSignupScreen> {
   final _restaurantPhone = TextEditingController();
   final _hours = TextEditingController();
 
+  // Menu picture chosen from the device, stored as a data URL ('' = none).
+  String _menuImage = '';
+
   String _priceRange = 'MODERATE';
   bool _obscure = true;
   bool _sent = false;
@@ -65,6 +69,7 @@ class _OwnerSignupScreenState extends State<OwnerSignupScreen> {
       'cuisine': _cuisine.text.trim(),
       'description': _description.text.trim(),
       'image': _image.text.trim(),
+      'menuImage': _menuImage,
       'address': _address.text.trim(),
       'restaurantPhone': _restaurantPhone.text.trim(),
       'openingHours': _hours.text.trim(),
@@ -299,6 +304,11 @@ class _OwnerSignupScreenState extends State<OwnerSignupScreen> {
                 labelText: 'Photo URL (optional)',
                 prefixIcon: Icon(Icons.image_outlined),
               ),
+            ),
+            _gap(),
+            MenuImagePicker(
+              value: _menuImage,
+              onChanged: (v) => setState(() => _menuImage = v),
             ),
             _gap(),
             DropdownButtonFormField<String>(

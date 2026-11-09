@@ -59,6 +59,7 @@ class OwnerRestaurant {
   final String cuisine;
   final String description;
   final String image;
+  final String menuImage;
   final String address;
   final String phone;
   final String openingHours;
@@ -77,6 +78,7 @@ class OwnerRestaurant {
     required this.cuisine,
     required this.description,
     required this.image,
+    this.menuImage = '',
     required this.address,
     required this.phone,
     required this.openingHours,
@@ -94,6 +96,7 @@ class OwnerRestaurant {
     String? cuisine,
     String? description,
     String? image,
+    String? menuImage,
     String? address,
     String? phone,
     String? openingHours,
@@ -108,6 +111,7 @@ class OwnerRestaurant {
       cuisine: cuisine ?? this.cuisine,
       description: description ?? this.description,
       image: image ?? this.image,
+      menuImage: menuImage ?? this.menuImage,
       address: address ?? this.address,
       phone: phone ?? this.phone,
       openingHours: openingHours ?? this.openingHours,
@@ -129,6 +133,7 @@ class OwnerRestaurant {
       cuisine: json['cuisine'] ?? '',
       description: json['description'] ?? '',
       image: json['image'] ?? '',
+      menuImage: json['menuImage'] ?? '',
       address: json['address'] ?? '',
       phone: json['phone'] ?? '',
       openingHours: json['openingHours'] ?? '',
@@ -152,6 +157,7 @@ class OwnerRestaurant {
       'cuisine': cuisine,
       'description': description,
       'image': image,
+      'menuImage': menuImage,
       'address': address,
       'phone': phone,
       'openingHours': openingHours,

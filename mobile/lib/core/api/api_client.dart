@@ -31,10 +31,10 @@ class ApiClient {
   }
 
   static Map<String, String> get _headers => {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-    if (hasToken) 'Authorization': 'Bearer $_token',
-  };
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        if (hasToken) 'Authorization': 'Bearer $_token',
+      };
 
   static Future<http.Response> get(String endpoint) async {
     final uri = Uri.parse('${AppConfig.apiBaseUrl}$endpoint');
@@ -45,14 +45,20 @@ class ApiClient {
     }
   }
 
-  static Future<http.Response> post(String endpoint, Map<String, dynamic> body) async {
+  static Future<http.Response> post(
+    String endpoint,
+    Map<String, dynamic> body, {
+    Duration? requestTimeout,
+  }) async {
     final uri = Uri.parse('${AppConfig.apiBaseUrl}$endpoint');
     try {
-      return await http.post(
-        uri,
-        headers: _headers,
-        body: jsonEncode(body),
-      ).timeout(timeout);
+      return await http
+          .post(
+            uri,
+            headers: _headers,
+            body: jsonEncode(body),
+          )
+          .timeout(requestTimeout ?? timeout);
     } catch (e) {
       throw ApiException('Network error: $e');
     }
