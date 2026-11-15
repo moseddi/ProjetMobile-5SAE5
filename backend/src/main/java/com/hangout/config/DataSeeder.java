@@ -61,7 +61,7 @@ public class DataSeeder implements CommandLineRunner {
         User emily = ensureUser("emily@example.com", "password", "Emily Chen",
             "+1234567892", "", User.Role.CLIENT, null);
 
-        ensureMenuItems(leGourmet, sushiParadise);
+        ensureMenuItems(leGourmet, sushiParadise, bellaItalia);
         ensureReviews(leGourmet, sushiParadise, demo, john);
         ensureEvents(leGourmet);
         ensureHangOuts(leGourmet, demo, john);
@@ -165,42 +165,50 @@ public class DataSeeder implements CommandLineRunner {
         return r;
     }
 
-    private void ensureMenuItems(Restaurant leGourmet, Restaurant sushiParadise) {
-        if (!menuItemRepository.findByRestaurantId(leGourmet.getId()).isEmpty()) {
-            return;
+    private void ensureMenuItems(Restaurant leGourmet, Restaurant sushiParadise, Restaurant bellaItalia) {
+        log.info("Checking seed menu items...");
+
+        // Le Gourmet
+        ensureMenuItem(leGourmet.getId(), "Foie Gras", "Pan-seared foie gras with fig compote",
+                "https://images.unsplash.com/photo-1544025162-d76694265947", 28.00, "STARTERS");
+        ensureMenuItem(leGourmet.getId(), "Coq au Vin", "Braised chicken in red wine sauce",
+                "https://images.unsplash.com/photo-1598103442097-8b74394b95c6", 42.00, "MAIN_COURSES");
+        ensureMenuItem(leGourmet.getId(), "French Bistro Burger", "Steak de bœuf Angus façon bouchère, brie de Meaux fondu, oignons confits au vin rouge et frites maison",
+                "https://images.unsplash.com/photo-1568901346375-23c9450c58cd", 22.00, "MAIN_COURSES");
+
+        // Sushi Paradise
+        ensureMenuItem(sushiParadise.getId(), "Sashimi Platter", "Assorted fresh sashimi",
+                "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351", 35.00, "MAIN_COURSES");
+        ensureMenuItem(sushiParadise.getId(), "Salmon Burger Crispy Rice", "Burger gourmand au riz croustillant, pavé de saumon snacké, avocat et sauce teriyaki",
+                "https://images.unsplash.com/photo-1550547660-d9450f859349", 18.50, "MAIN_COURSES");
+        ensureMenuItem(sushiParadise.getId(), "Dragon Roll", "Maki croustillant crevette tempura, avocat et sésame",
+                "https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56", 20.00, "MAIN_COURSES");
+
+        // Bella Italia
+        ensureMenuItem(bellaItalia.getId(), "Classic Burger Gourmet", "Steak haché pur bœuf, mozzarella fior di latte, roquette, pesto de basilic et tomates séchées",
+                "https://images.unsplash.com/photo-1586190848861-99aa4a171e90", 16.50, "MAIN_COURSES");
+        ensureMenuItem(bellaItalia.getId(), "Pizza Margherita", "Sauce tomate San Marzano, mozzarella fondante et basilic frais",
+                "https://images.unsplash.com/photo-1574071318508-1cdbab80d002", 14.00, "MAIN_COURSES");
+        ensureMenuItem(bellaItalia.getId(), "Tagliatelles à la Truffe", "Pâtes fraîches, crème de truffe noire et parmesan affiné 24 mois",
+                "https://images.unsplash.com/photo-1608897013039-887f21d8c804", 19.00, "MAIN_COURSES");
+    }
+
+    private void ensureMenuItem(String restaurantId, String name, String description,
+                                String image, Double price, String category) {
+        boolean exists = menuItemRepository.findByRestaurantId(restaurantId).stream()
+                .anyMatch(item -> item.getName().equalsIgnoreCase(name));
+        if (!exists) {
+            MenuItem m = new MenuItem();
+            m.setRestaurantId(restaurantId);
+            m.setName(name);
+            m.setDescription(description);
+            m.setImage(image);
+            m.setPrice(price);
+            m.setCategory(category);
+            m.setAvailable(true);
+            menuItemRepository.save(m);
+            log.info("Seeded menu item: {} ({} DT) for restaurant ID {}", name, price, restaurantId);
         }
-
-        log.info("Seeding menu items");
-        List<MenuItem> items = new ArrayList<>();
-
-        MenuItem m1 = new MenuItem();
-        m1.setRestaurantId(leGourmet.getId());
-        m1.setName("Foie Gras");
-        m1.setDescription("Pan-seared foie gras with fig compote");
-        m1.setImage("https://images.unsplash.com/photo-1544025162-d76694265947");
-        m1.setPrice(28.00);
-        m1.setCategory("STARTERS");
-        items.add(m1);
-
-        MenuItem m2 = new MenuItem();
-        m2.setRestaurantId(leGourmet.getId());
-        m2.setName("Coq au Vin");
-        m2.setDescription("Braised chicken in red wine sauce");
-        m2.setImage("https://images.unsplash.com/photo-1598103442097-8b74394b95c6");
-        m2.setPrice(42.00);
-        m2.setCategory("MAIN_COURSES");
-        items.add(m2);
-
-        MenuItem m3 = new MenuItem();
-        m3.setRestaurantId(sushiParadise.getId());
-        m3.setName("Sashimi Platter");
-        m3.setDescription("Assorted fresh sashimi");
-        m3.setImage("https://images.unsplash.com/photo-1579584425555-c3ce17fd4351");
-        m3.setPrice(35.00);
-        m3.setCategory("MAIN_COURSES");
-        items.add(m3);
-
-        menuItemRepository.saveAll(items);
     }
 
     private void ensureReviews(Restaurant leGourmet, Restaurant sushiParadise, User demo, User john) {

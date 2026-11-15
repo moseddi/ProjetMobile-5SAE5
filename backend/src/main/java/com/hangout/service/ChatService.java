@@ -3,7 +3,9 @@ package com.hangout.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hangout.exception.ChatUnavailableException;
+import com.hangout.model.MenuItem;
 import com.hangout.model.Restaurant;
+import com.hangout.repository.MenuItemRepository;
 import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +22,11 @@ import java.io.InterruptedIOException;
 import java.net.SocketTimeoutException;
 import java.util.Base64;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CompletableFuture;
@@ -36,6 +42,7 @@ import java.util.regex.Pattern;
 public class ChatService {
 
     private final RestaurantService restaurantService;
+    private final MenuItemRepository menuItemRepository;
     private final ObjectMapper objectMapper;
 
     private final RestClient restClient = buildClient();
@@ -48,7 +55,7 @@ public class ChatService {
     // Cache : le menu d'un restaurant n'est lu par Gemini qu'une seule fois
     private final Map<String, String> menuCache = new ConcurrentHashMap<>();
 
-    @Value("${gemini.api-key}")
+    @Value("${gemini.api-key:}")
     private String apiKey;
 
     @Value("${gemini.model:gemini-flash-lite-latest}")
@@ -90,66 +97,84 @@ public class ChatService {
     }
 
     public ChatReply ask(String question) {
-        try {
-            if (apiKey == null || apiKey.isBlank()) {
-                throw new ChatUnavailableException("L'assistant de menu n'est pas configure.");
-            }
+        if (question == null || question.isBlank()) {
+            return new ChatReply("Veuillez poser une question sur les menus ou les plats.", List.of());
+        }
 
-            List<Restaurant> restaurants = restaurantService.getAllRestaurants().stream()
-                    .filter(restaurant -> restaurant.getMenuImage() != null
-                            && !restaurant.getMenuImage().isBlank())
-                    .toList();
+        List<Restaurant> allRestaurants = restaurantService.getAllRestaurants();
+        if (allRestaurants.isEmpty()) {
+            return new ChatReply("Aucun restaurant n'est encore enregistré.", List.of());
+        }
 
-            if (restaurants.isEmpty()) {
-                return new ChatReply("Aucun restaurant n'a encore publie son menu.", List.of());
-            }
+        // 1. Récupération des plats de chaque restaurant
+        Map<String, List<MenuItem>> itemsByRestaurant = new HashMap<>();
+        for (Restaurant r : allRestaurants) {
+            List<MenuItem> items = menuItemRepository.findByRestaurantId(r.getId());
+            itemsByRestaurant.put(r.getId(), items != null ? items : List.of());
+        }
 
-            List<Restaurant> readableRestaurants = new ArrayList<>();
-            StringBuilder menus = new StringBuilder();
-            int unreadableMenuCount = 0;
-            List<CompletableFuture<MenuReadResult>> menuReads = restaurants.stream()
-                    .map(restaurant -> CompletableFuture.supplyAsync(() -> {
-                        try {
-                            return new MenuReadResult(restaurant, getMenuText(restaurant), false);
-                        } catch (IllegalStateException e) {
-                            log.warn("Skipping unreadable menu image for restaurant {}", restaurant.getId());
-                            return new MenuReadResult(restaurant, null, true);
-                        }
-                    }, menuExecutor))
-                    .toList();
+        boolean hasGeminiKey = (apiKey != null && !apiKey.trim().isBlank());
 
-            for (CompletableFuture<MenuReadResult> menuRead : menuReads) {
-                MenuReadResult result;
-                try {
-                    result = menuRead.join();
-                } catch (CompletionException e) {
-                    if (e.getCause() instanceof RuntimeException cause) {
-                        throw cause;
+        List<Restaurant> readableRestaurants = new ArrayList<>();
+        StringBuilder menus = new StringBuilder();
+        int unreadableMenuCount = 0;
+
+        for (Restaurant restaurant : allRestaurants) {
+            List<MenuItem> items = itemsByRestaurant.getOrDefault(restaurant.getId(), List.of());
+            StringBuilder restaurantMenu = new StringBuilder();
+
+            // Plats saisis dans la base de données
+            if (!items.isEmpty()) {
+                restaurantMenu.append("Plats au menu :\n");
+                for (MenuItem item : items) {
+                    restaurantMenu.append("- ").append(item.getName());
+                    if (item.getCategory() != null && !item.getCategory().isBlank()) {
+                        restaurantMenu.append(" [").append(item.getCategory()).append("]");
                     }
-                    throw e;
+                    if (item.getPrice() != null) {
+                        restaurantMenu.append(" : ").append(String.format(Locale.US, "%.2f", item.getPrice())).append(" DT");
+                    }
+                    if (item.getDescription() != null && !item.getDescription().isBlank()) {
+                        restaurantMenu.append(" (").append(item.getDescription()).append(")");
+                    }
+                    restaurantMenu.append("\n");
                 }
-                if (result.unreadable()) {
+            }
+
+            // Image de menu (analysée via Gemini OCR si clé présente)
+            if (hasGeminiKey && restaurant.getMenuImage() != null && !restaurant.getMenuImage().isBlank()) {
+                try {
+                    String ocrText = getMenuText(restaurant);
+                    if (ocrText != null && !ocrText.isBlank()) {
+                        restaurantMenu.append("Informations issues de la photo du menu :\n").append(ocrText).append("\n");
+                    }
+                } catch (Exception e) {
+                    log.warn("Impossible de lire l'image du menu pour {}: {}", restaurant.getName(), e.getMessage());
                     unreadableMenuCount++;
-                    continue;
                 }
-                Restaurant restaurant = result.restaurant();
-                String menuText = result.text();
-                if (menuText == null || menuText.isBlank()) {
-                    continue;
-                }
+            }
+
+            if (!restaurantMenu.isEmpty()) {
                 readableRestaurants.add(restaurant);
                 menus.append("RESTAURANT_ID: ").append(restaurant.getId()).append('\n')
                         .append("NOM: ").append(restaurant.getName()).append('\n')
-                        .append("ADRESSE: ").append(restaurant.getAddress()).append('\n')
-                        .append("MENU: ").append(menuText).append("\n\n");
+                        .append("ADRESSE: ").append(restaurant.getAddress() != null ? restaurant.getAddress() : "").append('\n')
+                        .append("CUISINE: ").append(restaurant.getCuisine() != null ? restaurant.getCuisine() : "").append('\n')
+                        .append("MENU:\n").append(restaurantMenu).append("\n\n");
             }
+        }
 
-            if (readableRestaurants.isEmpty()) {
-                return new ChatReply(
-                        "Aucun menu n'a pu etre lu. Demandez aux restaurants de reimporter leur image de menu.",
-                        List.of());
-            }
+        if (readableRestaurants.isEmpty()) {
+            return new ChatReply("Aucun restaurant n'a encore publié son menu ou ses plats.", List.of());
+        }
 
+        // Si la clé Gemini n'est pas configurée, on utilise la recherche locale
+        if (!hasGeminiKey) {
+            log.info("Gemini API key absente : utilisation du moteur de recherche local.");
+            return fallbackSearch(question, readableRestaurants, itemsByRestaurant, true);
+        }
+
+        try {
             String prompt = """
                     Tu es un assistant qui repond aux questions sur les menus de plusieurs restaurants.
                     Reponds dans la langue du client et base chaque information uniquement sur les menus ci-dessous.
@@ -183,12 +208,12 @@ public class ChatService {
             String reply = result.path("reply").asText("").trim();
             JsonNode ids = result.path("restaurantIds");
             if (reply.isEmpty() || !ids.isArray()) {
-                throw new ChatUnavailableException("L'assistant a renvoye une reponse invalide. Reessayez.");
+                return fallbackSearch(question, readableRestaurants, itemsByRestaurant, false);
             }
             reply = removeRestaurantIds(reply, readableRestaurants);
 
             Map<String, Restaurant> restaurantsById = readableRestaurants.stream()
-                    .collect(Collectors.toMap(Restaurant::getId, restaurant -> restaurant));
+                    .collect(Collectors.toMap(Restaurant::getId, restaurant -> restaurant, (a, b) -> a));
             List<ChatRestaurant> matches = new ArrayList<>();
             for (JsonNode idNode : ids) {
                 Restaurant restaurant = restaurantsById.get(idNode.asText());
@@ -197,42 +222,95 @@ public class ChatService {
                 }
             }
             if (unreadableMenuCount > 0) {
-                reply += " Attention : " + unreadableMenuCount
-                        + " menu(s) n'ont pas pu etre lus; les resultats peuvent etre incomplets.";
+                reply += " (Attention : " + unreadableMenuCount + " image(s) de menu n'ont pas pu être lues).";
             }
             return new ChatReply(reply, matches);
 
-        } catch (ChatUnavailableException e) {
-            throw e;
-        } catch (RestClientResponseException e) {
-            int code = e.getStatusCode().value();
-            log.error("Gemini menu search failed with HTTP status {}", code);
-            if (code == 429 || code == 503) {
-                throw new ChatUnavailableException("L'assistant est tres sollicite, reessaie dans un instant.");
-            }
-            throw new ChatUnavailableException("L'assistant n'a pas pu traiter la question.");
-        } catch (ResourceAccessException e) {
-            if (isTimeout(e)) {
-                log.warn("Gemini menu search timed out while reading restaurant menus", e);
-                throw new ChatUnavailableException(
-                        "La lecture des menus prend trop de temps. Reessayez dans un instant.");
-            }
-            log.error("Gemini cannot be reached from the backend", e);
-            throw new ChatUnavailableException(
-                    "Le backend ne parvient pas a joindre Gemini. Verifiez sa connexion Internet.");
-        } catch (RestClientException e) {
-            if (isTimeout(e)) {
-                log.warn("Gemini did not respond before the read timeout", e);
-                throw new ChatUnavailableException(
-                        "Gemini n'a pas repondu apres 45 secondes. Verifiez l'acces a generativelanguage.googleapis.com "
-                                + "et reessayez.");
-            }
-            log.error("Gemini menu search request failed", e);
-            throw new ChatUnavailableException("L'assistant est indisponible pour le moment.");
-        } catch (java.io.IOException e) {
-            log.error("Could not parse Gemini menu search response", e);
-            throw new ChatUnavailableException("L'assistant a renvoye une reponse invalide. Reessayez.");
+        } catch (Exception e) {
+            log.warn("Gemini call failed, falling back to local search: {}", e.getMessage());
+            return fallbackSearch(question, readableRestaurants, itemsByRestaurant, false);
         }
+    }
+
+    private ChatReply fallbackSearch(String question, List<Restaurant> restaurants,
+                                     Map<String, List<MenuItem>> itemsByRestaurant,
+                                     boolean missingApiKey) {
+        String query = question.toLowerCase().trim();
+
+        // Nettoyage pour extraire les mots-clés culinaires
+        String cleaned = query.replaceAll("(?i)[?.,!;:'\"()\\-_/]", " ")
+                .replaceAll("(?i)\\b(ou|est|ce|que|qui|quoi|quelles|quelle|quels|quel|sont|les|le|la|des|du|de|d|un|une|je|tu|il|elle|on|nous|vous|ils|elles|peux|peut|pouvez|pourrais|manger|trouver|avoir|prendre|commander|acheter|prix|combien|coute|coutent|restaurant|restaurants|resto|restos|plat|plats|menu|menus|carte|bonjour|salut|merci|svp|et|en|au|aux)\\b", " ")
+                .replaceAll("\\s+", " ")
+                .trim();
+
+        List<String> keywords = Arrays.stream(cleaned.split(" "))
+                .map(String::trim)
+                .filter(w -> w.length() >= 3)
+                .toList();
+
+        List<ChatRestaurant> matchingRestaurants = new ArrayList<>();
+        StringBuilder reply = new StringBuilder();
+
+        Map<Restaurant, List<MenuItem>> matchedItems = new LinkedHashMap<>();
+
+        for (Restaurant r : restaurants) {
+            List<MenuItem> items = itemsByRestaurant.getOrDefault(r.getId(), List.of());
+            List<MenuItem> hits = items.stream().filter(item -> {
+                String itemName = (item.getName() != null ? item.getName() : "").toLowerCase();
+                String itemDesc = (item.getDescription() != null ? item.getDescription() : "").toLowerCase();
+                String itemCat = (item.getCategory() != null ? item.getCategory() : "").toLowerCase();
+
+                if (keywords.isEmpty()) {
+                    return true;
+                }
+                return keywords.stream().anyMatch(kw -> itemName.contains(kw) || itemDesc.contains(kw) || itemCat.contains(kw));
+            }).toList();
+
+            if (!hits.isEmpty()) {
+                matchedItems.put(r, hits);
+                matchingRestaurants.add(new ChatRestaurant(r.getId(), r.getName(), r.getAddress()));
+            }
+        }
+
+        if (!matchedItems.isEmpty()) {
+            if (!keywords.isEmpty()) {
+                reply.append("Voici les restaurants où vous pouvez déguster ce que vous cherchez (")
+                        .append(String.join(", ", keywords)).append(") :\n\n");
+            } else {
+                reply.append("Voici les plats disponibles dans nos restaurants partenaires :\n\n");
+            }
+
+            for (Map.Entry<Restaurant, List<MenuItem>> entry : matchedItems.entrySet()) {
+                Restaurant r = entry.getKey();
+                reply.append("📍 **").append(r.getName()).append("** (").append(r.getAddress() != null ? r.getAddress() : "").append(") :\n");
+                for (MenuItem item : entry.getValue()) {
+                    reply.append("  • **").append(item.getName()).append("**");
+                    if (item.getPrice() != null) {
+                        reply.append(" — ").append(String.format(Locale.US, "%.2f", item.getPrice())).append(" DT");
+                    }
+                    if (item.getDescription() != null && !item.getDescription().isBlank()) {
+                        reply.append(" (").append(item.getDescription()).append(")");
+                    }
+                    reply.append("\n");
+                }
+                reply.append("\n");
+            }
+        } else {
+            reply.append("Je n'ai pas trouvé de plat correspondant directement à votre recherche dans les menus.\n\n");
+            reply.append("Voici les restaurants partenaires disponibles :\n");
+            for (Restaurant r : restaurants) {
+                reply.append("• **").append(r.getName()).append("** (Cuisine : ")
+                        .append(r.getCuisine() != null ? r.getCuisine() : "Variée")
+                        .append(" - ").append(r.getAddress() != null ? r.getAddress() : "").append(")\n");
+                matchingRestaurants.add(new ChatRestaurant(r.getId(), r.getName(), r.getAddress()));
+            }
+        }
+
+        if (missingApiKey) {
+            reply.append("\n💡 _Note : L'assistant fonctionne en mode local. Pour activer la compréhension IA avancée (Gemini), configurez GEMINI_API_KEY dans backend/.env._");
+        }
+
+        return new ChatReply(reply.toString().trim(), matchingRestaurants);
     }
 
     private static String removeRestaurantIds(String reply, List<Restaurant> restaurants) {
