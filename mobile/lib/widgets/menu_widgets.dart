@@ -325,12 +325,13 @@ class MenuItemList extends StatelessWidget {
   }
 }
 
-/// The customer-facing menu: title, category pills, and dishes grouped under
-/// category headings.
+/// The customer-facing menu: title, optional menu image, category pills, and
+/// dishes grouped under category headings.
 class MenuSection extends StatefulWidget {
   final List<MenuItem> items;
+  final String menuImage;
 
-  const MenuSection({super.key, required this.items});
+  const MenuSection({super.key, required this.items, this.menuImage = ''});
 
   @override
   State<MenuSection> createState() => _MenuSectionState();
@@ -339,11 +340,59 @@ class MenuSection extends StatefulWidget {
 class _MenuSectionState extends State<MenuSection> {
   String? _selected;
 
+  Widget _buildMenuImage() {
+    final url = widget.menuImage.trim();
+    if (url.isEmpty) return const SizedBox.shrink();
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: GestureDetector(
+        onTap: () => showDialog(
+          context: context,
+          builder: (_) => Dialog(
+            backgroundColor: Colors.black,
+            insetPadding: const EdgeInsets.all(12),
+            child: InteractiveViewer(
+              child: Image.network(url, fit: BoxFit.contain),
+            ),
+          ),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(18),
+          child: Image.network(
+            url,
+            width: double.infinity,
+            fit: BoxFit.cover,
+            errorBuilder: (_, __, ___) => Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(20),
+              color: AppColors.surface,
+              child: const Text('Menu image unavailable'),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final items = widget.items;
+    final hasMenuImage = widget.menuImage.trim().isNotEmpty;
 
     if (items.isEmpty) {
+      if (hasMenuImage) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Menu',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+            ),
+            const SizedBox(height: 12),
+            _buildMenuImage(),
+          ],
+        );
+      }
       return Container(
         width: double.infinity,
         padding: const EdgeInsets.all(28),
@@ -385,6 +434,7 @@ class _MenuSectionState extends State<MenuSection> {
           ],
         ),
         const SizedBox(height: 14),
+        _buildMenuImage(),
         MenuCategoryBar(
           items: items,
           selected: _selected,

@@ -3,6 +3,7 @@ class Restaurant {
   final String? ownerId;
   final String name;
   final String image;
+  final String menuImage;
   final String cuisine;
   final String address;
   final double rating;
@@ -17,6 +18,7 @@ class Restaurant {
     this.ownerId,
     required this.name,
     required this.image,
+    this.menuImage = '',
     required this.cuisine,
     required this.address,
     required this.rating,
@@ -32,6 +34,7 @@ class Restaurant {
     String? ownerId,
     String? name,
     String? image,
+    String? menuImage,
     String? cuisine,
     String? address,
     double? rating,
@@ -46,6 +49,7 @@ class Restaurant {
       ownerId: ownerId ?? this.ownerId,
       name: name ?? this.name,
       image: image ?? this.image,
+      menuImage: menuImage ?? this.menuImage,
       cuisine: cuisine ?? this.cuisine,
       address: address ?? this.address,
       rating: rating ?? this.rating,
@@ -63,6 +67,7 @@ class Restaurant {
       ownerId: json['ownerId'],
       name: json['name'] ?? '',
       image: json['image'] ?? '',
+      menuImage: json['menuImage'] ?? '',
       cuisine: json['cuisine'] ?? '',
       address: json['address'] ?? '',
       rating: (json['rating'] ?? 0).toDouble(),

@@ -27,6 +27,7 @@ public class Restaurant {
     private String openingHours;
     private Double rating; // Calculated from reviews
     private Integer reviewCount = 0;
+    private String menuImage;
     private Boolean isOpen;
 
     // The owner can switch the loyalty rewards programme off; missing means on.

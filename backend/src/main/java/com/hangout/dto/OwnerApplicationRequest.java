@@ -32,6 +32,7 @@ public class OwnerApplicationRequest {
     private String description;
 
     private String image;
+    private String menuImage;
 
     @NotBlank(message = "Address is required")
     private String address;

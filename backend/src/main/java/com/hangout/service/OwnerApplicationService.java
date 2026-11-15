@@ -50,6 +50,7 @@ public class OwnerApplicationService {
         a.setCuisine(request.getCuisine().trim());
         a.setDescription(request.getDescription().trim());
         a.setImage(request.getImage() != null ? request.getImage().trim() : "");
+        a.setMenuImage(request.getMenuImage());
         a.setAddress(request.getAddress().trim());
         a.setRestaurantPhone(request.getRestaurantPhone() != null && !request.getRestaurantPhone().isBlank()
             ? request.getRestaurantPhone().trim() : request.getPhone().trim());
@@ -102,6 +103,7 @@ public class OwnerApplicationService {
         restaurant.setCuisine(a.getCuisine());
         restaurant.setDescription(a.getDescription());
         restaurant.setImage(a.getImage());
+        restaurant.setMenuImage(a.getMenuImage());
         restaurant.setAddress(a.getAddress());
         restaurant.setPhone(a.getRestaurantPhone());
         restaurant.setOpeningHours(a.getOpeningHours());

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../models/owner_restaurant.dart';
+import '../../../widgets/menu_image_picker.dart';
 import '../providers/owner_provider.dart';
 
 class OwnerRestaurantProfileScreen extends StatefulWidget {
@@ -21,6 +22,9 @@ class _OwnerRestaurantProfileScreenState extends State<OwnerRestaurantProfileScr
   final _phoneController = TextEditingController();
   final _openingHoursController = TextEditingController();
   final _featureController = TextEditingController();
+
+  // Menu picture chosen from the device, stored as a data URL ('' = none).
+  String _menuImage = '';
 
   final List<String> _features = [];
   PriceRange _priceRange = PriceRange.moderate;
@@ -46,6 +50,7 @@ class _OwnerRestaurantProfileScreenState extends State<OwnerRestaurantProfileScr
     _cuisineController.text = restaurant.cuisine;
     _descriptionController.text = restaurant.description;
     _imageController.text = restaurant.image;
+    _menuImage = restaurant.menuImage;
     _addressController.text = restaurant.address;
     _phoneController.text = restaurant.phone;
     _openingHoursController.text = restaurant.openingHours;
@@ -82,6 +87,7 @@ class _OwnerRestaurantProfileScreenState extends State<OwnerRestaurantProfileScr
       cuisine: _cuisineController.text.trim(),
       description: _descriptionController.text.trim(),
       image: _imageController.text.trim(),
+      menuImage: _menuImage,
       address: _addressController.text.trim(),
       phone: _phoneController.text.trim(),
       openingHours: _openingHoursController.text.trim(),
@@ -174,8 +180,13 @@ class _OwnerRestaurantProfileScreenState extends State<OwnerRestaurantProfileScr
               const SizedBox(height: 16),
               TextFormField(
                 controller: _imageController,
-                decoration: const InputDecoration(labelText: 'Image URL'),
+                decoration: const InputDecoration(labelText: 'Cover photo URL'),
                 keyboardType: TextInputType.url,
+              ),
+              const SizedBox(height: 16),
+              MenuImagePicker(
+                value: _menuImage,
+                onChanged: (v) => setState(() => _menuImage = v),
               ),
               const SizedBox(height: 16),
               TextFormField(

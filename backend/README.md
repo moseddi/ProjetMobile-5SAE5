@@ -169,6 +169,20 @@ The server will start on `http://localhost:8080`
 - `POST /api/restaurants` - Create restaurant
 - `PUT /api/restaurants/{id}` - Update restaurant
 - `DELETE /api/restaurants/{id}` - Delete restaurant
+- `POST /api/chat` - Search every restaurant menu for a dish and return matching restaurants
+
+The global menu assistant reads every restaurant's `menuImage` with Gemini, caches
+the extracted menu text until the image changes, and answers questions about dishes,
+prices, descriptions, ingredients, portions, options, and categories across menus.
+It returns relevant restaurant names and addresses with its answer. Up to four menu
+images are analyzed in parallel, using
+`gemini-flash-lite-latest` by default with `gemini-flash-latest` as fallback. Gemini
+requests time out after 45 seconds. The first search can take longer while menus are
+analyzed; subsequent searches reuse the cache until the backend restarts or a menu
+image changes. Configure `GEMINI_API_KEY` in
+`backend/.env` to enable it. The request body is `{"message":"Where can I eat a burger?"}`;
+questions are limited to 500 characters. Upload menu images in restaurant profiles;
+remote image URLs are not fetched.
 
 ### Reservations
 

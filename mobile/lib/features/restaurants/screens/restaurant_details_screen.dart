@@ -12,7 +12,8 @@ class RestaurantDetailsScreen extends StatefulWidget {
   const RestaurantDetailsScreen({super.key, required this.restaurant});
 
   @override
-  State<RestaurantDetailsScreen> createState() => _RestaurantDetailsScreenState();
+  State<RestaurantDetailsScreen> createState() =>
+      _RestaurantDetailsScreenState();
 }
 
 class _RestaurantDetailsScreenState extends State<RestaurantDetailsScreen> {
@@ -24,7 +25,8 @@ class _RestaurantDetailsScreenState extends State<RestaurantDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final menuItems = context.watch<RestaurantProvider>().menuFor(widget.restaurant.id);
+    final menuItems =
+        context.watch<RestaurantProvider>().menuFor(widget.restaurant.id);
 
     return Scaffold(
       body: CustomScrollView(
@@ -39,7 +41,8 @@ class _RestaurantDetailsScreenState extends State<RestaurantDetailsScreen> {
                 errorBuilder: (context, error, stackTrace) {
                   return Container(
                     color: AppColors.border,
-                    child: const Icon(Icons.restaurant, size: 64, color: AppColors.textHint),
+                    child: const Icon(Icons.restaurant,
+                        size: 64, color: AppColors.textHint),
                   );
                 },
               ),
@@ -68,9 +71,12 @@ class _RestaurantDetailsScreenState extends State<RestaurantDetailsScreen> {
                             ),
                           ),
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 6),
                             decoration: BoxDecoration(
-                              color: widget.restaurant.isOpen ? AppColors.openStatus : AppColors.closedStatus,
+                              color: widget.restaurant.isOpen
+                                  ? AppColors.openStatus
+                                  : AppColors.closedStatus,
                               borderRadius: BorderRadius.circular(20),
                             ),
                             child: Text(
@@ -87,14 +93,17 @@ class _RestaurantDetailsScreenState extends State<RestaurantDetailsScreen> {
                       const SizedBox(height: 12),
                       Row(
                         children: [
-                          const Icon(Icons.restaurant, size: 18, color: AppColors.textSecondary),
+                          const Icon(Icons.restaurant,
+                              size: 18, color: AppColors.textSecondary),
                           const SizedBox(width: 6),
                           Text(
                             widget.restaurant.cuisine,
-                            style: const TextStyle(fontSize: 16, color: AppColors.textSecondary),
+                            style: const TextStyle(
+                                fontSize: 16, color: AppColors.textSecondary),
                           ),
                           const SizedBox(width: 16),
-                          const Icon(Icons.star, size: 18, color: AppColors.ratingActive),
+                          const Icon(Icons.star,
+                              size: 18, color: AppColors.ratingActive),
                           const SizedBox(width: 4),
                           Text(
                             widget.restaurant.rating.toStringAsFixed(1),
@@ -109,13 +118,19 @@ class _RestaurantDetailsScreenState extends State<RestaurantDetailsScreen> {
                       const SizedBox(height: 24),
                       _buildSection('About', widget.restaurant.description),
                       const SizedBox(height: 16),
-                      _buildInfoRow(Icons.access_time, 'Hours', widget.restaurant.openingHours),
+                      _buildInfoRow(Icons.access_time, 'Hours',
+                          widget.restaurant.openingHours),
                       const SizedBox(height: 8),
-                      _buildInfoRow(Icons.location_on, 'Address', widget.restaurant.address),
+                      _buildInfoRow(Icons.location_on, 'Address',
+                          widget.restaurant.address),
                       const SizedBox(height: 8),
-                      _buildInfoRow(Icons.phone, 'Phone', widget.restaurant.phone),
+                      _buildInfoRow(
+                          Icons.phone, 'Phone', widget.restaurant.phone),
                       const SizedBox(height: 32),
-                      MenuSection(items: menuItems),
+                      MenuSection(
+                        items: menuItems,
+                        menuImage: widget.restaurant.menuImage,
+                      ),
                     ],
                   ),
                 ),

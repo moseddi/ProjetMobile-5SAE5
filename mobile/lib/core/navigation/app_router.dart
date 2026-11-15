@@ -5,6 +5,7 @@ import '../../features/auth/screens/owner_signup_screen.dart';
 import '../../features/auth/screens/register_screen.dart';
 import '../../features/home/screens/main_screen.dart';
 import '../../features/restaurants/screens/restaurant_details_screen.dart';
+import '../../features/restaurants/screens/restaurant_chat_screen.dart';
 import '../../features/reservations/screens/reservation_screen.dart';
 import '../../features/reservations/screens/reservation_summary_screen.dart';
 import '../../features/events/screens/event_details_screen.dart';
@@ -40,7 +41,9 @@ class AppRouter {
         return main;
     }
   }
+
   static const String restaurantDetails = '/restaurant-details';
+  static const String menuAssistant = '/menu-assistant';
   static const String reservation = '/reservation';
   static const String reservationSummary = '/reservation-summary';
   static const String eventDetails = '/event-details';
@@ -68,6 +71,10 @@ class AppRouter {
         final restaurant = settings.arguments as Restaurant;
         return MaterialPageRoute(
           builder: (_) => RestaurantDetailsScreen(restaurant: restaurant),
+        );
+      case menuAssistant:
+        return MaterialPageRoute(
+          builder: (_) => const RestaurantChatScreen(),
         );
       case reservation:
         final restaurant = settings.arguments as Restaurant;
